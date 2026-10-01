@@ -14,7 +14,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         radiusValueSpan.innerText = e.target.value;
     });
 
-    // Control para el checkbox global de "Expandir nodos"
     const toggleExpandAll = document.getElementById("toggle-expand-all");
     if (toggleExpandAll) {
         toggleExpandAll.addEventListener("change", (e) => {
@@ -31,7 +30,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     let xmlDoc;
     try {
-        // Usamos ruta relativa explícita para evitar fallos en subdirectorios de GitHub Pages
         const response = await fetch("./poi-mapping-overpass-turbo.xml");
         
         if (!response.ok) {
@@ -74,28 +72,27 @@ function renderizarCategorias(xmlDoc) {
         return;
     }
 
-    const lang = "es"; // Idioma por defecto
-
     categories.forEach((cat) => {
         const key = cat.getAttribute("key");
         const nameNode = cat.querySelector("name");
-        const catName = nameNode ? (nameNode.getAttribute(lang) || nameNode.getAttribute("es") || key) : key;
+        
+        // Extraer el texto en español de forma flexible
+        let catName = key;
+        if (nameNode) {
+            catName = nameNode.getAttribute("es") || nameNode.textContent || key;
+        }
 
-        // Crear contenedor del grupo (Acordeón)
         const groupDiv = document.createElement("div");
         groupDiv.className = "category-group";
 
-        // Cabecera comprimida de la categoría principal
         const headerDiv = document.createElement("div");
         headerDiv.className = "category-header";
         headerDiv.innerHTML = `<span>${catName} (${key})</span> <span class="arrow">▼</span>`;
         
-        // Evento para expandir/contraer al hacer clic en la cabecera
         headerDiv.addEventListener("click", () => {
             groupDiv.classList.toggle("active");
         });
 
-        // Contenedor de las subcategorías (elementos internos)
         const itemsDiv = document.createElement("div");
         itemsDiv.className = "category-items";
 
@@ -103,7 +100,11 @@ function renderizarCategorias(xmlDoc) {
         subcategories.forEach((sub) => {
             const subValue = sub.getAttribute("value");
             const subNameNode = sub.querySelector("name");
-            const subName = subNameNode ? (subNameNode.getAttribute(lang) || subNameNode.getAttribute("es") || subValue) : subValue;
+            
+            let subName = subValue;
+            if (subNameNode) {
+                subName = subNameNode.getAttribute("es") || subNameNode.textContent || subValue;
+            }
 
             const label = document.createElement("label");
             label.innerHTML = `
