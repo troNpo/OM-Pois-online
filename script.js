@@ -2,7 +2,7 @@ let xmlDocGlobal = null;
 
 document.addEventListener("DOMContentLoaded", async () => {
     const container = document.getElementById("category-container");
-    container.innerHTML = "<p style='color: #ffa726;'>Cargando categorías...</p>";
+    container.innerHTML = "<p style='color: #ffa726; padding: 10px;'>Cargando categorías...</p>";
 
     const urlParams = new URLSearchParams(window.location.search);
     const lat = parseFloat(urlParams.get("lat")) || 40.4168;
@@ -16,15 +16,16 @@ document.addEventListener("DOMContentLoaded", async () => {
         radiusValueSpan.innerText = e.target.value;
     });
 
+    // Control del interruptor general "Expandir nodos"
     const toggleExpandAll = document.getElementById("toggle-expand-all");
     if (toggleExpandAll) {
         toggleExpandAll.addEventListener("change", (e) => {
-            const groups = document.querySelectorAll(".category-group");
-            groups.forEach(group => {
+            const nodes = document.querySelectorAll(".category-node");
+            nodes.forEach(node => {
                 if (e.target.checked) {
-                    group.classList.add("active");
+                    node.classList.add("active");
                 } else {
-                    group.classList.remove("active");
+                    node.classList.remove("active");
                 }
             });
         });
@@ -34,7 +35,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (selectLang) {
         selectLang.addEventListener("change", () => {
             if (xmlDocGlobal) {
-                renderizarCategorias(xmlDocGlobal);
+                renderizarArbolCategorias(xmlDocGlobal);
             }
         });
     }
@@ -42,7 +43,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     try {
         const response = await fetch("./poi-mapping-overpass-turbo.xml");
         if (!response.ok) {
-            throw new Error(`No se encuentra el XML (Error HTTP: ${response.status})`);
+            throw new Error(`No se encuentra el archivo XML (Error HTTP: ${response.status})`);
         }
         
         const text = await response.text();
@@ -53,10 +54,10 @@ document.addEventListener("DOMContentLoaded", async () => {
             throw new Error("El archivo XML tiene errores de sintaxis.");
         }
 
-        renderizarCategorias(xmlDocGlobal);
+        renderizarArbolCategorias(xmlDocGlobal);
     } catch (error) {
         console.error("Error al cargar el XML:", error);
-        container.innerHTML = `<p style='color: #ff5252;'>${error.message}</p>`;
+        container.innerHTML = `<p style='color: #ff5252; padding: 10px;'>${error.message}</p>`;
     }
 
     const btnSearch = document.getElementById("btn-search");
@@ -92,80 +93,98 @@ function obtenerTraduccion(element, fallback) {
     return element.getAttribute("title") || fallback;
 }
 
-function renderizarCategorias(xmlDoc) {
+function construirNodoXML(categoryElem) {
+    const titleAttr = categoryElem.getAttribute("title") || "Categoría";
+    const name = obtenerTraduccion(categoryElem, titleAttr);
+
+    const nodeDiv = document.createElement("div");
+    nodeDiv.className = "category-node";
+
+    const rowDiv = document.createElement("div");
+    rowDiv.className = "category-row";
+
+    // Subcategorías internas o Mappings
+    const subCategories = categoryElem.querySelectorAll(":scope > category");
+    const mappings = categoryElem.querySelectorAll(":scope > mapping");
+    const hasChildren = subCategories.length > 0 || mappings.length > 0;
+
+    rowDiv.innerHTML = `
+        <div class="category-left">
+            <input type="checkbox" class="cat-checkbox">
+            <span>${name}</span>
+        </div>
+        <div class="category-arrow">${hasChildren ? '›' : ''}</div>
+    `;
+
+    const checkbox = rowDiv.querySelector("input[type='checkbox']");
+
+    // Contenedor de hijos (subcategorías o mapeos finales)
+    const childrenDiv = document.createElement("div");
+    childrenDiv.className = "category-children";
+
+    if (hasChildren) {
+        // Evento para expandir/contraer al hacer clic en la fila o flecha
+        rowDiv.addEventListener("click", (e) => {
+            if (e.target === checkbox) return; // Si hace clic en el checkbox, no expande
+            nodeDiv.classList.toggle("active");
+        });
+
+        // Procesar subcategorías recursivamente
+        subCategories.forEach(sub => {
+            childrenDiv.appendChild(construirNodoXML(sub));
+        });
+
+        // Procesar mapeos directos limpios (sin tags OSM visibles)
+        mappings.forEach(map => {
+            const tagAttr = map.getAttribute("tag");
+            if (!tagAttr) return;
+            const [tagKey, tagValue] = tagAttr.split("=");
+
+            const mapRow = document.createElement("div");
+            mapRow.className = "category-row";
+            mapRow.innerHTML = `
+                <div class="category-left">
+                    <input type="checkbox" class="subcat-checkbox" data-key="${tagKey}" data-value="${tagValue}">
+                    <span>${name}</span>
+                </div>
+            `;
+            childrenDiv.appendChild(mapRow);
+        });
+    } else {
+        // Si no tiene hijos pero es una categoría hoja con mapeo propio
+        checkbox.className = "subcat-checkbox";
+        // Aquí podríamos extraer su tag si existiera directamente
+    }
+
+    nodeDiv.appendChild(rowDiv);
+    if (hasChildren) {
+        nodeDiv.appendChild(childrenDiv);
+    }
+
+    // Cascada de selección de checkboxes (si marcas la categoría padre, marca los hijos opcionalmente o viceversa)
+    checkbox.addEventListener("change", () => {
+        const descendantChecks = nodeDiv.querySelectorAll("input[type='checkbox']");
+        descendantChecks.forEach(ch => {
+            ch.checked = checkbox.checked;
+        });
+    });
+
+    return nodeDiv;
+}
+
+function renderizarArbolCategorias(xmlDoc) {
     const container = document.getElementById("category-container");
     container.innerHTML = "";
     
     const rootCategories = xmlDoc.querySelectorAll(":scope > category, poi_categories > category");
     
     if (rootCategories.length === 0) {
-        container.innerHTML = "<p style='color: #ff5252;'>No se encontraron categorías principales en el XML.</p>";
+        container.innerHTML = "<p style='color: #ff5252; padding: 10px;'>No se encontraron categorías principales en el XML.</p>";
         return;
     }
 
     rootCategories.forEach((cat) => {
-        const catTitle = cat.getAttribute("title") || "Categoría";
-        const catName = obtenerTraduccion(cat, catTitle);
-
-        const groupDiv = document.createElement("div");
-        groupDiv.className = "category-group";
-
-        const headerDiv = document.createElement("div");
-        headerDiv.className = "category-header";
-        headerDiv.innerHTML = `<span>${catName}</span> <span class="arrow">▼</span>`;
-        
-        headerDiv.addEventListener("click", () => {
-            groupDiv.classList.toggle("active");
-        });
-
-        const itemsDiv = document.createElement("div");
-        itemsDiv.className = "category-items";
-
-        const procesarSubcategorias = (parentElem) => {
-            const subCategories = parentElem.querySelectorAll(":scope > category");
-            subCategories.forEach((sub) => {
-                const subTitle = sub.getAttribute("title") || "";
-                const subName = obtenerTraduccion(sub, subTitle);
-
-                procesarSubcategorias(sub);
-
-                const mappings = sub.querySelectorAll(":scope > mapping");
-                mappings.forEach((map) => {
-                    const tagAttr = map.getAttribute("tag");
-                    if (!tagAttr) return;
-
-                    const [tagKey, tagValue] = tagAttr.split("=");
-
-                    const label = document.createElement("label");
-                    // Mostramos solo el nombre limpio sin las etiquetas OSM entre paréntesis
-                    label.innerHTML = `
-                        <input type="checkbox" class="subcat-checkbox" data-key="${tagKey}" data-value="${tagValue}">
-                        <span>${subName}</span>
-                    `;
-                    itemsDiv.appendChild(label);
-                });
-            });
-        };
-
-        procesarSubcategorias(cat);
-
-        const directMappings = cat.querySelectorAll(":scope > mapping");
-        directMappings.forEach((map) => {
-            const tagAttr = map.getAttribute("tag");
-            if (!tagAttr) return;
-            const [tagKey, tagValue] = tagAttr.split("=");
-
-            const label = document.createElement("label");
-            label.innerHTML = `
-                <input type="checkbox" class="subcat-checkbox" data-key="${tagKey}" data-value="${tagValue}">
-                <span>${catName}</span>
-            `;
-            itemsDiv.appendChild(label);
-        });
-
-        groupDiv.appendChild(headerDiv);
-        groupDiv.appendChild(itemsDiv);
-        container.appendChild(groupDiv);
+        container.appendChild(construirNodoXML(cat));
     });
 }
 
@@ -184,8 +203,15 @@ async function ejecutarConsultaOverpass(lat, lon) {
     checkboxes.forEach(chk => {
         const key = chk.getAttribute("data-key");
         const value = chk.getAttribute("data-value");
-        queries.push(`node(around:${radiusMeters}, ${lat}, ${lon})["${key}"="${value}"];`);
+        if (key && value) {
+            queries.push(`node(around:${radiusMeters}, ${lat}, ${lon})["${key}"="${value}"];`);
+        }
     });
+
+    if (queries.length === 0) {
+        alert("Los elementos seleccionados no tienen etiquetas de mapeo válidas.");
+        return;
+    }
 
     const overpassQuery = `
         [out:json][timeout:25];
