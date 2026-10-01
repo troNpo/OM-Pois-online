@@ -3,53 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Búsqueda de PDI - OruxMaps</title>
+    <title>Buscador de PDI - Overpass</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="app-container">
-        <!-- Cabecera -->
-        <header class="app-header">
-            <h2>Búsqueda de PDI</h2>
-            <button id="btn-search" title="Buscar y Exportar KML">✔</button>
-        </header>
-
-        <!-- Panel de Coordenadas y Radio -->
-        <section class="config-section">
-            <div class="coords-box" id="info-coords">
-                Centro: Leyendo coordenadas...
-            </div>
+        <!-- Parámetros de búsqueda -->
+        <div class="search-params">
+            <div id="info-coords" style="font-size: 0.85rem; color: #b0bec5; margin-bottom: 8px;">Centro: --</div>
             
-            <!-- Barra deslizadora de radio (hasta 40km) -->
-            <div class="slider-control">
-                <label for="search-radius">Radio de búsqueda: <span id="radius-value">20</span> km</label>
-                <input type="range" id="search-radius" min="1" max="40" value="20">
-            </div>
+            <label for="search-radius">Radio de búsqueda: <span id="radius-value">20</span> km</label>
+            <input type="range" id="search-radius" min="1" max="100" value="20">
 
-            <div class="input-group">
-                <input type="text" id="search-keywords" placeholder="Palabras a buscar (opcional)">
+            <div style="margin-top: 10px;">
+                <label for="max-results" style="font-size: 0.85rem; color: #b0bec5;">Max. resultados (por defecto 3000):</label>
+                <input type="number" id="max-results" value="3000" style="width: 100%; padding: 6px; background: #222; color: #fff; border: 1px solid #444; border-radius: 4px; margin-top: 4px;">
             </div>
-            
-            <div class="input-group">
-                <label for="max-results">Max. resultados (por defecto 3000):</label>
-                <input type="number" id="max-results" value="3000">
-            </div>
-        </section>
+        </div>
 
-        <!-- Listado Dinámico de Categorías desde el XML -->
-        <section class="categories-section">
-            <div class="categories-header">
-                <h3>Categorías</h3>
-                <label class="toggle-expand">
-                    <span>Expandir nodos</span>
+        <!-- Selector de Idioma -->
+        <div class="language-selector-container" style="margin: 15px 0; display: flex; align-items: center; justify-content: space-between;">
+            <label for="select-lang" style="color: #fff; font-size: 0.9rem;">Idioma / Language:</label>
+            <select id="select-lang" style="padding: 6px; background: #333; color: #fff; border: 1px solid #555; border-radius: 4px;">
+                <option value="es" selected>Español</option>
+                <option value="en">English</option>
+                <option value="de">Deutsch</option>
+                <option value="fr">Français</option>
+                <option value="it">Italiano</option>
+                <option value="nl">Nederlands</option>
+            </select>
+        </div>
+
+        <!-- Cabecera de Categorías y Toggle Switch -->
+        <div class="categories-header" style="display: flex; align-items: center; justify-content: space-between; margin-top: 20px; margin-bottom: 10px;">
+            <h3 style="margin: 0; color: #fff;">Categorías</h3>
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="font-size: 0.85rem; color: #b0bec5;">Expandir nodos</span>
+                <label class="toggle-switch">
                     <input type="checkbox" id="toggle-expand-all">
+                    <span class="slider-switch"></span>
                 </label>
             </div>
-            <!-- Contenedor adaptado para la estructura comprimida y desplegable -->
-            <div id="category-container" class="category-menu">
-                <p style="color: #888; font-size: 0.9rem;">Cargando categorías desde el XML...</p>
-            </div>
-        </section>
+        </div>
+
+        <!-- Contenedor dinámico del acordeón -->
+        <div id="category-container">
+            <!-- Las categorías se inyectarán aquí mediante script.js -->
+        </div>
+
+        <!-- Botón de Búsqueda -->
+        <button id="btn-search" style="width: 100%; margin-top: 20px; padding: 12px; background: #b71c1c; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">
+            Buscar y Generar KML
+        </button>
     </div>
 
     <script src="script.js"></script>
