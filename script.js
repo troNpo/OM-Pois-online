@@ -27,12 +27,22 @@ document.addEventListener("DOMContentLoaded", async () => {
     let xmlDoc;
     try {
         const response = await fetch("poi-mapping-overpass-turbo.xml");
+        if (!response.ok) {
+            throw new Error(`Error HTTP: ${response.status} (No se encuentra el archivo)`);
+        }
         const text = await response.text();
         xmlDoc = new DOMParser().parseFromString(text, "text/xml");
+        
+        // Comprobar si hubo error de parseo en el XML
+        const parserError = xmlDoc.querySelector("parsererror");
+        if (parserError) {
+            throw new Error("El archivo XML está mal formado.");
+        }
+
         renderizarCategorias(xmlDoc);
     } catch (error) {
         console.error("Error al cargar el XML:", error);
-        document.getElementById("category-container").innerHTML = "<p style='color: #ff5252;'>Error al cargar categorías.</p>";
+        document.getElementById("category-container").innerHTML = `<p style='color: #ff5252;'>${error.message}</p>`;
     }
 
     document.getElementById("btn-search").addEventListener("click", () => {
