@@ -1,0 +1,97 @@
+body {
+    background-color: #121212;
+    color: #e0e0e0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.app-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding-bottom: 40px;
+}
+
+.app-header {
+    background-color: #b71c1c;
+    color: white;
+    padding: 14px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.app-header button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.6rem;
+    cursor: pointer;
+}
+
+.config-section, .categories-section {
+    padding: 12px 16px;
+    background-color: #1e1e1e;
+    border-bottom: 1px solid #2c2c2c;
+}
+
+.coords-box {
+    font-size: 0.85rem;
+    color: #b0bec5;
+    margin-bottom: 12px;
+    background: #262626;
+    padding: 8px 10px;
+    border-radius: 4px;
+}
+
+.slider-control {
+    margin: 12px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 0.9rem;
+}
+
+.slider-control input[type="range"] {
+    width: 100%;
+    accent-color: #b71c1c;
+}
+
+.input-group {
+    margin: 10px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 0.9rem;
+}
+
+.input-group input[type="text"], .input-group input[type="number"] {
+    background: #2c2c2c;
+    border: 1px solid #444;
+    color: white;
+    padding: 8px;
+    border-radius: 4px;
+}
+
+.categories-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.category-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #2c2c2c;
+    font-size: 0.95rem;
+}
+
+.category-item label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+}
