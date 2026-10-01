@@ -1,0 +1,3165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<category xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://mapsforge.org/poi-mapping" title="root" xsi:schemaLocation="http://mapsforge.org/poi-mapping https://raw.githubusercontent.com/mapsforge/mapsforge/master/resources/poi-mapping.xsd">
+  <!-- http://wiki.openstreetmap.org/wiki/Map_Features -->
+  <!-- Amenities -->
+  <category title="Amenities">
+    <translation lang="de">Einrichtungen</translation>
+    <translation lang="es">Servicios</translation>
+    <translation lang="fr">Services</translation>
+    <translation lang="it">Servizi</translation>
+    <translation lang="nl">Voorzieningen</translation>
+    <category title="Food">
+      <translation lang="de">Essen</translation>
+      <translation lang="es">Alimentación</translation>
+      <translation lang="fr">Alimentation</translation>
+      <translation lang="it">Ristorazione</translation>
+      <translation lang="nl">Eten</translation>
+      <category title="Restaurants">
+        <translation lang="de">Restaurants</translation>
+        <translation lang="es">Restaurantes</translation>
+        <translation lang="fr">Restaurants</translation>
+        <translation lang="it">Ristoranti</translation>
+        <translation lang="nl">Restaurants</translation>
+        <mapping tag="amenity=restaurant"/>
+      </category>
+      <category title="Food counter areas">
+        <translation lang="de">Food Courts</translation>
+        <translation lang="es">Zonas de comida</translation>
+        <translation lang="fr">Aires de restauration</translation>
+        <translation lang="it">Aree ristoro</translation>
+        <translation lang="nl">Foodcourts</translation>
+        <mapping tag="amenity=food_court"/>
+      </category>
+      <category title="Fast food restaurants">
+        <translation lang="de">Fast Food</translation>
+        <translation lang="es">Comida rápida</translation>
+        <translation lang="fr">Restauration rapide</translation>
+        <translation lang="it">Fast food</translation>
+        <translation lang="nl">Fastfood</translation>
+        <mapping tag="amenity=fast_food"/>
+      </category>
+      <category title="Drinking water sources">
+        <translation lang="de">Trinkwasser</translation>
+        <translation lang="es">Agua potable</translation>
+        <translation lang="fr">Eau potable</translation>
+        <translation lang="it">Acqua potabile</translation>
+        <translation lang="nl">Drinkwater</translation>
+        <mapping tag="amenity=drinking_water"/>
+      </category>
+      <category title="Public grills">
+        <translation lang="de">Grillplätze</translation>
+        <translation lang="es">Barbacoas públicas</translation>
+        <translation lang="fr">Barbecues publics</translation>
+        <translation lang="it">Grigliate pubbliche</translation>
+        <translation lang="nl">Openbare barbecues</translation>
+        <mapping tag="amenity=bbq"/>
+      </category>
+      <category title="Pubs">
+        <translation lang="de">Kneipen</translation>
+        <translation lang="es">Pubs</translation>
+        <translation lang="fr">Pubs</translation>
+        <translation lang="it">Pub</translation>
+        <translation lang="nl">Pubs</translation>
+        <mapping tag="amenity=pub"/>
+      </category>
+      <category title="Bars">
+        <translation lang="de">Bars</translation>
+        <translation lang="es">Bares</translation>
+        <translation lang="fr">Bars</translation>
+        <translation lang="it">Bar</translation>
+        <translation lang="nl">Bars</translation>
+        <mapping tag="amenity=bar"/>
+      </category>
+      <category title="Cafes">
+        <translation lang="de">Cafés</translation>
+        <translation lang="es">Cafeterías</translation>
+        <translation lang="fr">Cafés</translation>
+        <translation lang="it">Caffè</translation>
+        <translation lang="nl">Cafés</translation>
+        <mapping tag="amenity=cafe"/>
+      </category>
+      <category title="Beer gardens">
+        <translation lang="de">Biergärten</translation>
+        <translation lang="es">Terrazas de cerveza</translation>
+        <translation lang="fr">Jardins de bière</translation>
+        <translation lang="it">Birrerie all'aperto</translation>
+        <translation lang="nl">Biertuinen</translation>
+        <mapping tag="amenity=biergarten"/>
+        <mapping tag="amenity=beer_garden"/>
+      </category>
+      <category title="Ice cream shops">
+        <translation lang="de">Eisdielen</translation>
+        <translation lang="es">Heladerías</translation>
+        <translation lang="fr">Glaciers</translation>
+        <translation lang="it">Gelaterie</translation>
+        <translation lang="nl">Ijssalons</translation>
+        <mapping tag="amenity=ice_cream"/>
+        <mapping tag="shop=ice_cream"/>
+      </category>
+    </category>
+    <category title="Education institutes">
+      <translation lang="de">Bildungseinrichtungen</translation>
+      <translation lang="es">Institutos educativos</translation>
+      <translation lang="fr">Établissements d'enseignement</translation>
+      <translation lang="it">Istituti educativi</translation>
+      <translation lang="nl">Onderwijsinstellingen</translation>
+      <category title="Kindergartens">
+        <translation lang="de">Kindergärten</translation>
+        <translation lang="es">Guarderías y jardines de infancia</translation>
+        <translation lang="fr">Jardins d'enfants</translation>
+        <translation lang="it">Asili nido e scuole materne</translation>
+        <translation lang="nl">Kleuterscholen</translation>
+        <mapping tag="amenity=kindergarten"/>
+      </category>
+      <category title="School grounds">
+        <translation lang="de">Schulen</translation>
+        <translation lang="es">Colegios y escuelas</translation>
+        <translation lang="fr">Écoles</translation>
+        <translation lang="it">Scuole</translation>
+        <translation lang="nl">Scholen</translation>
+        <mapping tag="amenity=school"/>
+      </category>
+      <category title="College campus or buildings">
+        <translation lang="de">Colleges</translation>
+        <translation lang="es">Centros de formación profesional / Colleges</translation>
+        <translation lang="fr">Collèges</translation>
+        <translation lang="it">College</translation>
+        <translation lang="nl">Hogescholen</translation>
+        <mapping tag="amenity=college"/>
+      </category>
+      <category title="Public libraries">
+        <translation lang="de">Öffentliche Bibliotheken</translation>
+        <translation lang="es">Bibliotecas públicas</translation>
+        <translation lang="fr">Bibliothèques publiques</translation>
+        <translation lang="it">Biblioteche pubbliche</translation>
+        <translation lang="nl">Openbare bibliotheken</translation>
+        <mapping tag="amenity=library"/>
+      </category>
+      <category title="University campus or buildings">
+        <translation lang="de">Universitäten</translation>
+        <translation lang="es">Universidades</translation>
+        <translation lang="fr">Universités</translation>
+        <translation lang="it">Università</translation>
+        <translation lang="nl">Universiteiten</translation>
+        <mapping tag="amenity=university"/>
+      </category>
+    </category>
+    <category title="Transportation">
+      <translation lang="de">Verkehr</translation>
+      <translation lang="es">Transporte</translation>
+      <translation lang="fr">Transport</translation>
+      <translation lang="it">Trasporti</translation>
+      <translation lang="nl">Vervoer</translation>
+      <category title="Ferry terminals">
+        <translation lang="de">Fährterminals</translation>
+        <translation lang="es">Terminales de ferry</translation>
+        <translation lang="fr">Terminaux de ferry</translation>
+        <translation lang="it">Terminal dei traghetti</translation>
+        <translation lang="nl">Veerbootterminals</translation>
+        <mapping tag="amenity=ferry_terminal"/>
+      </category>
+      <category title="Bicycle parking places">
+        <translation lang="de">Fahrradparkplätze</translation>
+        <translation lang="es">Aparcamientos para bicicletas</translation>
+        <translation lang="fr">Stationnement vélos</translation>
+        <translation lang="it">Parcheggi per biciclette</translation>
+        <translation lang="nl">Fietsenstallingen</translation>
+        <mapping tag="amenity=bicycle_parking"/>
+      </category>
+      <category title="Bicycle rental stations">
+        <translation lang="de">Fahrradverleih</translation>
+        <translation lang="es">Alquiler de bicicletas</translation>
+        <translation lang="fr">Location de vélos</translation>
+        <translation lang="it">Noleggio biciclette</translation>
+        <translation lang="nl">Fietsverhuur</translation>
+        <mapping tag="amenity=bicycle_rental"/>
+      </category>
+      <category title="Bus stations">
+        <translation lang="de">Busbahnhöfe</translation>
+        <translation lang="es">Estaciones de autobús</translation>
+        <translation lang="fr">Gares routières</translation>
+        <translation lang="it">Autostazioni</translation>
+        <translation lang="nl">Busstations</translation>
+        <mapping tag="amenity=bus_station"/>
+      </category>
+      <category title="Car rental stations">
+        <translation lang="de">Autovermietung</translation>
+        <translation lang="es">Alquiler de coches</translation>
+        <translation lang="fr">Location de voitures</translation>
+        <translation lang="it">Noleggio auto</translation>
+        <translation lang="nl">Autoverhuur</translation>
+        <mapping tag="amenity=car_rental"/>
+      </category>
+      <category title="Car sharing stations">
+        <translation lang="de">Carsharing</translation>
+        <translation lang="es">Compartir coche (Carsharing)</translation>
+        <translation lang="fr">Covoiturage / Auto-partage</translation>
+        <translation lang="it">Car sharing</translation>
+        <translation lang="nl">Autodelen</translation>
+        <mapping tag="amenity=car_sharing"/>
+      </category>
+      <category title="Car washing stations">
+        <translation lang="de">Waschanlagen</translation>
+        <translation lang="es">Lavado de coches</translation>
+        <translation lang="fr">Stations de lavage</translation>
+        <translation lang="it">Autolavaggi</translation>
+        <translation lang="nl">Autowasstraten</translation>
+        <mapping tag="amenity=car_wash"/>
+      </category>
+      <category title="Fuel stations">
+        <translation lang="de">Tankstellen</translation>
+        <translation lang="es">Gasolineras</translation>
+        <translation lang="fr">Stations-service</translation>
+        <translation lang="it">Distributori di carburante</translation>
+        <translation lang="nl">Tankstations</translation>
+        <mapping tag="amenity=fuel"/>
+      </category>
+    <category title="Car parking places">
+      <translation lang="de">Parkplätze</translation>
+      <translation lang="es">Aparcamientos de coches</translation>
+      <translation lang="fr">Parkings</translation>
+      <translation lang="it">Parcheggi per auto</translation>
+      <translation lang="nl">Parkeerplaatsen</translation>
+      <mapping tag="amenity=parking"/>
+    </category>
+    <category title="Motorcycle parking places">
+      <translation lang="de">Motorradparkplätze</translation>
+      <translation lang="es">Aparcamientos para motos</translation>
+      <translation lang="fr">Stationnement motos</translation>
+      <translation lang="it">Parcheggi per moto</translation>
+      <translation lang="nl">Motorparkeerplaatsen</translation>
+      <mapping tag="amenity=motorcycle_parking"/>
+    </category>
+<category title="Taxi stands">
+  <translation lang="de">Taxistände</translation>
+  <translation lang="es">Paradas de taxi</translation>
+  <translation lang="fr">Stations de taxi</translation>
+  <translation lang="it">Posteggi taxi</translation>
+  <translation lang="nl">Taxistandplaatsen</translation>
+  <mapping tag="amenity=taxi"/>
+</category>
+<category title="Electric vehicle charging facilities">
+  <translation lang="de">Ladestationen für Elektrofahrzeuge</translation>
+  <translation lang="es">Puntos de recarga para vehículos eléctricos</translation>
+  <translation lang="fr">Bornes de recharge pour véhicules électriques</translation>
+  <translation lang="it">Colonnine di ricarica per veicoli elettrici</translation>
+  <translation lang="nl">Oplaadpunten voor elektrische voertuigen</translation>
+  <mapping tag="amenity=charging_station"/>
+  <!-- Deprecated tag -->
+  <mapping tag="amenity=ev_charging"/>
+</category>
+</category>
+<category title="Financial institutes">
+  <translation lang="de">Finanzinstitute</translation>
+  <translation lang="es">Entidades financieras</translation>
+  <translation lang="fr">Institutions financières</translation>
+  <translation lang="it">Istituti finanziari</translation>
+  <translation lang="nl">Financiële instellingen</translation>
+  <category title="ATMs and cash points">
+    <translation lang="de">Geldautomaten</translation>
+    <translation lang="es">Cajeros automáticos</translation>
+    <translation lang="fr">Guichets automatiques bancaires</translation>
+    <translation lang="it">Bancomat</translation>
+    <translation lang="nl">Geldautomaten</translation>
+    <mapping tag="amenity=atm"/>
+  </category>
+  <category title="Banks">
+    <translation lang="de">Banken</translation>
+    <translation lang="es">Bancos</translation>
+    <translation lang="fr">Banques</translation>
+    <translation lang="it">Banche</translation>
+    <translation lang="nl">Banken</translation>
+    <mapping tag="amenity=bank"/>
+  </category>
+  <category title="Currency exchange places">
+    <translation lang="de">Wechselstuben</translation>
+    <translation lang="es">Casas de cambio</translation>
+    <translation lang="fr">Bureaux de change</translation>
+    <translation lang="it">Uffici di cambio valuta</translation>
+    <translation lang="nl">Wisselkantoren</translation>
+    <mapping tag="amenity=bureau_de_change"/>
+  </category>
+</category>
+<category title="Health care">
+  <translation lang="de">Gesundheitswesen</translation>
+  <translation lang="es">Sanidad</translation>
+  <translation lang="fr">Santé</translation>
+  <translation lang="it">Assistenza sanitaria</translation>
+  <translation lang="nl">Gezondheidszorg</translation>
+  <category title="Pharmacies">
+    <translation lang="de">Apotheken</translation>
+    <translation lang="es">Farmacias</translation>
+    <translation lang="fr">Pharmacies</translation>
+    <translation lang="it">Farmacie</translation>
+    <translation lang="nl">Apotheken</translation>
+    <mapping tag="amenity=pharmacy"/>
+  </category>
+  <category title="Hospitals">
+    <translation lang="de">Krankenhäuser</translation>
+    <translation lang="es">Hospitales</translation>
+    <translation lang="fr">Hôpitaux</translation>
+    <translation lang="it">Ospedali</translation>
+    <translation lang="nl">Ziekenhuizen</translation>
+    <mapping tag="amenity=hospital"/>
+    <!-- Added -->
+    <mapping tag="amenity=clinic"/>
+  </category>
+  <category title="Places to drop babies for remorse">
+    <translation lang="de">Babyklappen</translation>
+    <translation lang="es">Buzones de bebés</translation>
+    <translation lang="fr">Boîtes à bébés</translation>
+    <translation lang="it">Culle per la vita</translation>
+    <translation lang="nl">Vondelkamers</translation>
+    <mapping tag="amenity=baby_hatch"/>
+  </category>
+  <category title="Dentists">
+    <translation lang="de">Zahnärzte</translation>
+    <translation lang="es">Dentistas</translation>
+    <translation lang="fr">Dentistes</translation>
+    <translation lang="it">Dentisti</translation>
+    <translation lang="nl">Tandartsen</translation>
+    <mapping tag="amenity=dentist"/>
+  </category>
+  <category title="Doctor practices">
+    <translation lang="de">Arztpraxen</translation>
+    <translation lang="es">Consultorios médicos</translation>
+    <translation lang="fr">Cabinets médicaux</translation>
+    <translation lang="it">Studi medici</translation>
+    <translation lang="nl">Doktersartsenpraktijken</translation>
+    <mapping tag="amenity=doctors"/>
+  </category>
+  <category title="Nursing homes">
+    <translation lang="de">Pflegeheime</translation>
+    <translation lang="es">Residencias de ancianos</translation>
+    <translation lang="fr">Maisons de retraite</translation>
+    <translation lang="it">Case di cura</translation>
+    <translation lang="nl">Verzorgingstehuizen</translation>
+    <mapping tag="amenity=nursing_home"/>
+  </category>
+<category title="Veterinary clinics">
+  <translation lang="de">Tierarztpraxen</translation>
+  <translation lang="es">Clínicas veterinarias</translation>
+  <translation lang="fr">Cabinets vétérinaires</translation>
+  <translation lang="it">Cliniche veterinarie</translation>
+  <translation lang="nl">Dierenartspraktijken</translation>
+  <mapping tag="amenity=veterinary"/>
+</category>
+</category>
+<category title="Entertainment, arts and culture">
+  <translation lang="de">Unterhaltung, Kunst und Kultur</translation>
+  <translation lang="es">Entretenimiento, arte y cultura</translation>
+  <translation lang="fr">Divertissement, arts et culture</translation>
+  <translation lang="it">Intrattenimento, arte e cultura</translation>
+  <translation lang="nl">Vermaak, kunst en cultuur</translation>
+  <category title="Arts centers">
+    <translation lang="de">Kulturzentren</translation>
+    <translation lang="es">Centros de arte</translation>
+    <translation lang="fr">Centres culturels</translation>
+    <translation lang="it">Centri culturali</translation>
+    <translation lang="nl">Kunstcentra</translation>
+    <mapping tag="amenity=arts_centre"/>
+  </category>
+  <category title="Cinemas">
+    <translation lang="de">Kinos</translation>
+    <translation lang="es">Cines</translation>
+    <translation lang="fr">Cinémas</translation>
+    <translation lang="it">Cinema</translation>
+    <translation lang="nl">Bioscopen</translation>
+    <mapping tag="amenity=cinema"/>
+  </category>
+  <category title="Community centers">
+    <translation lang="de">Gemeindezentren / Bürgerhäuser</translation>
+    <translation lang="es">Centros cívicos y comunitarios</translation>
+    <translation lang="fr">Centres communautaires</translation>
+    <translation lang="it">Centri sociali e comunitari</translation>
+    <translation lang="nl">Buurthuizen</translation>
+    <mapping tag="amenity=community_centre"/>
+  </category>
+<category title="Fountains">
+  <translation lang="de">Brunnen</translation>
+  <translation lang="es">Fuentes</translation>
+  <translation lang="fr">Fontaines</translation>
+  <translation lang="it">Fontane</translation>
+  <translation lang="nl">Fonteinen</translation>
+  <mapping tag="amenity=fountain"/>
+</category>
+<category title="Nightclubs (Dancing)">
+  <translation lang="de">Nachtclubs / Diskotheken</translation>
+  <translation lang="es">Discotecas y clubes nocturnos</translation>
+  <translation lang="fr">Boîtes de nuit</translation>
+  <translation lang="it">Discoteche e locali notturni</translation>
+  <translation lang="nl">Nachtclubs / Discotheken</translation>
+  <mapping tag="amenity=nightclub"/>
+</category>
+<category title="Strip clubs">
+  <translation lang="de">Striptease-Lokale</translation>
+  <translation lang="es">Clubes de striptease</translation>
+  <translation lang="fr">Clubs de strip-tease</translation>
+  <translation lang="it">Strip club</translation>
+  <translation lang="nl">Priveclubs / Stripclubs</translation>
+  <mapping tag="amenity=stripclub"/>
+</category>
+<category title="Theatres and operas">
+  <translation lang="de">Theater und Opernhäuser</translation>
+  <translation lang="es">Teatros y óperas</translation>
+  <translation lang="fr">Théâtres et opéras</translation>
+  <translation lang="it">Teatri e opere</translation>
+  <translation lang="nl">Theaters en opera's</translation>
+  <mapping tag="amenity=theatre"/>
+</category>
+</category>
+<category title="Other amenities">
+  <translation lang="de">Sonstige Einrichtungen</translation>
+  <translation lang="es">Otros servicios</translation>
+  <translation lang="fr">Autres services</translation>
+  <translation lang="it">Altri servizi</translation>
+  <translation lang="nl">Overige voorzieningen</translation>
+ 
+<!-- Why not.. -->
+<category title="Brothels">
+  <translation lang="de">Bordelle</translation>
+  <translation lang="es">Burdeles</translation>
+  <translation lang="fr">Maisons closes</translation>
+  <translation lang="it">Bordelli</translation>
+  <translation lang="nl">Bordeel</translation>
+  <mapping tag="amenity=brothel"/>
+</category>
+
+<category title="Court houses">
+  <translation lang="de">Gerichtsgebäude</translation>
+  <translation lang="es">Palacios de justicia / Juzgados</translation>
+  <translation lang="fr">Tribunaux</translation>
+  <translation lang="it">Tribunali</translation>
+  <translation lang="nl">Rechtbanken</translation>
+  <mapping tag="amenity=court_house"/>
+</category>
+<category title="Crematoriums">
+  <translation lang="de">Krematorien</translation>
+  <translation lang="es">Crematorios</translation>
+  <translation lang="fr">Crématoriums</translation>
+  <translation lang="it">Crematori</translation>
+  <translation lang="nl">Crematoria</translation>
+  <mapping tag="amenity=crematorium"/>
+</category>
+<category title="Embassies">
+  <translation lang="de">Botschaften</translation>
+  <translation lang="es">Embajadas</translation>
+  <translation lang="fr">Ambassades</translation>
+  <translation lang="it">Ambasciate</translation>
+  <translation lang="nl">Ambassades</translation>
+  <mapping tag="amenity=embassy"/>
+</category>
+<category title="Fire stations">
+  <translation lang="de">Feuerwachen</translation>
+  <translation lang="es">Parques de bomberos</translation>
+  <translation lang="fr">Casiers de pompiers</translation>
+  <translation lang="it">Stazioni dei vigili del fuoco</translation>
+  <translation lang="nl">Brandweerkazernes</translation>
+  <mapping tag="amenity=fire_station"/>
+</category>
+<category title="Grave yards">
+  <translation lang="de">Friedhöfe</translation>
+  <translation lang="es">Cementerios</translation>
+  <translation lang="fr">Cimetières</translation>
+  <translation lang="it">Cimiteri</translation>
+  <translation lang="nl">Begraafplaatsen</translation>
+  <mapping tag="amenity=grave_yard"/>
+</category>
+<category title="Hunting stands">
+  <translation lang="de">Hochsitze</translation>
+  <translation lang="es">Puestos de caza</translation>
+  <translation lang="fr">Miradors de chasse</translation>
+  <translation lang="it">Alte torrette di caccia</translation>
+  <translation lang="nl">Jachthutten / Hoogzitjes</translation>
+  <mapping tag="amenity=hunting_stand"/>
+</category>
+<category title="Marketplaces">
+  <translation lang="de">Marktplätze</translation>
+  <translation lang="es">Mercados</translation>
+  <translation lang="fr">Marchés</translation>
+  <translation lang="it">Mercati</translation>
+  <translation lang="nl">Markten</translation>
+  <mapping tag="amenity=market_place"/>
+</category>
+<category title="Churches, mosques, temples">
+  <translation lang="de">Kirchen, Moscheen, Tempel</translation>
+  <translation lang="es">Iglesias, mezquitas, templos</translation>
+  <translation lang="fr">Églises, mosquées, temples</translation>
+  <translation lang="it">Chiese, moschee, templi</translation>
+  <translation lang="nl">Kerken, moskeeën, tempels</translation>
+  <mapping tag="amenity=place_of_worship"/>
+</category>
+<category title="Police stations">
+  <translation lang="de">Polizeiwachen</translation>
+  <translation lang="es">Comisarías de policía</translation>
+  <translation lang="fr">Postes de police</translation>
+  <translation lang="it">Stazioni di polizia</translation>
+  <translation lang="nl">Politiebureaus</translation>
+  <mapping tag="amenity=police"/>
+</category>
+<category title="Post boxes">
+  <translation lang="de">Briefkästen</translation>
+  <translation lang="es">Buzones de correos</translation>
+  <translation lang="fr">Boîtes aux lettres</translation>
+  <translation lang="it">Buchche delle lettere</translation>
+  <translation lang="nl">Brievenbussen</translation>
+  <mapping tag="amenity=post_box"/>
+</category>
+<category title="Post offices">
+  <translation lang="de">Postämter</translation>
+  <translation lang="es">Oficinas de correos</translation>
+  <translation lang="fr">Bureaux de poste</translation>
+  <translation lang="it">Uffici postali</translation>
+  <translation lang="nl">Postkantoren</translation>
+  <mapping tag="amenity=post_office"/>
+</category>
+<category title="Prisons">
+  <translation lang="de">Gِefängnisse</translation>
+  <translation lang="es">Prisiones y cárceles</translation>
+  <translation lang="fr">Prisons</translation>
+  <translation lang="it">Prigioni</translation>
+  <translation lang="nl">Gevangenissen</translation>
+  <mapping tag="amenity=prison"/>
+</category>
+
+<category title="Recycling facilities">
+  <translation lang="de">Recyclinghöfe / Wertstoffhöfe</translation>
+  <translation lang="es">Puntos de reciclaje</translation>
+  <translation lang="fr">Installations de recyclage</translation>
+  <translation lang="it">Centri di riciclaggio</translation>
+  <translation lang="nl">Recyclingcentra</translation>
+  <mapping tag="amenity=recycling"/>
+</category>
+<category title="Saunas">
+  <translation lang="de">Saunen</translation>
+  <translation lang="es">Saunas</translation>
+  <translation lang="fr">Saunas</translation>
+  <translation lang="it">Saune</translation>
+  <translation lang="nl">Sauna's</translation>
+  <mapping tag="amenity=sauna"/>
+</category>
+<!-- There are a lot of different shelter_type, how to define those ?? -->
+<category title="Bad weather shelters">
+  <translation lang="de">Schutzhütten / Unterstände</translation>
+  <translation lang="es">Refugios para mal tiempo</translation>
+  <translation lang="fr">Abris anti-intempéries</translation>
+  <translation lang="it">Rifugi per intemperie</translation>
+  <translation lang="nl">Schuilhutten / Schuilplaatsen</translation>
+  <mapping tag="amenity=shelter"/>
+</category>
+<category title="Public telephones">
+  <translation lang="de">Öffentliche Fernsprecher / Telefonzellen</translation>
+  <translation lang="es">Teléfonos públicos</translation>
+  <translation lang="fr">Téléphones publics</translation>
+  <translation lang="it">Telefoni pubblici</translation>
+  <translation lang="nl">Openbare telefoons</translation>
+  <mapping tag="amenity=telephone"/>
+</category>
+<category title="Public toilets">
+  <translation lang="de">Öffentliche Toiletten</translation>
+  <translation lang="es">Aseos públicos</translation>
+  <translation lang="fr">Toilettes publiques</translation>
+  <translation lang="it">Servizi igienici pubblici</translation>
+  <translation lang="nl">Openbare toiletten</translation>
+  <mapping tag="amenity=toilets"/>
+</category>
+<category title="Town halls">
+  <translation lang="de">Rathäuser</translation>
+  <translation lang="es">Ayuntamientos</translation>
+  <translation lang="fr">Hôtels de ville / Mairies</translation>
+  <translation lang="it">Municipi / Palazzi comunali</translation>
+  <translation lang="nl">Gemeenteloketten / Stadhuizen</translation>
+  <mapping tag="amenity=townhall"/>
+</category>
+</category>
+</category>
+<!-- Aerialway -->
+<!-- Aeroway -->
+<category title="Airport POIs">
+  <translation lang="de">Flugplatz-POI</translation>
+  <translation lang="es">Puntos de interés de aeropuertos</translation>
+  <translation lang="fr">POI d'aéroport</translation>
+  <translation lang="it">POI aeroportuali</translation>
+  <translation lang="nl">Luchthaven-POI's</translation>
+  <!-- Added start -->
+  <category title="Airports">
+    <translation lang="de">Flughäfen</translation>
+    <translation lang="es">Aeropuertos</translation>
+    <translation lang="fr">Aéroports</translation>
+    <translation lang="it">Aeroporti</translation>
+    <translation lang="nl">Luchthavens</translation>
+    <mapping tag="aeroway=aerodrome"/>
+    <mapping tag="aeroway=airport"/>
+  </category>
+  <category title="Airport terminals">
+    <translation lang="de">Flughafenterminals</translation>
+    <translation lang="es">Terminales de aeropuerto</translation>
+    <translation lang="fr">Terminaux d'aéroport</translation>
+    <translation lang="it">Terminal aeroportuali</translation>
+    <translation lang="nl">Luchthaventerminals</translation>
+    <mapping tag="aeroway=terminal"/>
+  </category>
+  <!-- Added end -->
+  <!-- Questionable, does this really add valuable information? Would effect tag-mapping too!! -->
+  <category title="Airport gates">
+    <translation lang="de">Flugsteige / Gates</translation>
+    <translation lang="es">Puertas de embarque</translation>
+    <translation lang="fr">Portes d'embarquement</translation>
+    <translation lang="it">Gate aeroportuali</translation>
+    <translation lang="nl">Gates</translation>
+    <mapping tag="aeroway=gate"/>
+  </category>
+  <category title="Helipads">
+    <translation lang="de">Hubschrauberlandeplätze</translation>
+    <translation lang="es">Helipuertos</translation>
+    <translation lang="fr">Hélisurfaces / Héliports</translation>
+    <translation lang="it">Eliporti</translation>
+    <translation lang="nl">Helipads</translation>
+    <mapping tag="aeroway=helipad"/>
+  </category>
+  <category title="Terminals">
+    <translation lang="de">Terminals</translation>
+    <translation lang="es">Terminales</translation>
+    <translation lang="fr">Terminaux</translation>
+    <translation lang="it">Terminal</translation>
+    <translation lang="nl">Terminals</translation>
+    <mapping tag="aeroway=terminal"/>
+  </category>
+</category>
+<!-- See annotation in #736 -->
+<!-- Barrier -->
+<category title="Barriers">
+  <translation lang="de">Barrieren / Sperren</translation>
+  <translation lang="es">Barreras</translation>
+  <translation lang="fr">Barrières</translation>
+  <translation lang="it">Barriere</translation>
+  <translation lang="nl">Barrières / Afscheidingen</translation>
+<category title="Border controls">
+  <translation lang="de">Grenzkontrollen</translation>
+  <translation lang="es">Controles fronterizos</translation>
+  <translation lang="fr">Contrôles frontaliers</translation>
+  <translation lang="it">Controlli di frontiera</translation>
+  <translation lang="nl">Grensbewaking / Grenscontroles</translation>
+  <mapping tag="barrier=border_control"/>
+</category>
+</category>
+<!-- Building -->
+<!-- Craft -->
+<category title="Crafting">
+  <translation lang="de">Handwerk</translation>
+  <translation lang="es">Artesanía y oficios</translation>
+  <translation lang="fr">Artisanat</translation>
+  <translation lang="it">Artigianato</translation>
+  <translation lang="nl">Ambachten</translation>
+  <category title="Agricultural engines">
+    <translation lang="de">Landmaschinenbau</translation>
+    <translation lang="es">Motores y maquinaria agrícola</translation>
+    <translation lang="fr">Machines agricoles</translation>
+    <translation lang="it">Macchine agricole</translation>
+    <translation lang="nl">Landbouwwerktuigen</translation>
+    <mapping tag="craft=agricultural_engines"/>
+  </category>
+  <category title="Basket makers">
+    <translation lang="de">Korbmacher</translation>
+    <translation lang="es">Cesteros</translation>
+    <translation lang="fr">Vanniers</translation>
+    <translation lang="it">Cestai</translation>
+    <translation lang="nl">Mandenmakers</translation>
+    <mapping tag="craft=basket_maker"/>
+  </category>
+  <category title="Beekeepers">
+    <translation lang="de">Imker</translation>
+    <translation lang="es">Apicultores</translation>
+    <translation lang="fr">Apiculteurs</translation>
+    <translation lang="it">Apicoltori</translation>
+    <translation lang="nl">Imkers</translation>
+    <mapping tag="craft=beekeeper"/>
+  </category>
+  <category title="Blacksmiths">
+    <translation lang="de">Schmiede</translation>
+    <translation lang="es">Herreros</translation>
+    <translation lang="fr">Forgerons</translation>
+    <translation lang="it">Fabbri</translation>
+    <translation lang="nl">Smidzen / Smeden</translation>
+    <mapping tag="craft=blacksmith"/>
+  </category>
+  <category title="Breweries">
+    <translation lang="de">Brauereien</translation>
+    <translation lang="es">Cervecerías artesanales</translation>
+    <translation lang="fr">Brasseries</translation>
+    <translation lang="it">Birrifici</translation>
+    <translation lang="nl">Brouwerijen</translation>
+    <mapping tag="craft=brewery"/>
+  </category>
+  <category title="Boat builders">
+    <translation lang="de">Bootsbauer</translation>
+    <translation lang="es">Carpinteros de ribera / Astilleros de botes</translation>
+    <translation lang="fr">Constructeurs de bateaux</translation>
+    <translation lang="it">Cantieri navali / Costruttori di barche</translation>
+    <translation lang="nl">Jachtbouwers / Bootbouwers</translation>
+    <mapping tag="craft=boatbuilder"/>
+  </category>
+  <category title="Bonfires">
+    <translation lang="de">Feuerstellen / Brauchtumsfeuer</translation>
+    <translation lang="es">Hogueras</translation>
+    <translation lang="fr">Feux de joie</translation>
+    <translation lang="it">Falò</translation>
+    <translation lang="nl">Vreugdevuren</translation>
+    <mapping tag="craft=bonfire"/>
+  </category>
+  <category title="Bookbinders">
+    <translation lang="de">Buchbinder</translation>
+    <translation lang="es">Enuadernadores</translation>
+    <translation lang="fr">Relieurs</translation>
+    <translation lang="it">Rilegatori</translation>
+    <translation lang="nl">Boekbinders</translation>
+    <mapping tag="craft=bookbinder"/>
+  </category>
+  <category title="Carpenters">
+    <translation lang="de">Tischler / Schreiner</translation>
+    <translation lang="es">Carpinteros</translation>
+    <translation lang="fr">Charpentiers / Menuisiers</translation>
+    <translation lang="it">Falegnami</translation>
+    <translation lang="nl">Timmerlieden</translation>
+    <mapping tag="craft=carpenter"/>
+  </category>
+  <category title="Carpet layers">
+    <translation lang="de">Bodenleger / Teppichleger</translation>
+    <translation lang="es">Instaladores de moqueta y suelos</translation>
+    <translation lang="fr">Poseurs de moquette</translation>
+    <translation lang="it">Posatori di moquette e pavimenti</translation>
+    <translation lang="nl">Vloerenleggers / Tapijtleggers</translation>
+    <mapping tag="craft=carpet_layer"/>
+  </category>
+  <category title="Caterers">
+    <translation lang="de">Partyservice / Catering</translation>
+    <translation lang="es">Servicios de catering</translation>
+    <translation lang="fr">Traiteurs</translation>
+    <translation lang="it">Catering</translation>
+    <translation lang="nl">Cateraars</translation>
+    <mapping tag="craft=caterer"/>
+  </category>
+  <category title="Clockmakers">
+    <translation lang="de">Uhrmacher</translation>
+    <translation lang="es">Relojeros</translation>
+    <translation lang="fr">Horlogers</translation>
+    <translation lang="it">Orologiai</translation>
+    <translation lang="nl">Horlogemakers / Klokkenmakers</translation>
+    <mapping tag="craft=clockmaker"/>
+  </category>
+  <category title="Confectioneries">
+    <translation lang="de">Konditoreien</translation>
+    <translation lang="es">Confiterías</translation>
+    <translation lang="fr">Confiseries / Pâtisseries</translation>
+    <translation lang="it">Pasticcerie</translation>
+    <translation lang="nl">Banketbakkers</translation>
+    <mapping tag="craft=confectionery"/>
+  </category>
+  <category title="Dressmakers">
+    <translation lang="de">Schneider</translation>
+    <translation lang="es">Modistas y sastres</translation>
+    <translation lang="fr">Couturiers</translation>
+    <translation lang="it">Sarti</translation>
+    <translation lang="nl">Klerenmakers / Coupeurs</translation>
+    <mapping tag="craft=dressmaker"/>
+  </category>
+  <category title="Electricians">
+    <translation lang="de">Elektriker</translation>
+    <translation lang="es">Electricistas</translation>
+    <translation lang="fr">Électriciens</translation>
+    <translation lang="it">Elettricisti</translation>
+    <translation lang="nl">Elektriciens</translation>
+    <mapping tag="craft=electrician"/>
+  </category>
+  <category title="Gardeners">
+    <translation lang="de">Gärtner</translation>
+    <translation lang="es">Jardineros</translation>
+    <translation lang="fr">Jardiniers / Paysagistes</translation>
+    <translation lang="it">Giardinieri</translation>
+    <translation lang="nl">Tuinmannen / Hoveniers</translation>
+    <mapping tag="craft=gardener"/>
+  </category>
+  <category title="Glaziers">
+    <translation lang="de">Glaser</translation>
+    <translation lang="es">Cristaleros</translation>
+    <translation lang="fr">Vitriers</translation>
+    <translation lang="it">Vetrai</translation>
+    <translation lang="nl">Glazenmakers</translation>
+    <mapping tag="craft=glaziery"/>
+  </category>
+  <category title="Handicrafts">
+    <translation lang="de">Kunsthandwerk</translation>
+    <translation lang="es">Artesanía</translation>
+    <translation lang="fr">Artisanat d'art</translation>
+    <translation lang="it">Artigianato artistico</translation>
+    <translation lang="nl">Handwerk</translation>
+    <mapping tag="craft=handicraft"/>
+  </category>
+  <category title="Heating, Ventilating and Air Condition">
+    <translation lang="de">Heizung, Lüftung, Klima (HLK)</translation>
+    <translation lang="es">Calefacción, ventilación y aire acondicionado (CLIMA)</translation>
+    <translation lang="fr">Chauffage, ventilation et climatisation (CVC)</translation>
+    <translation lang="it">Riscaldamento, ventilazione e condizionamento (HVAC)</translation>
+    <translation lang="nl">Verwarming, ventilatie en airconditioning (W-installaties)</translation>
+    <mapping tag="craft=hvac"/>
+  </category>
+  <category title="Insulations">
+    <translation lang="de">Isolierer / Dämmung</translation>
+    <translation lang="es">Aislamientos</translation>
+    <translation lang="fr">Isolation</translation>
+    <translation lang="it">Isolamenti</translation>
+    <translation lang="nl">Isolatiewerkzaamheden</translation>
+    <mapping tag="craft=insulation"/>
+  </category>
+  <category title="Jewellers">
+    <translation lang="de">Juweliere / Goldschmiede</translation>
+    <translation lang="es">Joyerías</translation>
+    <translation lang="fr">Bijoutiers / Joailliers</translation>
+    <translation lang="it">Gioiellerie / Oreficerie</translation>
+    <translation lang="nl">Juweliers</translation>
+    <mapping tag="craft=jeweller"/>
+  </category>
+  <category title="Locksmiths">
+    <translation lang="de">Schlossereien</translation>
+    <translation lang="es">Cerrajeros</translation>
+    <translation lang="fr">Serruriers</translation>
+    <translation lang="it">Fabbri / Serraturieri</translation>
+    <translation lang="nl">Slotenmakers</translation>
+    <mapping tag="craft=locksmith"/>
+  </category>
+  <category title="Key cutters">
+    <translation lang="de">Schlüsseldiensleister / Schlüsseldienst</translation>
+    <translation lang="es">Duplicado de llaves</translation>
+    <translation lang="fr">Reproduction de clés</translation>
+    <translation lang="it">Duplicazione chiavi</translation>
+    <translation lang="nl">Sleutelservice</translation>
+    <mapping tag="craft=key_cutter"/>
+  </category>
+  <category title="Metal constructions">
+    <translation lang="de">Metallbau</translation>
+    <translation lang="es">Construcciones metálicas</translation>
+    <translation lang="fr">Constructions métalliques</translation>
+    <translation lang="it">Costruzioni metalliche</translation>
+    <translation lang="nl">Metaalconstructie</translation>
+    <mapping tag="craft=metal_construction"/>
+  </category>
+  <category title="Opticians">
+    <translation lang="de">Optiker</translation>
+    <translation lang="es">Ópticas</translation>
+    <translation lang="fr">Opticiens</translation>
+    <translation lang="it">Ottici</translation>
+    <translation lang="nl">Opticiens</translation>
+    <mapping tag="craft=optician"/>
+  </category>
+  <category title="Painters">
+    <translation lang="de">Maler / Anstreicher</translation>
+    <translation lang="es">Pintores</translation>
+    <translation lang="fr">Peintres en bâtiment</translation>
+    <translation lang="it">Imbianchini / Pittori edili</translation>
+    <translation lang="nl">Schilders</translation>
+    <mapping tag="craft=painter"/>
+  </category>
+  <category title="Parquet layers">
+    <translation lang="de">Parkettleger</translation>
+    <translation lang="es">Instaladores de parqué</translation>
+    <translation lang="fr">Poseurs de parquet</translation>
+    <translation lang="it">Posatori di parquet</translation>
+    <translation lang="nl">Parketleggers</translation>
+    <mapping tag="craft=parquet_layer"/>
+  </category>
+  <category title="Photographers">
+    <translation lang="de">Fotografen</translation>
+    <translation lang="es">Fotógrafos</translation>
+    <translation lang="fr">Photographes</translation>
+    <translation lang="it">Fotografi</translation>
+    <translation lang="nl">Fotografen</translation>
+    <mapping tag="craft=photographer"/>
+  </category>
+  <category title="Photographic laboratory">
+    <translation lang="de">Fotolabor</translation>
+    <translation lang="es">Laboratorio fotográfico</translation>
+    <translation lang="fr">Laboratoire photographique</translation>
+    <translation lang="it">Laboratorio fotografico</translation>
+    <translation lang="nl">Fotolaboratorium</translation>
+    <mapping tag="craft=photographic_laboratory"/>
+  </category>
+  <category title="Plasterers">
+    <translation lang="de">Stuckateure / Putzer</translation>
+    <translation lang="es">Yeseros y estucadores</translation>
+    <translation lang="fr">Plâtriers</translation>
+    <translation lang="it">Gessatori / Stuccatori</translation>
+    <translation lang="nl">Stukadoors</translation>
+    <mapping tag="craft=plasterer"/>
+  </category>
+  <category title="Plumbers">
+    <translation lang="de">Installateure / Klempner / Sanitär</translation>
+    <translation lang="es">Fontaneros</translation>
+    <translation lang="fr">Plombiers</translation>
+    <translation lang="it">Idraulici</translation>
+    <translation lang="nl">Loodgieters</translation>
+    <mapping tag="craft=plumber"/>
+  </category>
+  <category title="Potteries">
+    <translation lang="de">Töpfereien</translation>
+    <translation lang="es">Alfarerías y cerámica</translation>
+    <translation lang="fr">Poteries</translation>
+    <translation lang="it">Ceramiche / Vasai</translation>
+    <translation lang="nl">Aardewerk / Pottenbakkerijen</translation>
+    <mapping tag="craft=pottery"/>
+  </category>
+  <category title="Riggers">
+    <translation lang="de">Takler / Anschläger</translation>
+    <translation lang="es">Aparejadores / Estibadores</translation>
+    <translation lang="fr">Gréeurs</translation>
+    <translation lang="it">Rigger / Attrezzatori</translation>
+    <translation lang="nl">Riggers / Hijsspecialisten</translation>
+    <mapping tag="craft=rigger"/>
+  </category>
+  <category title="Roofers">
+    <translation lang="de">Dachdecker</translation>
+    <translation lang="es">Tejadores / Techadores</translation>
+    <translation lang="fr">Couvreurs</translation>
+    <translation lang="it">Tetti e coperture / Tettioli</translation>
+    <translation lang="nl">Dakdekkers</translation>
+    <mapping tag="craft=roofer"/>
+  </category>
+  <category title="Saddlers">
+    <translation lang="de">Sattler</translation>
+    <translation lang="es">Guarnicioneros / Silleros</translation>
+    <translation lang="fr">Selliers</translation>
+    <translation lang="it">Sellaio</translation>
+    <translation lang="nl">Zadelmakers</translation>
+    <mapping tag="craft=saddler"/>
+  </category>
+  <category title="Sail makers">
+    <translation lang="de">Segelmacher</translation>
+    <translation lang="es">Veleros / Artesanos de velas</translation>
+    <translation lang="fr">Voiliers / Fabricants de voiles</translation>
+    <translation lang="it">Velaio</translation>
+    <translation lang="nl">Zeilmakers</translation>
+    <mapping tag="craft=sailmaker"/>
+  </category>
+  <category title="Sawmills">
+    <translation lang="de">Sägewerke</translation>
+    <translation lang="es">Aserraderos</translation>
+    <translation lang="fr">Scieries</translation>
+    <translation lang="it">Segherie</translation>
+    <translation lang="nl">Zagerijen</translation>
+    <mapping tag="craft=sawmill"/>
+  </category>
+  <category title="Scaffolders">
+    <translation lang="de">Gerüstbauer</translation>
+    <translation lang="es">Montadores de andamios</translation>
+    <translation lang="fr">Échafaudeurs</translation>
+    <translation lang="it">Montatori di ponteggi</translation>
+    <translation lang="nl">Steigerbouwers</translation>
+    <mapping tag="craft=scaffolder"/>
+  </category>
+  <category title="Sculptors">
+    <translation lang="de">Bildhauer</translation>
+    <translation lang="es">Escultores</translation>
+    <translation lang="fr">Sculpteurs</translation>
+    <translation lang="it">Scultori</translation>
+    <translation lang="nl">Beeldhouwers</translation>
+    <mapping tag="craft=sculptor"/>
+  </category>
+  <category title="Shoemakers">
+    <translation lang="de">Schuhmacher</translation>
+    <translation lang="es">Zapateros</translation>
+    <translation lang="fr">Cordonniers</translation>
+    <translation lang="it">Calzolai</translation>
+    <translation lang="nl">Schoenmakers</translation>
+    <mapping tag="craft=shoemaker"/>
+  </category>
+  <category title="Stand builders">
+    <translation lang="de">Messebauer</translation>
+    <translation lang="es">Montadores de stands</translation>
+    <translation lang="fr">Constructeurs de stands</translation>
+    <translation lang="it">Allestitori di stand fieristici</translation>
+    <translation lang="nl">Standbouwers</translation>
+    <mapping tag="craft=stand_builder"/>
+  </category>
+  <category title="Stonemason">
+    <translation lang="de">Steinmetzen</translation>
+    <translation lang="es">Canteros</translation>
+    <translation lang="fr">Tailleurs de pierre</translation>
+    <translation lang="it">Scalpellini</translation>
+    <translation lang="nl">Steenhouwers</translation>
+    <mapping tag="craft=stonemason"/>
+  </category>
+  <category title="Sun protections">
+    <translation lang="de">Sonnenschutz</translation>
+    <translation lang="es">Protección solar y toldos</translation>
+    <translation lang="fr">Protection solaire</translation>
+    <translation lang="it">Protezione solare e tende da sole</translation>
+    <translation lang="nl">Zonwering</translation>
+    <mapping tag="craft=Sun protection"/>
+  </category>
+  <category title="Sweeps">
+    <translation lang="de">Schornsteinfeger</translation>
+    <translation lang="es">Desatascos y deshollinadores</translation>
+    <translation lang="fr">Ramoneurs</translation>
+    <translation lang="it">Spazzacamini</translation>
+    <translation lang="nl">Schoorsteenvegers</translation>
+    <mapping tag="craft=sweep"/>
+  </category>
+  <category title="Tailors">
+    <translation lang="de">Schneider</translation>
+    <translation lang="es">Sastres</translation>
+    <translation lang="fr">Tailleurs</translation>
+    <translation lang="it">Sarti</translation>
+    <translation lang="nl">Kleermakers</translation>
+    <mapping tag="craft=tailor"/>
+  </category>
+  <category title="Tilers">
+    <translation lang="de">Fliesenleger</translation>
+    <translation lang="es">Alicatadores y soladores</translation>
+    <translation lang="fr">Carreleurs</translation>
+    <translation lang="it">Piastrellisti</translation>
+    <translation lang="nl">Tegelzetters</translation>
+    <mapping tag="craft=tiler"/>
+  </category>
+  <category title="Tinsmiths">
+    <translation lang="de">Spengler / Flaschner</translation>
+    <translation lang="es">Hojalateros</translation>
+    <translation lang="fr">Zingueurs / Ferblantiers</translation>
+    <translation lang="it">Lattonieri</translation>
+    <translation lang="nl">Blikslagers / Dakdekkers in metaal</translation>
+    <mapping tag="craft=tinsmith"/>
+  </category>
+  <category title="Upholsterers">
+    <translation lang="de">Raumausstatter / Polsterer</translation>
+    <translation lang="es">Tapiceros</translation>
+    <translation lang="fr">Routiers / Tapissiers</translation>
+    <translation lang="it">Tappezzieri</translation>
+    <translation lang="nl">Stoffeerders</translation>
+    <mapping tag="craft=upholsterer"/>
+  </category>
+  <category title="Watchmakers">
+    <translation lang="de">Uhrmacher</translation>
+    <translation lang="es">Relojeros</translation>
+    <translation lang="fr">Horlogers</translation>
+    <translation lang="it">Orologiai</translation>
+    <translation lang="nl">Horlogemakers</translation>
+    <mapping tag="craft=watchmaker"/>
+  </category>
+</category>
+<!-- Emergency -->
+<category title="Emergency">
+  <translation lang="de">Notfall</translation>
+  <translation lang="es">Emergencia</translation>
+  <translation lang="fr">Urgence</translation>
+  <translation lang="it">Emergenza</translation>
+  <translation lang="nl">Noodgeval</translation>
+  <category title="Ambulance stations">
+    <translation lang="de">Rettungswachen</translation>
+    <translation lang="es">Estaciones de ambulancias</translation>
+    <translation lang="fr">Postes d'ambulances</translation>
+    <translation lang="it">Postazioni di ambulanze</translation>
+    <translation lang="nl">Ambulanceposten</translation>
+    <mapping tag="emergency=ambulance_station"/>
+  </category>
+  <category title="Fire extinguishers">
+    <translation lang="de">Feuerlöscher</translation>
+    <translation lang="es">Extintores de incendios</translation>
+    <translation lang="fr">Extincteurs</translation>
+    <translation lang="it">Estintori</translation>
+    <translation lang="nl">Brandblussers</translation>
+    <mapping tag="emergency=fire_extinguisher"/>
+  </category>
+  <category title="Fire flappers">
+    <translation lang="de">Feuerpaddel / Löschpeitschen</translation>
+    <translation lang="es">Batefuegos</translation>
+    <translation lang="fr">Battes à feu</translation>
+    <translation lang="it">Battifuoco</translation>
+    <translation lang="nl">Bluszweep / Vuurflappers</translation>
+    <mapping tag="emergency=fire_flapper"/>
+  </category>
+  <category title="Fire hoses">
+    <translation lang="de">Feuerwehrschläuche</translation>
+    <translation lang="es">Mangueras contra incendios</translation>
+    <translation lang="fr">Tuyaux d'incendie</translation>
+    <translation lang="it">Manichette antincendio</translation>
+    <translation lang="nl">Brandslangen</translation>
+    <mapping tag="emergency=Fire hose"/>
+  </category>
+  <category title="Fire hydrants">
+    <translation lang="de">Überflur- / Unterflurhydranten</translation>
+    <translation lang="es">Hidrantes de incendios</translation>
+    <translation lang="fr">Bouches d'incendie</translation>
+    <translation lang="it">Idranti antincendio</translation>
+    <translation lang="nl">Brandkranen</translation>
+    <mapping tag="emergency=fire_hydrant"/>
+  </category>
+  <category title="Emergency phones">
+    <translation lang="de">Notrufsäulen</translation>
+    <translation lang="es">Teléfonos de emergencia</translation>
+    <translation lang="fr">Téléphones d'urgence</translation>
+    <translation lang="it">Telefoni di emergenza</translation>
+    <translation lang="nl">Noodtelefoons</translation>
+    <mapping tag="emergency=phone"/>
+  </category>
+  <category title="SES stations">
+    <translation lang="de">SES-Stationen (Katastrophenschutz)</translation>
+    <translation lang="es">Estaciones SES (Emergencias / Protección Civil)</translation>
+    <translation lang="fr">Postes SES (Secours)</translation>
+    <translation lang="it">Stazioni SES (Protezione civile)</translation>
+    <translation lang="nl">SES-stations</translation>
+    <mapping tag="emergency=ses_station"/>
+  </category>
+  <category title="Sirens">
+    <translation lang="de">Sirenen</translation>
+    <translation lang="es">Sirenas de alarma</translation>
+    <translation lang="fr">Sirènes d'alarme</translation>
+    <translation lang="it">Sirene d'allarme</translation>
+    <translation lang="nl">Sirenes</translation>
+    <mapping tag="emergency=siren"/>
+  </category>
+</category>
+<!-- Geological -->
+<category title="Geological">
+  <translation lang="de">Geologisch</translation>
+  <translation lang="es">Geológico</translation>
+  <translation lang="fr">Géologique</translation>
+  <translation lang="it">Geologico</translation>
+  <translation lang="nl">Geologisch</translation>
+  <category title="Outcrops">
+    <translation lang="de">Geologische Aufschlüsse</translation>
+    <translation lang="es">Afloramientos rocosos</translation>
+    <translation lang="fr">Affleurements</translation>
+    <translation lang="it">Affioramenti rocciosi</translation>
+    <translation lang="nl">Dagzoom / Ontsluitingen</translation>
+    <mapping tag="geological=outcrop"/>
+  </category>
+  <category title="Paleontological sites">
+    <translation lang="de">Paläontologische Fundstellen</translation>
+    <translation lang="es">Yacimientos paleontológicos</translation>
+    <translation lang="fr">Sites paléontologiques</translation>
+    <translation lang="it">Siti paleontologici</translation>
+    <translation lang="nl">Paleontologische vindplaatsen</translation>
+    <mapping tag="geological=paleontological"/>
+  </category>
+</category>
+<!-- Highway -->
+<category title="Highway">
+  <translation lang="de">Straßen / Verkehr</translation>
+  <translation lang="es">Vías y tráfico</translation>
+  <translation lang="fr">Routier</translation>
+  <translation lang="it">Strade e traffico</translation>
+  <translation lang="nl">Wegen en verkeer</translation>
+  <category title="Bus stops">
+    <translation lang="de">Bushaltestellen</translation>
+    <translation lang="es">Paradas de autobús</translation>
+    <translation lang="fr">Arrêts de bus</translation>
+    <translation lang="it">Fermate dell'autobus</translation>
+    <translation lang="nl">Bushaltes</translation>
+    <mapping tag="highway=bus_stop"/>
+  </category>
+
+<category title="Rest areas">
+  <translation lang="de">Rastplätze</translation>
+  <translation lang="es">Áreas de descanso</translation>
+  <translation lang="fr">Aires de repos</translation>
+  <translation lang="it">Aree di sosta</translation>
+  <translation lang="nl">Rustplaatsen</translation>
+  <mapping tag="highway=rest_area"/>
+</category>
+<category title="Speed cameras">
+  <translation lang="de">Blitzer / Geschwindigkeitsmessanlagen</translation>
+  <translation lang="es">Radares de velocidad</translation>
+  <translation lang="fr">Radars de vitesse</translation>
+  <translation lang="it">Autovelox / Rilevatori di velocità</translation>
+  <translation lang="nl">Flitspalen</translation>
+  <mapping tag="highway=speed_camera"/>
+</category>
+</category>
+<!-- Historic -->
+<category title="Historic">
+  <translation lang="de">Historisch</translation>
+  <translation lang="es">Histórico</translation>
+  <translation lang="fr">Historique</translation>
+  <translation lang="it">Storico</translation>
+  <translation lang="nl">Historisch</translation>
+  <category title="Archaeological sites">
+    <translation lang="de">Archäologische Fundstätten</translation>
+    <translation lang="es">Yacimientos arqueológicos</translation>
+    <translation lang="fr">Sites archéologiques</translation>
+    <translation lang="it">Siti archeologici</translation>
+    <translation lang="nl">Archeologische vindplaatsen</translation>
+    <mapping tag="historic=archaeological_site"/>
+  </category>
+  <category title="Battlefields">
+    <translation lang="de">Schlachtfelder</translation>
+    <translation lang="es">Campos de batalla</translation>
+    <translation lang="fr">Champs de bataille</translation>
+    <translation lang="it">Campi di battaglia</translation>
+    <translation lang="nl">Slagvelden</translation>
+    <mapping tag="historic=battlefield"/>
+  </category>
+  <category title="Boundary stones">
+    <translation lang="de">Grenzsteine</translation>
+    <translation lang="es">Mojones / Piedras de límite</translation>
+    <translation lang="fr">Bornes frontières / Bornes milliaires</translation>
+    <translation lang="it">Cippi confinari</translation>
+    <translation lang="nl">Grenspalen</translation>
+    <mapping tag="historic=Boundary stone"/>
+  </category>
+  <category title="Castles">
+    <translation lang="de">Burgen und Schlösser</translation>
+    <translation lang="es">Castillos y palacios</translation>
+    <translation lang="fr">Châteaux</translation>
+    <translation lang="it">Castelli</translation>
+    <translation lang="nl">Kastelen</translation>
+    <mapping tag="historic=castle"/>
+  </category>
+  <category title="City gates">
+    <translation lang="de">Stadttore</translation>
+    <translation lang="es">Puertas de la ciudad</translation>
+    <translation lang="fr">Portes de ville</translation>
+    <translation lang="it">Porte cittadine</translation>
+    <translation lang="nl">Stadspoorten</translation>
+    <mapping tag="historic=city gate"/>
+  </category>
+  <category title="Forts">
+    <translation lang="de">Festungen / Forts</translation>
+    <translation lang="es">Fuertes y fortificaciones</translation>
+    <translation lang="fr">Forts</translation>
+    <translation lang="it">Forti / Fortezze</translation>
+    <translation lang="nl">Forten</translation>
+    <mapping tag="historic=fort"/>
+  </category>
+  <category title="Memorials">
+    <translation lang="de">Gedenkstätten / Denkmäler</translation>
+    <translation lang="es">Monumentos conmemorativos / Placas</translation>
+    <translation lang="fr">Mémoriaux</translation>
+    <translation lang="it">Monumenti commemorativi</translation>
+    <translation lang="nl">Gedenktekens / Monumenten</translation>
+    <mapping tag="historic=memorial"/>
+  </category>
+  <category title="Monuments">
+    <translation lang="de">Historische Denkmäler</translation>
+    <translation lang="es">Monumentos históricos</translation>
+    <translation lang="fr">Monuments</translation>
+    <translation lang="it">Monumenti</translation>
+    <translation lang="nl">Monumenten</translation>
+    <mapping tag="historic=monument"/>
+  </category>
+  <category title="Ruins">
+    <translation lang="de">Ruinen</translation>
+    <translation lang="es">Ruinas</translation>
+    <translation lang="fr">Ruines</translation>
+    <translation lang="it">Rovine</translation>
+    <translation lang="nl">Ruïnes</translation>
+    <mapping tag="historic=ruins"/>
+  </category>
+  <category title="Rune stones">
+    <translation lang="de">Runensteine</translation>
+    <translation lang="es">Piedras rúnicas</translation>
+    <translation lang="fr">Pierres runiques</translation>
+    <translation lang="it">Pietre runiche</translation>
+    <translation lang="nl">Runenstenen</translation>
+    <mapping tag="historic=runes_stone"/>
+  </category>
+  <category title="Wayside crosses">
+    <translation lang="de">Wegkreuze</translation>
+    <translation lang="es">Cruces de término / Cruceros</translation>
+    <translation lang="fr">Croix de chemin</translation>
+    <translation lang="it">Croci viarie</translation>
+    <translation lang="nl">Wegkruisen</translation>
+    <mapping tag="historic=wayside_cross"/>
+  </category>
+  <category title="Wayside shrines">
+    <translation lang="de">Bildstöcke / Marterln / Wegkapellen</translation>
+    <translation lang="es">Hornacinas / Peirones / Templete de camino</translation>
+    <translation lang="fr">Oratoires</translation>
+    <translation lang="it">Madonnine / Capitelli votivi</translation>
+    <translation lang="nl">Veldkapelletjes / Wegkapellen</translation>
+    <mapping tag="historic=wayside_shrine"/>
+  </category>
+  <category title="Wrecks">
+    <translation lang="de">Wracks</translation>
+    <translation lang="es">Pecios / Naufragios</translation>
+    <translation lang="fr">Épaves</translation>
+    <translation lang="it">Relitti</translation>
+    <translation lang="nl">Wrakken</translation>
+    <mapping tag="historic=wreck"/>
+  </category>
+</category>
+<!-- Leisure -->
+<category title="Leisure">
+  <translation lang="de">Freizeit</translation>
+  <translation lang="es">Ocio y tiempo libre</translation>
+  <translation lang="fr">Loisirs</translation>
+  <translation lang="it">Tempo libero</translation>
+  <translation lang="nl">Recreatie</translation>
+<category title="Dancing places">
+  <translation lang="de">Tanzlokale / Diskotheken / Tanzflächen</translation>
+  <translation lang="es">Salones de baile / Zonas de baile</translation>
+  <translation lang="fr">Lieux de danse</translation>
+  <translation lang="it">Sale da ballo</translation>
+  <translation lang="nl">Dansgelegenheden</translation>
+  <mapping tag="leisure=dance"/>
+</category>
+<category title="Dog parks">
+  <translation lang="de">Hundefreilaufflächen / Hundeparks</translation>
+  <translation lang="es">Zonas para perros / Parques caninos</translation>
+  <translation lang="fr">Parcs à chiens</translation>
+  <translation lang="it">Aree di sosta per cani / Parchi per cani</translation>
+  <translation lang="nl">Hondenuitlaatplaatsen / Hondenparken</translation>
+  <mapping tag="leisure=dog_park"/>
+</category>
+<category title="Fishing sites">
+  <translation lang="de">Angelplätze / Angelgewässer</translation>
+  <translation lang="es">Zonas de pesca</translation>
+  <translation lang="fr">Zones de pêche</translation>
+  <translation lang="it">Aree di pesca</translation>
+  <translation lang="nl">Visstekken</translation>
+  <mapping tag="leisure=fishing"/>
+</category>
+<category title="Gardens">
+  <translation lang="de">Gärten / Parkgärten</translation>
+  <translation lang="es">Jardines</translation>
+  <translation lang="fr">Jardins</translation>
+  <translation lang="it">Giardini</translation>
+  <translation lang="nl">Tuinen</translation>
+  <mapping tag="leisure=garden"/>
+</category>
+<category title="Golf courses">
+  <translation lang="de">Golfplätze</translation>
+  <translation lang="es">Campos de golf</translation>
+  <translation lang="fr">Parcours de golf</translation>
+  <translation lang="it">Campi da golf</translation>
+  <translation lang="nl">Golfbanen</translation>
+  <mapping tag="leisure=golf_course"/>
+</category>
+<category title="Ice rinks">
+  <translation lang="de">Eisbahnen / Eislaufplätze</translation>
+  <translation lang="es">Pistas de patinaje sobre hielo</translation>
+  <translation lang="fr">Patinoires</translation>
+  <translation lang="it">Piste di pattinaggio su ghiaccio</translation>
+  <translation lang="nl">IJsbanen</translation>
+  <mapping tag="leisure=ice_rink"/>
+</category>
+<category title="Marinas">
+  <translation lang="de">Yachthäfen</translation>
+  <translation lang="es">Puertos deportivos</translation>
+  <translation lang="fr">Ports de plaisance</translation>
+  <translation lang="it">Porti turistici / Marina</translation>
+  <translation lang="nl">Jachthavens</translation>
+  <mapping tag="leisure=marina"/>
+</category>
+<category title="Miniature golf places">
+  <translation lang="de">Minigolfplätze</translation>
+  <translation lang="es">Minigolf</translation>
+  <translation lang="fr">Mini-golfs</translation>
+  <translation lang="it">Minigolf</translation>
+  <translation lang="nl">Midgetgolfbanen</translation>
+  <mapping tag="leisure=miniature_golf"/>
+</category>
+<category title="Nature reserves">
+  <translation lang="de">Naturschutzgebiete</translation>
+  <translation lang="es">Reservas naturales</translation>
+  <translation lang="fr">Réserves naturelles</translation>
+  <translation lang="it">Riserve naturali</translation>
+  <translation lang="nl">Natuurreservaten</translation>
+  <mapping tag="leisure=nature_reserve"/>
+</category>
+<category title="Parks">
+  <translation lang="de">Parks / Grünanlagen</translation>
+  <translation lang="es">Parques</translation>
+  <translation lang="fr">Parcs</translation>
+  <translation lang="it">Parchi</translation>
+  <translation lang="nl">Parken</translation>
+  <mapping tag="leisure=park"/>
+</category>
+<category title="Pitches">
+  <translation lang="de">Sportplätze / Spielfelder</translation>
+  <translation lang="es">Campos de deporte / Canchas</translation>
+  <translation lang="fr">Terrains de sports</translation>
+  <translation lang="it">Campi sportivi</translation>
+  <translation lang="nl">Sportvelden</translation>
+  <mapping tag="leisure=pitch"/>
+</category>
+<category title="Playgrounds">
+  <translation lang="de">Spielplätze</translation>
+  <translation lang="es">Parques infantiles / Áreas de juegos</translation>
+  <translation lang="fr">Aires de jeux</translation>
+  <translation lang="it">Aree giochi</translation>
+  <translation lang="nl">Speeltuinen</translation>
+  <mapping tag="leisure=playground"/>
+</category>
+<category title="Slipways">
+  <translation lang="de">Bootsslipanlagen / Slippanlagen</translation>
+  <translation lang="es">Rampas de botadura</translation>
+  <translation lang="fr">Cales de mise à l'eau</translation>
+  <translation lang="it">Scivoli alaggio</translation>
+  <translation lang="nl">Hellingbanen / Slipways</translation>
+  <mapping tag="leisure=slipway"/>
+</category>
+<category title="Sports centres">
+  <translation lang="de">Sportzentren / Sportstätten</translation>
+  <translation lang="es">Polideportivos / Centros deportivos</translation>
+  <translation lang="fr">Centres sportifs</translation>
+  <translation lang="it">Centri sportivi</translation>
+  <translation lang="nl">Sportcentra</translation>
+  <mapping tag="leisure=sports_centre"/>
+</category>
+<category title="Stadiums">
+  <translation lang="de">Stadien</translation>
+  <translation lang="es">Estadios</translation>
+  <translation lang="fr">Stades</translation>
+  <translation lang="it">Stadi</translation>
+  <translation lang="nl">Stadions</translation>
+  <mapping tag="leisure=stadium"/>
+</category>
+<category title="Swimming pools">
+  <translation lang="de">Schwimmbäder / Freibäder / Hallenbäder</translation>
+  <translation lang="es">Piscinas</translation>
+  <translation lang="fr">Piscines</translation>
+  <translation lang="it">Piscine</translation>
+  <translation lang="nl">Zwembaden</translation>
+  <mapping tag="leisure=swimming_pool"/>
+</category>
+<category title="Tracks">
+  <translation lang="de">Laufbahnen / Sportbahnen</translation>
+  <translation lang="es">Pistas de atletismo / Circuitos</translation>
+  <translation lang="fr">Pistes d'athlétisme</translation>
+  <translation lang="it">Piste di atletica</translation>
+  <translation lang="nl">Hardloopbanen / Hardlooppaden</translation>
+  <mapping tag="leisure=track"/>
+</category>
+<category title="Water parks">
+  <translation lang="de">Wasserparks / Erlebnisbäder</translation>
+  <translation lang="es">Parques acuáticos</translation>
+  <translation lang="fr">Parcs aquatiques</translation>
+  <translation lang="it">Parchi acquatici</translation>
+  <translation lang="nl">Waterparken</translation>
+  <mapping tag="leisure=water_park"/>
+</category>
+</category>
+<!-- Man Made -->
+<category title="Man Made">
+  <translation lang="de">Künstliche Anlagen / Bauwerke</translation>
+  <translation lang="es">Elementos artificiales / Obras</translation>
+  <translation lang="fr">Installations artificielles</translation>
+  <translation lang="it">Opere artificiali</translation>
+  <translation lang="nl">Door mens gemaakte objecten</translation>
+  <category title="Adits">
+    <translation lang="de">Stollen (Bergbau)</translation>
+    <translation lang="es">Galerías mineras / Bocaminas</translation>
+    <translation lang="fr">Galeries de mine</translation>
+    <translation lang="it">Gallerie minerarie / Cunicoli</translation>
+    <translation lang="nl">Mijngangen / Adits</translation>
+    <mapping tag="man_made=adit"/>
+  </category>
+  <category title="Beacons">
+    <translation lang="de">Baken / Feuerbaken / Landmarken</translation>
+    <translation lang="es">Balizas / Señales de navegación</translation>
+    <translation lang="fr">Balises</translation>
+    <translation lang="it">Bacini / Boe / Segnali</translation>
+    <translation lang="nl">Baken / Bakens</translation>
+    <mapping tag="man_made=beacon"/>
+  </category>
+  <category title="Chimneys">
+    <translation lang="de">Industrieschornsteine</translation>
+    <translation lang="es">Chimeneas industriales</translation>
+    <translation lang="fr">Cheminées d'usine</translation>
+    <translation lang="it">Cimiteri / Ciminiere</translation>
+    <translation lang="nl">Schoorstenen</translation>
+    <mapping tag="man_made=chimney"/>
+  </category>
+<category title="Lighthouses">
+  <translation lang="de">Leuchttürme</translation>
+  <translation lang="es">Faros</translation>
+  <translation lang="fr">Phares</translation>
+  <translation lang="it">Fari</translation>
+  <translation lang="nl">Vuurtorens</translation>
+  <mapping tag="man_made=lighthouse"/>
+</category>
+<category title="Mineshafts">
+  <translation lang="de">Tage- / Untertage-Minenschächte</translation>
+  <translation lang="es">Pozos de mina</translation>
+  <translation lang="fr">Puits de mine</translation>
+  <translation lang="it">Pozzi di miniera</translation>
+  <translation lang="nl">Mijnschachten</translation>
+  <mapping tag="man_made=mineshaft"/>
+</category>
+<category title="Petroleum wells">
+  <translation lang="de">Erdölförderanlagen / Ölpumpen</translation>
+  <translation lang="es">Pozos petrolíferos</translation>
+  <translation lang="fr">Puits de pétrole</translation>
+  <translation lang="it">Pozzi petroliferi</translation>
+  <translation lang="nl">Oliebronnen</translation>
+  <mapping tag="man_made=petroleum_well"/>
+</category>
+<category title="Covered water reservoirs">
+  <translation lang="de">Gedeckte Wasserspeicher / Hochbehälter</translation>
+  <translation lang="es">Depósitos de agua cubiertos</translation>
+  <translation lang="fr">Réservoirs d'eau couverts</translation>
+  <translation lang="it">Serbatoi d'acqua coperti</translation>
+  <translation lang="nl">Bedekte waterreservoirs</translation>
+  <mapping tag="man_made=reservoir_covered"/>
+</category>
+<category title="Survey points">
+  <translation lang="de">Vermessungspunkte / Triangulationspunkte</translation>
+  <translation lang="es">Puntos geodésicos / Vértices</translation>
+  <translation lang="fr">Points géodésiques / Bornes de triangulation</translation>
+  <translation lang="it">Punti geodetici / Trigonometrici</translation>
+  <translation lang="nl">Landmeetkundige punten</translation>
+  <mapping tag="man_made=survey_point"/>
+</category>
+<category title="Towers">
+  <translation lang="de">Türme</translation>
+  <translation lang="es">Torres</translation>
+  <translation lang="fr">Tours</translation>
+  <translation lang="it">Torri</translation>
+  <translation lang="nl">Torens</translation>
+  <mapping tag="man_made=tower"/>
+  <!-- OpenAndroMaps specific -->
+  <mapping tag="tower=communication"/>
+  <!-- OpenAndroMaps specific -->
+  <mapping tag="tower=observation"/>
+</category>
+<category title="Wastewater plants">
+  <translation lang="de">Kläranlagen</translation>
+  <translation lang="es">Depuradoras / Plantas de aguas residuales</translation>
+  <translation lang="fr">Stations d'épuration</translation>
+  <translation lang="it">Depuratori / Impianti di depurazione</translation>
+  <translation lang="nl">Rioleringswaterzuiveringsinstallaties</translation>
+  <mapping tag="man_made=wastewater_plant"/>
+</category>
+<category title="Watermills">
+  <translation lang="de">Wassermühlen</translation>
+  <translation lang="es">Molinos de agua</translation>
+  <translation lang="fr">Moulins à eau</translation>
+  <translation lang="it">Mulini ad acqua</translation>
+  <translation lang="nl">Watermolens</translation>
+  <mapping tag="man_made=watermill"/>
+</category>
+<category title="Water towers">
+  <translation lang="de">Wassertürme</translation>
+  <translation lang="es">Torres de agua / Pilaras</translation>
+  <translation lang="fr">Châteaux d'eau</translation>
+  <translation lang="it">Torri dell'acqua</translation>
+  <translation lang="nl">Watertorens</translation>
+  <mapping tag="man_made=water_tower"/>
+</category>
+<category title="Water works">
+  <translation lang="de">Wasserwerke</translation>
+  <translation lang="es">Obras hidráulicas / Plantas potabilizadoras</translation>
+  <translation lang="fr">Stations de traitement des eaux</translation>
+  <translation lang="it">Acquedotti / Impianti idrici</translation>
+  <translation lang="nl">Waterzuiveringsbedrijven / Waterwerken</translation>
+  <mapping tag="man_made=water_works"/>
+</category>
+<category title="Water well">
+  <translation lang="de">Brunnen / Wasserbohrungen</translation>
+  <translation lang="es">Pozos de agua</translation>
+  <translation lang="fr">Puits d'eau</translation>
+  <translation lang="it">Pozzi d'acqua</translation>
+  <translation lang="nl">Waterputten</translation>
+  <mapping tag="man_made=water_well"/>
+</category>
+<category title="Windmills">
+  <translation lang="de">Windmühlen</translation>
+  <translation lang="es">Molinos de viento</translation>
+  <translation lang="fr">Moulins à vent</translation>
+  <translation lang="it">Mulini a vento</translation>
+  <translation lang="nl">Windmolens</translation>
+  <mapping tag="man_made=windmill"/>
+  <!-- OpenAndroMaps specific -->
+  <mapping tag="tower=windmill"/>
+</category>
+<category title="Works">
+  <translation lang="de">Industrieanlagen / Fabrikanlagen</translation>
+  <translation lang="es">Instalaciones industriales / Fábricas</translation>
+  <translation lang="fr">Usines / Sites industriels</translation>
+  <translation lang="it">Stabilimenti industriali</translation>
+  <translation lang="nl">Fabrieken / Bedrijfsterreinen</translation>
+  <mapping tag="man_made=works"/>
+</category>
+</category>
+<!-- Military -->
+<category title="Military">
+  <translation lang="de">Militär</translation>
+  <translation lang="es">Militar</translation>
+  <translation lang="fr">Militaire</translation>
+  <translation lang="it">Militare</translation>
+  <translation lang="nl">Militair</translation>
+  <category title="Military Airfields">
+    <translation lang="de">Militärflugplätze</translation>
+    <translation lang="es">Aeródromos militares</translation>
+    <translation lang="fr">Aérodromes militaires</translation>
+    <translation lang="it">Aeroporti militari</translation>
+    <translation lang="nl">Militaire vliegvelden</translation>
+    <mapping tag="military=airfield"/>
+  </category>
+  <category title="Bunkers">
+    <translation lang="de">Bunker</translation>
+    <translation lang="es">Búnkeres</translation>
+    <translation lang="fr">Bunkers</translation>
+    <translation lang="it">Bunker</translation>
+    <translation lang="nl">Bunkers</translation>
+    <mapping tag="military=bunker"/>
+  </category>
+  <category title="Barracks">
+    <translation lang="de">Kasernen</translation>
+    <translation lang="es">Cuarteles</translation>
+    <translation lang="fr">Cernes / Casernes</translation>
+    <translation lang="it">Caserme</translation>
+    <translation lang="nl">Kazernes</translation>
+    <mapping tag="military=barrack"/>
+  </category>
+  <category title="Dangerous Areas">
+    <translation lang="de">Militärisches Sicherheits-/Gefahrengebiet</translation>
+    <translation lang="es">Zonas peligrosas militares</translation>
+    <translation lang="fr">Zones dangereuses militaires</translation>
+    <translation lang="it">Aree militari pericolose</translation>
+    <translation lang="nl">Militaire gevarenzones</translation>
+    <mapping tag="military=danger_area"/>
+  </category>
+  <category title="Naval bases">
+    <translation lang="de">Marinestützpunkte</translation>
+    <translation lang="es">Bases navales</translation>
+    <translation lang="fr">Bases navales</translation>
+    <translation lang="it">Basi navali</translation>
+    <translation lang="nl">Marinebases</translation>
+    <mapping tag="military=naval_base"/>
+  </category>
+  <category title="Firing / bombing ranges">
+    <translation lang="de">Truppenübungsplätze / Schießplätze</translation>
+    <translation lang="es">Campos de tiro y bombardeo</translation>
+    <translation lang="fr">Champs de tir / Zones d'entraînement militaire</translation>
+    <translation lang="it">Poligoni di tiro / Aree di addestramento</translation>
+    <translation lang="nl">Schietbanen / Oefenterreinen</translation>
+    <mapping tag="military=range"/>
+  </category>
+</category>
+<!-- Natural -->
+<category title="Natural">
+  <translation lang="de">Natur / Geografie</translation>
+  <translation lang="es">Naturaleza</translation>
+  <translation lang="fr">Nature</translation>
+  <translation lang="it">Natura</translation>
+  <translation lang="nl">Natuur</translation>
+  <category title="Peak">
+    <translation lang="de">Berggipfel</translation>
+    <translation lang="es">Cima / Pico</translation>
+    <translation lang="fr">Sommet</translation>
+    <translation lang="it">Cima / Picco</translation>
+    <translation lang="nl">Bergtop</translation>
+    <mapping tag="natural=peak"/>
+  </category>
+  <category title="Mountain pass">
+    <translation lang="de">Gebirgspass / Passhöhe</translation>
+    <translation lang="es">Puerto de montaña</translation>
+    <translation lang="fr">Col de montagne</translation>
+    <translation lang="it">Passo di montagna</translation>
+    <translation lang="nl">Bergpas</translation>
+    <mapping tag="mountain_pass=yes"/>
+  </category>
+  <category title="Volcano">
+    <translation lang="de">Vulkan</translation>
+    <translation lang="es">Volcán</translation>
+    <translation lang="fr">Volcan</translation>
+    <translation lang="it">Vulcano</translation>
+    <translation lang="nl">Vulkaan</translation>
+    <mapping tag="natural=volcano"/>
+  </category>
+  <category title="Geyser">
+    <translation lang="de">Geysir</translation>
+    <translation lang="es">Géiser</translation>
+    <translation lang="fr">Geyser</translation>
+    <translation lang="it">Geyser</translation>
+    <translation lang="nl">Geiser</translation>
+    <mapping tag="natural=geyser"/>
+  </category>
+  <category title="Spring">
+    <translation lang="de">Quelle / Mineralquelle</translation>
+    <translation lang="es">Manantial / Fuente natural</translation>
+    <translation lang="fr">Source</translation>
+    <translation lang="it">Sorgente / Fonte</translation>
+    <translation lang="nl">Bron / Waterbron</translation>
+    <mapping tag="natural=spring"/>
+  </category>
+</category>
+<!-- Office -->
+<category title="Office">
+  <translation lang="de">Büros / Verwaltung</translation>
+  <translation lang="es">Oficinas</translation>
+  <translation lang="fr">Bureaux</translation>
+  <translation lang="it">Uffici</translation>
+  <translation lang="nl">Kantoren</translation>
+<category title="Administrative">
+  <translation lang="de">Verwaltungsbüros</translation>
+  <translation lang="es">Oficinas administrativas</translation>
+  <translation lang="fr">Bureaux administratifs</translation>
+  <translation lang="it">Uffici amministrativi</translation>
+  <translation lang="nl">Administratieve kantoren</translation>
+  <mapping tag="office=administrative"/>
+</category>
+
+<category title="Government">
+  <translation lang="de">Behörden / Ämter</translation>
+  <translation lang="es">Oficinas gubernamentales / Organismos públicos</translation>
+  <translation lang="fr">Services gouvernementaux / Administrations</translation>
+  <translation lang="it">Uffici governativi / Pubblica amministrazione</translation>
+  <translation lang="nl">Overheid / Overheidsinstanties</translation>
+  <mapping tag="office=government"/>
+</category>
+
+<category title="Travel agents">
+  <translation lang="de">Reisebüros</translation>
+  <translation lang="es">Agencias de viajes</translation>
+  <translation lang="fr">Agences de voyages</translation>
+  <translation lang="it">Agenzie di viaggio</translation>
+  <translation lang="nl">Reisbureaus</translation>
+  <mapping tag="office=travel_agent"/>
+</category>
+</category>
+<!-- Places / added OAM -->
+<category title="Places">
+  <translation lang="de">Orte / Siedlungen</translation>
+  <translation lang="es">Lugares y asentamientos</translation>
+  <translation lang="fr">Lieux / Localités</translation>
+  <translation lang="it">Località / Insediamenti</translation>
+  <translation lang="nl">Plaatsen</translation>
+  <category title="Cities">
+    <translation lang="de">Großstädte</translation>
+    <translation lang="es">Ciudades</translation>
+    <translation lang="fr">Villes</translation>
+    <translation lang="it">Città</translation>
+    <translation lang="nl">Steden</translation>
+    <mapping tag="place=city"/>
+  </category>
+  <category title="Towns">
+    <translation lang="de">Städte / Ortschaften / Stadtteile</translation>
+    <translation lang="es">Pueblos / Barrios / Zonas urbanas</translation>
+    <translation lang="fr">Villes / Banlieues / Quartiers</translation>
+    <translation lang="it">Centri abitati / Quartieri / sobborghi</translation>
+    <translation lang="nl">Steden / Buitenwijken / Buurten</translation>
+    <mapping tag="place=town"/>
+    <mapping tag="place=suburb"/>
+    <mapping tag="place=neighbourhood"/>
+    <mapping tag="place=neighborhood"/>
+  </category>
+  <category title="Villages">
+    <translation lang="de">Dörfer</translation>
+    <translation lang="es">Aldeas / Pueblos pequeños</translation>
+    <translation lang="fr">Villages</translation>
+    <translation lang="it">Villaggi / Paesi</translation>
+    <translation lang="nl">Dorpen</translation>
+    <mapping tag="place=village"/>
+  </category>
+  <category title="Hamlets">
+    <translation lang="de">Weiler / Anwesen</translation>
+    <translation lang="es">Caseríos / Pequeños núcleos</translation>
+    <translation lang="fr">Hameaux</translation>
+    <translation lang="it">Frazioni / Borghi rurali</translation>
+    <translation lang="nl">Gehuchten</translation>
+    <mapping tag="place=hamlet"/>
+  </category>
+  <category title="Isolated dwellings">
+    <translation lang="de">Einzelgehöfte / Einsiedeleien</translation>
+    <translation lang="es">Viviendas aisladas / Granjas</translation>
+    <translation lang="fr">Habitations isolées / Fermes</translation>
+    <translation lang="it">Case sparse / Fattorie</translation>
+    <translation lang="nl">Alleenstaande woningen / Boerderijen</translation>
+    <mapping tag="place=isolated_dwelling"/>
+    <mapping tag="place=farm"/>
+  </category>
+</category>
+<!-- Power -->
+<!-- Public Transport -->
+<category title="Public Transport">
+  <translation lang="de">Öffentlicher Nahverkehr</translation>
+  <translation lang="es">Transporte público</translation>
+  <translation lang="fr">Transports en commun</translation>
+  <translation lang="it">Trasporto pubblico</translation>
+  <translation lang="nl">Openbaar vervoer</translation>
+  <category title="Platforms">
+    <translation lang="de">Bahnsteige / Haltestellenbereiche</translation>
+    <translation lang="es">Andenes / Plataformas</translation>
+    <translation lang="fr">Quais</translation>
+    <translation lang="it">Banchine / Piattaforme</translation>
+    <translation lang="nl">Perrons</translation>
+    <mapping tag="public_transport=platform"/>
+  </category>
+  <category title="Stations">
+    <translation lang="de">Verkehrsstationen / Bahnhöfe</translation>
+    <translation lang="es">Estaciones</translation>
+    <translation lang="fr">Gares / Stations</translation>
+    <translation lang="it">Stazioni</translation>
+    <translation lang="nl">Stations</translation>
+    <mapping tag="public_transport=station"/>
+  </category>
+  <category title="Stop positions">
+    <translation lang="de">Haltepunkte</translation>
+    <translation lang="es">Posiciones de parada</translation>
+    <translation lang="fr">Positions d'arrêt</translation>
+    <translation lang="it">Posizioni di fermata</translation>
+    <translation lang="nl">Halteposities</translation>
+    <mapping tag="public_transport=stop_position"/>
+  </category>
+</category>
+<!-- Railway -->
+<!-- TODO -->
+<!-- Route -->
+<!-- Shop -->
+<!-- TODO This should be cleared up further -->
+<category title="Shop">
+  <translation lang="de">Geschäfte / Einkaufen</translation>
+  <translation lang="es">Comercios y tiendas</translation>
+  <translation lang="fr">Magasins / Commerces</translation>
+  <translation lang="it">Negozi e attività commerciali</translation>
+  <translation lang="nl">Winkels</translation>
+  <category title="Alcohol">
+    <translation lang="de">Spirituosenfachgeschäfte</translation>
+    <translation lang="es">Tiendas de bebidas alcohólicas / Licores</translation>
+    <translation lang="fr">Magasins de spiritueux / Cave à vin</translation>
+    <translation lang="it">Enoteca / Liquori</translation>
+    <translation lang="nl">Slijterijen</translation>
+    <mapping tag="shop=alcohol"/>
+  </category>
+  <category title="Anime">
+    <translation lang="de">Anime-Shops / Manga-Läden</translation>
+    <translation lang="es">Tiendas de anime y manga</translation>
+    <translation lang="fr">Boutiques d'animé et manga</translation>
+    <translation lang="it">Negozi di anime e manga</translation>
+    <mapping tag="shop=anime"/>
+  </category>
+  <category title="Baby goods">
+    <translation lang="de">Babybedarf</translation>
+    <translation lang="es">Artículos para bebés</translation>
+    <translation lang="fr">Articles pour bébés</translation>
+    <translation lang="it">Articoli per neonati</translation>
+    <translation lang="nl">Babyartikelen</translation>
+    <mapping tag="shop=baby_goods"/>
+  </category>
+  <category title="Bakeries">
+    <translation lang="de">Bäckereien</translation>
+    <translation lang="es">Panaderías</translation>
+    <translation lang="fr">Boulangeries</translation>
+    <translation lang="it">Panifici / Panetterie</translation>
+    <translation lang="nl">Bakkerijen</translation>
+    <mapping tag="shop=bakery"/>
+  </category>
+  <category title="Bathroom furnishing">
+    <translation lang="de">Badezimmereinrichtung / Badausstattung</translation>
+    <translation lang="es">Muebles y accesorios de baño</translation>
+    <translation lang="fr">Équipement de salle de bains</translation>
+    <translation lang="it">Arredo bagno</translation>
+    <translation lang="nl">Badkamerinrichting</translation>
+    <mapping tag="shop=bathroom_furnishing"/>
+  </category>
+  <category title="Beauty">
+    <translation lang="de">Kosmetikstudios / Parfümerien</translation>
+    <translation lang="es">Estética / Belleza / Perfumerías</translation>
+    <translation lang="fr">Instituts de beauté / Parfumeries</translation>
+    <translation lang="it">Estetista / Profumerie</translation>
+    <translation lang="nl">Schoonheidssalons / Parfumerieën</translation>
+    <mapping tag="shop=beauty"/>
+  </category>
+  <category title="Beds">
+    <translation lang="de">Bettenfachgeschäfte</translation>
+    <translation lang="es">Colchonerías / Tiendas de camas</translation>
+    <translation lang="fr">Literie</translation>
+    <translation lang="it">Negozi di letti e materassi</translation>
+    <translation lang="nl">Beddenzaken</translation>
+    <mapping tag="shop=bed"/>
+  </category>
+  <category title="Beverages">
+    <translation lang="de">Getränkemärkte</translation>
+    <translation lang="es">Bebidas / Distribuidores de bebidas</translation>
+    <translation lang="fr">Magasins de boissons</translation>
+    <translation lang="it">Negozio di bevande</translation>
+    <translation lang="nl">Drankenhandels</translation>
+    <mapping tag="shop=beverages"/>
+  </category>
+  <category title="Bicycles">
+    <translation lang="de">Fahrradgeschäfte</translation>
+    <translation lang="es">Tiendas de bicicletas</translation>
+    <translation lang="fr">Magasins de vélos</translation>
+    <translation lang="it">Negozi di biciclette</translation>
+    <translation lang="nl">Fietsenwinkels</translation>
+    <mapping tag="shop=bicycle"/>
+  </category>
+  <category title="Books">
+    <translation lang="de">Buchhandlungen</translation>
+    <translation lang="es">Librerías</translation>
+    <translation lang="fr">Librairies</translation>
+    <translation lang="it">Librerie</translation>
+    <translation lang="nl">Boekenwinkels</translation>
+    <mapping tag="shop=books"/>
+  </category>
+  <category title="Boutiques">
+    <translation lang="de">Boutiquen</translation>
+    <translation lang="es">Boutiques</translation>
+    <translation lang="fr">Boutiques</translation>
+    <translation lang="it">Boutique / Negozi di abbigliamento firmato</translation>
+    <translation lang="nl">Boetieks</translation>
+    <mapping tag="shop=boutique"/>
+  </category>
+  <category title="Butchers">
+    <translation lang="de">Metzgereien / Fleischer</translation>
+    <translation lang="es">Carnicerías</translation>
+    <translation lang="fr">Boucheries</translation>
+    <translation lang="it">Macellerie</translation>
+    <translation lang="nl">Slagerijen</translation>
+    <mapping tag="shop=butcher"/>
+  </category>
+  <category title="Cars">
+    <translation lang="de">Autohäuser</translation>
+    <translation lang="es">Concesionarios de automóviles</translation>
+    <translation lang="fr">Concessionnaires automobiles</translation>
+    <translation lang="it">Concessionari auto</translation>
+    <translation lang="nl">Autodealers</translation>
+    <mapping tag="shop=car"/>
+  </category>
+  <category title="Car repairs">
+    <translation lang="de">Autowerkstätten</translation>
+    <translation lang="es">Talleres mecánicos / Reparación de autos</translation>
+    <translation lang="fr">Garages / Réparation automobile</translation>
+    <translation lang="it">Officine meccaniche auto</translation>
+    <translation lang="nl">Autoreparatiewerkplaatsen</translation>
+    <mapping tag="shop=car_repair"/>
+  </category>
+  <category title="Car parts">
+    <translation lang="de">Autoteile / KFZ-Zubehör</translation>
+    <translation lang="es">Recambios y accesorios para automóviles</translation>
+    <translation lang="fr">Pièces détachées automobiles</translation>
+    <translation lang="it">Ricambi auto</translation>
+    <translation lang="nl">Auto-onderdelen</translation>
+    <mapping tag="shop=car_parts"/>
+  </category>
+  <category title="Carpets">
+    <translation lang="de">Teppichgeschäfte</translation>
+    <translation lang="es">Tiendas de alfombras</translation>
+    <translation lang="fr">Magasins de tapis</translation>
+    <translation lang="it">Negozi di tappeti</translation>
+    <translation lang="nl">Tapijtwinkels</translation>
+    <mapping tag="shop=carpet"/>
+  </category>
+  <category title="Charity">
+    <translation lang="de">Sozialkaufhäuser / Wohlfahrtsläden</translation>
+    <translation lang="es">Tiendas benéficas / Rastrillos solidarios</translation>
+    <translation lang="fr">Magasins caritatifs / Friperies solidaires</translation>
+    <translation lang="it">Negozi di beneficenza</translation>
+    <translation lang="nl">Liefdadigheidswinkels / Kringloop</translation>
+    <mapping tag="shop=charity"/>
+  </category>
+  <category title="Chemists">
+    <translation lang="de">Drogerien</translation>
+    <translation lang="es">Droguerías / Parafarmacias</translation>
+    <translation lang="fr">Drogueries / Parapharmacies</translation>
+    <translation lang="it">Drogherie / Profumerie / Articoli per la casa</translation>
+    <translation lang="nl">Drogisterijen</translation>
+    <mapping tag="shop=chemist"/>
+    <mapping tag="shop=drugstore"/>
+  </category>
+  <category title="Clothes">
+    <translation lang="de">Bekleidungsgeschäfte / Textilien</translation>
+    <translation lang="es">Tiendas de ropa</translation>
+    <translation lang="fr">Magasins de vêtements</translation>
+    <translation lang="it">Negozi di abbigliamento</translation>
+    <translation lang="nl">Kledingwinkels</translation>
+    <mapping tag="shop=clothes"/>
+  </category>
+  <category title="Computers">
+    <translation lang="de">Computerläden / IT-Fachgeschäfte</translation>
+    <translation lang="es">Tiendas de informática y ordenadores</translation>
+    <translation lang="fr">Magasins d'informatique</translation>
+    <translation lang="it">Negozi di computer e informatica</translation>
+    <translation lang="nl">Computerwinkels</translation>
+    <mapping tag="shop=computer"/>
+  </category>
+  <category title="Confectionery shops">
+    <translation lang="de">Konditoreien / Süßwarengeschäfte</translation>
+    <translation lang="es">Confiterías y golosinas</translation>
+    <translation lang="fr">Confiseries</translation>
+    <translation lang="it">Pasticcerie / Confetterie</translation>
+    <translation lang="nl">Banketbakkerijen / Snoepwinkels</translation>
+    <mapping tag="shop=confectionery"/>
+  </category>
+  <category title="Convenience">
+    <translation lang="de">Kioske / Tante-Emma-Läden / Minimärkte</translation>
+    <translation lang="es">Tiendas de conveniencia / ultramarinos</translation>
+    <translation lang="fr">Supérettes / Épiceries de quartier</translation>
+    <translation lang="it">Alimentari / Minimarket</translation>
+    <translation lang="nl">Avondwinkels / Buurtwinkels</translation>
+    <mapping tag="shop=convenience"/>
+  </category>
+  <category title="Copyshops">
+    <translation lang="de">Copy-Shops / Copyshops</translation>
+    <translation lang="es">Copisterías / Tiendas de fotocopias</translation>
+    <translation lang="fr">Magasins de photocopies / Reprographie</translation>
+    <translation lang="it">Copisterie</translation>
+    <translation lang="nl">Copyshops / Kopieerwinkels</translation>
+    <mapping tag="shop=copyshop"/>
+  </category>
+  <category title="Curtains">
+    <translation lang="de">Gardinengeschäfte</translation>
+    <translation lang="es">Tiendas de cortinas</translation>
+    <translation lang="fr">Magasins de rideaux</translation>
+    <translation lang="it">Negozi di tende</translation>
+    <translation lang="nl">Gordijnenwinkels</translation>
+    <mapping tag="shop=curtain"/>
+  </category>
+  <category title="Delis">
+    <translation lang="de">Feinkostläden</translation>
+    <translation lang="es">Ultramarinos finos / Delicatessen</translation>
+    <translation lang="fr">Épiceries fines</translation>
+    <translation lang="it">Gastronomie / Prodotti tipici</translation>
+    <translation lang="nl">Delicatessenwinkels</translation>
+    <mapping tag="shop=deli"/>
+  </category>
+  <category title="Department stores">
+    <translation lang="de">Kaufhäuser</translation>
+    <translation lang="es">Grandes almacenes</translation>
+    <translation lang="fr">Grands magasins</translation>
+    <translation lang="it">Magazzini generali / Grandi magazzini</translation>
+    <translation lang="nl">Warenhuizen</translation>
+    <mapping tag="shop=department_store"/>
+  </category>
+  <category title="Dives">
+    <translation lang="de">Tauchshops / Tauchsportgeschäfte</translation>
+    <translation lang="es">Tiendas de submarinismo y buceo</translation>
+    <translation lang="fr">Magasins de plongée</translation>
+    <translation lang="it">Negozi di subacquea</translation>
+    <translation lang="nl">Duikwinkels</translation>
+    <mapping tag="shop=dive"/>
+  </category>
+  <category title="Dry cleaning">
+    <translation lang="de">Reinigung / Textilreinigung</translation>
+    <translation lang="es">Tintorerías</translation>
+    <translation lang="fr">Pressings / Nettoyage à sec</translation>
+    <translation lang="it">Lavanderie a secco</translation>
+    <translation lang="nl">Stomerijen</translation>
+    <mapping tag="shop=dry_cleaning"/>
+  </category>
+  <category title="DIY">
+    <translation lang="de">Baumärkte / Handwerkerbedarf</translation>
+    <translation lang="es">Bricolaje y ferretería / Suministros</translation>
+    <translation lang="fr">Bricolage / Matériaux</translation>
+    <translation lang="it">Bricolage / Fai da te / Forniture edili</translation>
+    <translation lang="nl">Doe-het-zelf / Bouwmarkten</translation>
+    <mapping tag="shop=doityourself"/>
+    <mapping tag="shop=trade"/>
+  </category>
+  <category title="Electronics">
+    <translation lang="de">Elektronikfachmärkte / Elektrogeschäfte</translation>
+    <translation lang="es">Tiendas de electrónica y electrodomésticos</translation>
+    <translation lang="fr">Magasins d'électronique</translation>
+    <translation lang="it">Negozi di elettronica</translation>
+    <translation lang="nl">Elektronicawinkels</translation>
+    <mapping tag="shop=electronics"/>
+  </category>
+  <category title="Erotic">
+    <translation lang="de">Erotikshops / Sexshops</translation>
+    <translation lang="es">Sexshops / Tiendas eróticas</translation>
+    <translation lang="fr">Sexshops / Boutiques érotiques</translation>
+    <translation lang="it">Sexy shop</translation>
+    <translation lang="nl">Erotische winkels / Sexshops</translation>
+    <mapping tag="shop=erotic"/>
+  </category>
+  <category title="Fabric">
+    <translation lang="de">Stoffgeschäfte / Kurzwaren</translation>
+    <translation lang="es">Tiendas de telas y tejidos</translation>
+    <translation lang="fr">Magasins de tissus / Merceries</translation>
+    <translation lang="it">Negozi di tessuti</translation>
+    <translation lang="nl">Stoffenwinkels</translation>
+    <mapping tag="shop=fabric"/>
+  </category>
+  <category title="Farms">
+    <translation lang="de">Hofläden / Bauerngeschäfte</translation>
+    <translation lang="es">Tiendas agrícolas / Venta en granjas</translation>
+    <translation lang="fr">Magasins de fermes / Vente directe</translation>
+    <translation lang="it">Spacci aziendali agricoli</translation>
+    <translation lang="nl">Boerderijwinkels</translation>
+    <mapping tag="shop=farm"/>
+  </category>
+  <category title="Florists">
+    <translation lang="de">Blumengeschäfte / Floristen</translation>
+    <translation lang="es">Floristerías</translation>
+    <translation lang="fr">Fleuristes</translation>
+    <translation lang="it">Fioristi</translation>
+    <translation lang="nl">Bloemisten</translation>
+    <mapping tag="shop=florist"/>
+  </category>
+  <category title="Frames">
+    <translation lang="de">Bilderrahmen-Geschäfte</translation>
+    <translation lang="es">Marquerías / Tiendas de marcos</translation>
+    <translation lang="fr">Magasins d'encadrement</translation>
+    <translation lang="it">Corniciai</translation>
+    <translation lang="nl">Lijstenmakers</translation>
+    <mapping tag="shop=frame"/>
+  </category>
+  <category title="Furnaces">
+    <translation lang="de">Ofenbau / Kaminfachgeschäfte</translation>
+    <translation lang="es">Estufas y chimeneas (tienda)</translation>
+    <translation lang="fr">Magasins de poêles et cheminées</translation>
+    <translation lang="it">Stufe e caminetti (negozio)</translation>
+    <translation lang="nl">Kachels en haarden</translation>
+    <mapping tag="shop=furnace"/>
+  </category>
+  <category title="Funeral directors">
+    <translation lang="de">Bestattungsunternehmen</translation>
+    <translation lang="es">Funerarias / Servicios funerarios</translation>
+    <translation lang="fr">Pompes funèbres</translation>
+    <translation lang="it">Onoranze funebri</translation>
+    <translation lang="nl">Uitvaartverzorging</translation>
+    <mapping tag="shop=funeral_directors"/>
+  </category>
+  <category title="Furniture">
+    <translation lang="de">Möbelgeschäfte / Möbelhäuser</translation>
+    <translation lang="es">Mueblerías / Tiendas de muebles</translation>
+    <translation lang="fr">Magasins de meubles</translation>
+    <translation lang="it">Negozi di mobili / Arredamento</translation>
+    <translation lang="nl">Woonwinkels / Meubelzaken</translation>
+    <mapping tag="shop=furniture"/>
+  </category>
+  <category title="Garden centres">
+    <translation lang="de">Gartencenter / Gärtnereien</translation>
+    <translation lang="es">Centros de jardinería / Viveros</translation>
+    <translation lang="fr">Jardineries</translation>
+    <translation lang="it">Centri di giardinaggio / Vivai</translation>
+    <translation lang="nl">Tuincentra</translation>
+    <mapping tag="shop=garden_centre"/>
+  </category>
+  <category title="Gas">
+    <translation lang="de">Gasverkauf / Flaschengas</translation>
+    <translation lang="es">Venta de gas / Bombonas</translation>
+    <translation lang="fr">Vente de gaz</translation>
+    <translation lang="it">Vendita gas / Bombole</translation>
+    <translation lang="nl">Gasverkoop</translation>
+    <mapping tag="shop=gas"/>
+  </category>
+  <category title="General">
+    <translation lang="de">Gemischtwarenläden</translation>
+    <translation lang="es">Tiendas de comestibles y varios / General</translation>
+    <translation lang="fr">Alimentation générale / Épiceries</translation>
+    <translation lang="it">Generi alimentari misti / emporio</translation>
+    <translation lang="nl">Algemene winkels / Kruideniers</translation>
+    <mapping tag="shop=general"/>
+  </category>
+  <category title="Gifts">
+    <translation lang="de">Geschenkartikel / Souvenirläden</translation>
+    <translation lang="es">Tiendas de regalos / Souvenirs</translation>
+    <translation lang="fr">Magasins de cadeaux / Souvenirs</translation>
+    <translation lang="it">Negozi di articoli da regalo</translation>
+    <translation lang="nl">Cadeauwinkels</translation>
+    <mapping tag="shop=gift"/>
+  </category>
+  <category title="Glazier shops">
+    <translation lang="de">Glaser / Glasereien</translation>
+    <translation lang="es">Cristalerías</translation>
+    <translation lang="fr">Vitriers / Miroiteries</translation>
+    <translation lang="it">Vetrerie</translation>
+    <translation lang="nl">Glazenwassers / Glaszetters</translation>
+    <mapping tag="shop=glaziery"/>
+  </category>
+  <category title="Green grocers">
+    <translation lang="de">Obst- und Gemüsehandlungen</translation>
+    <translation lang="es">Fruterías y verdulerías</translation>
+    <translation lang="fr">Marchés de fruits et légumes / Primeurs</translation>
+    <translation lang="it">Fruttivendoli</translation>
+    <translation lang="nl">Groenteboeren</translation>
+    <mapping tag="shop=greengrocer"/>
+  </category>
+  <category title="Hairdressers">
+    <translation lang="de">Friseure / Salons</translation>
+    <translation lang="es">Peluquerías</translation>
+    <translation lang="fr">Coiffeurs</translation>
+    <translation lang="it">Parrucchieri</translation>
+    <translation lang="nl">Kappers</translation>
+    <mapping tag="shop=hairdresser"/>
+  </category>
+  <category title="Hardware">
+    <translation lang="de">Eisenwarengeschäfte / Baumärkte (klein)</translation>
+    <translation lang="es">Freterías / Artículos de ferretería</translation>
+    <translation lang="fr">Quincailleries</translation>
+    <translation lang="it">Ferramenta</translation>
+    <translation lang="nl">Ijzerwarenwinkels</translation>
+    <mapping tag="shop=hardware"/>
+  </category>
+  <category title="Hearing aids">
+    <translation lang="de">Hörgeräteakustiker</translation>
+    <translation lang="es">Centros auditivos / Audífonos</translation>
+    <translation lang="fr">Appareils auditifs / Audioprothésistes</translation>
+    <translation lang="it">Apparecchi acustici</translation>
+    <translation lang="nl">Hoorwinkels / Audiologen</translation>
+    <mapping tag="shop=hearing_aids"/>
+  </category>
+  <category title="Herbalists">
+    <translation lang="de">Kräuterläden / Reformhäuser</translation>
+    <translation lang="es">Herbolarios / Herboristerías</translation>
+    <translation lang="fr">Herboristeries / Magasins de diététique</translation>
+    <translation lang="it">Erboristerie</translation>
+    <translation lang="nl">Natuurwinkels / Kruideniers</translation>
+    <mapping tag="shop=herbalist"/>
+  </category>
+  <category title="Hi-Fi">
+    <translation lang="de">Hi-Fi-Geschäfte / Unterhaltungselektronik</translation>
+    <translation lang="es">Tiendas de alta fidelidad / Hi-Fi</translation>
+    <translation lang="fr">Magasins Hi-Fi</translation>
+    <translation lang="it">Negozi Hi-Fi / Audio</translation>
+    <translation lang="nl">Hi-Fi-winkels</translation>
+    <mapping tag="shop=hifi"/>
+  </category>
+  <category title="Hunting">
+    <translation lang="de">Jagdbedarf / Waffenhandlungen</translation>
+    <translation lang="es">Artículos de caza y pesca</translation>
+    <translation lang="fr">Chasse et pêche (magasin)</translation>
+    <translation lang="it">Articoli per la caccia</translation>
+    <translation lang="nl">Jachtartikelen</translation>
+    <mapping tag="shop=hunting"/>
+  </category>
+  <category title="Interior decoration">
+    <translation lang="de">Innendekoration / Raumausstattung</translation>
+    <translation lang="es">Decoración de interiores</translation>
+    <translation lang="fr">Décoration d'intérieur</translation>
+    <translation lang="it">Decorazione d'interni</translation>
+    <translation lang="nl">Interieurdecoratie</translation>
+    <mapping tag="shop=interior_decoration"/>
+  </category>
+  <category title="Jeweleries">
+    <translation lang="de">Juweliere / Uhrmacher</translation>
+    <translation lang="es">Joyerías</translation>
+    <translation lang="fr">Bijouteries / Horlogeries</translation>
+    <translation lang="it">Gioiellerie</translation>
+    <translation lang="nl">Juweliers</translation>
+    <mapping tag="shop=jewelery"/>
+  </category>
+  <category title="Kiosks">
+    <translation lang="de">Kioske / Zeitschriftenläden</translation>
+    <translation lang="es">Kioscos de prensa</translation>
+    <translation lang="fr">Kiosques à journaux</translation>
+    <translation lang="it">Chioschi di giornali</translation>
+    <translation lang="nl">Kiosken</translation>
+    <mapping tag="shop=kiosk"/>
+  </category>
+  <category title="Kitchens">
+    <translation lang="de">Küchenstudios</translation>
+    <translation lang="es">Tiendas de cocinas</translation>
+    <translation lang="fr">Cuisinistes / Magasins de cuisines</translation>
+    <translation lang="it">Negozi di cucine</translation>
+    <translation lang="nl">Keukenwinkels</translation>
+    <mapping tag="shop=kitchen"/>
+  </category>
+  <category title="Laundries">
+    <translation lang="de">Wäschereien / Waschsalons</translation>
+    <translation lang="es">Lavanderías automáticas</translation>
+    <translation lang="fr">Laveries automatiques</translation>
+    <translation lang="it">Lavanderie a gettoni / Self-service</translation>
+    <translation lang="nl">Wasserettes</translation>
+    <mapping tag="shop=laundry"/>
+  </category>
+  <category title="Malls">
+    <translation lang="de">Einkaufszentren / Malls</translation>
+    <translation lang="es">Centros comerciales</translation>
+    <translation lang="fr">Centres commerciaux</translation>
+    <translation lang="it">Centri commerciali</translation>
+    <translation lang="nl">Winkelcentra</translation>
+    <mapping tag="shop=mall"/>
+  </category>
+  <category title="Massages">
+    <translation lang="de">Massagepraxen / Massagestudios</translation>
+    <translation lang="es">Salones de masajes</translation>
+    <translation lang="fr">Salons de massage</translation>
+    <translation lang="it">Centri massaggi</translation>
+    <translation lang="nl">Massagesalons</translation>
+    <mapping tag="shop=massage"/>
+  </category>
+  <category title="Mobile phones">
+    <translation lang="de">Handyläden / Mobilfunkgeschäfte</translation>
+    <translation lang="es">Tiendas de telefonía móvil</translation>
+    <translation lang="fr">Boutiques de téléphonie mobile</translation>
+    <translation lang="it">Negozi di telefonia mobile</translation>
+    <translation lang="nl">Telefoonwinkels</translation>
+    <mapping tag="shop=mobile_phone"/>
+  </category>
+  <category title="Money lenders">
+    <translation lang="de">Geldverleiher / Pfandleiher</translation>
+    <translation lang="es">Preamistas / Casas de empeño</translation>
+    <translation lang="fr">Prêteurs sur gages</translation>
+    <translation lang="it">Prestiti / Compro oro e pegni</translation>
+    <translation lang="nl">Geldverstrekkers / Kredietbanken</translation>
+    <mapping tag="shop=money_lender"/>
+  </category>
+  <category title="Motorcycles">
+    <translation lang="de">Motorradhändler und -werkstätten</translation>
+    <translation lang="es">Concesionarios y talleres de motocicletas</translation>
+    <translation lang="fr">Concessionnaires et réparateurs moto</translation>
+    <translation lang="it">Concessionari e officine moto</translation>
+    <translation lang="nl">Motordealers en reparatie</translation>
+    <mapping tag="shop=motorcycle"/>
+    <mapping tag="shop=motorcycle_repair"/>
+  </category>
+  <category title="Musical instruments">
+    <translation lang="de">Musikalienhandlungen / Musikinstrumente</translation>
+    <translation lang="es">Tiendas de instrumentos musicales</translation>
+    <translation lang="fr">Magasins d'instruments de musique</translation>
+    <translation lang="it">Negozi di strumenti musicali</translation>
+    <translation lang="nl">Muziekwinkels</translation>
+    <mapping tag="shop=musical_instrument"/>
+  </category>
+  <category title="Newsagents">
+    <translation lang="de">Zeitschriftenhändler / Presse</translation>
+    <translation lang="es">Estancos / Librerías de prensa</translation>
+    <translation lang="fr">Marchands de journaux / Tabac-presse</translation>
+    <translation lang="it">Edicole / Giornalai</translation>
+    <translation lang="nl">Krantenkiezers / Kiosken</translation>
+    <mapping tag="shop=newsagent"/>
+  </category>
+  <category title="Optician shops">
+    <translation lang="de">Optiker / Augenoptik</translation>
+    <translation lang="es">Ópticas</translation>
+    <translation lang="fr">Opticiens</translation>
+    <translation lang="it">Ottica / Ottici</translation>
+    <translation lang="nl">Opticiens</translation>
+    <mapping tag="shop=optician"/>
+  </category>
+  <category title="Organics">
+    <translation lang="de">Bio-Läden / Bioläden</translation>
+    <translation lang="es">Tiendas de productos ecológicos / Herbolarios bio</translation>
+    <translation lang="fr">Magasins bio</translation>
+    <translation lang="it">Negozi di prodotti biologici</translation>
+    <translation lang="nl">Biologische winkels</translation>
+    <mapping tag="shop=organic"/>
+  </category>
+  <category title="Outdoor">
+    <translation lang="de">Outdoor-Ausstatter / Trekkingläden</translation>
+    <translation lang="es">Tiendas de montaña y aire libre / Outdoor</translation>
+    <translation lang="fr">Magasins d'articles de sport et outdoor</translation>
+    <translation lang="it">Negozi di articoli sportivi / Outdoor</translation>
+    <translation lang="nl">Outdoorwinkels / Buitensportzaken</translation>
+    <mapping tag="shop=outdoor"/>
+  </category>
+  <category title="Paints">
+    <translation lang="de">Farbenfachgeschäfte / Lacke</translation>
+    <translation lang="es">Pinturas y decoración (tienda)</translation>
+    <translation lang="fr">Magasins de peinture</translation>
+    <translation lang="it">Negozi di vernici</translation>
+    <translation lang="nl">Verfwinkels</translation>
+    <mapping tag="shop=paint"/>
+  </category>
+  <category title="Pawnbrokers">
+    <translation lang="de">Pfandleiher</translation>
+    <translation lang="es">Casas de empeño</translation>
+    <translation lang="fr">Prêteurs sur gages (pawnbrokers)</translation>
+    <translation lang="it">Pegni / Prestito su pegno</translation>
+    <translation lang="nl">Pandjeshuizen</translation>
+    <mapping tag="shop=pawnbroker"/>
+  </category>
+  <category title="Pets">
+    <translation lang="de">Zoohandlungen / Tierbedarf</translation>
+    <translation lang="es">Tiendas de animales / Mascotas</translation>
+    <translation lang="fr">Animaleries</translation>
+    <translation lang="it">Negozi di animali / Pet shop</translation>
+    <translation lang="nl">Dierenspeciaalzaken</translation>
+    <mapping tag="shop=pet"/>
+  </category>
+  <category title="Radio technics">
+    <translation lang="de">Funktechnik / Radio- und Elektronikwerkstätten</translation>
+    <translation lang="es">Radiotécnica y electrónica</translation>
+    <translation lang="fr">Magasins de radiotechnique</translation>
+    <translation lang="it">Radiotecnica</translation>
+    <translation lang="nl">Radiotechniek / Elektronica</translation>
+    <mapping tag="shop=radiotechnics"/>
+  </category>
+  <category title="Seafood / Fish">
+    <translation lang="de">Fischgeschäfte / Fischhandlungen</translation>
+    <translation lang="es">Pescaderías</translation>
+    <translation lang="fr">Poissonneries</translation>
+    <translation lang="it">Pescherie</translation>
+    <translation lang="nl">Viswinkels</translation>
+    <mapping tag="shop=seafood"/>
+    <mapping tag="shop=fish"/>
+  </category>
+  <category title="Second hand">
+    <translation lang="de">Second-Hand-Läden / Gebrauchtwaren</translation>
+    <translation lang="es">Tiendas de segunda mano / Rastro</translation>
+    <translation lang="fr">Magasins de seconde main / Dépôt-vente</translation>
+    <translation lang="it">Negozi di seconda mano / Usato</translation>
+    <translation lang="nl">Tweedehands winkels / Kringloop</translation>
+    <mapping tag="shop=second_hand"/>
+  </category>
+  <category title="Shoes">
+    <translation lang="de">Schuhgeschäfte</translation>
+    <translation lang="es">Zapaterías</translation>
+    <translation lang="fr">Magasins de chaussures</translation>
+    <translation lang="it">Negozi di calzature / Scarpe</translation>
+    <translation lang="nl">Schoenwinkels</translation>
+    <mapping tag="shop=shoes"/>
+  </category>
+  <category title="Sports">
+    <translation lang="de">Sportgeschäfte</translation>
+    <translation lang="es">Tiendas de deportes</translation>
+    <translation lang="fr">Magasins de sports</translation>
+    <translation lang="it">Negozi di articoli sportivi</translation>
+    <translation lang="nl">Sportwinkels</translation>
+    <mapping tag="shop=sports"/>
+  </category>
+  <category title="Stationeries">
+    <translation lang="de">Schreibwarengeschäfte / Papierwaren</translation>
+    <translation lang="es">Papelerías</translation>
+    <translation lang="fr">Papeteries</translation>
+    <translation lang="it">Cartolerie</translation>
+    <translation lang="nl">Schrijfwarenwinkels / Papierenwinkels</translation>
+    <mapping tag="shop=stationery"/>
+  </category>
+  <category title="Supermarkets">
+    <translation lang="de">Supermärkte</translation>
+    <translation lang="es">Supermercados</translation>
+    <translation lang="fr">Supermarchés</translation>
+    <translation lang="it">Supermercati</translation>
+    <translation lang="nl">Supermarkten</translation>
+    <mapping tag="shop=supermarket"/>
+  </category>
+  <category title="Tattoos">
+    <translation lang="de">Tätowierstudios / Tattoos</translation>
+    <translation lang="es">Estudios de tatuajes</translation>
+    <translation lang="fr">Salons de tatouage</translation>
+    <translation lang="it">Studi di tatuaggi</translation>
+    <translation lang="nl">Tatoeagestudio's</translation>
+    <mapping tag="shop=tattoo"/>
+  </category>
+  <category title="Tickets">
+    <translation lang="de">Ticketshops / Vorverkaufsstellen</translation>
+    <translation lang="es">Puntos de venta de entradas / Venta de billetes</translation>
+    <translation lang="fr">Billetteries</translation>
+    <translation lang="it">Biglietterie</translation>
+    <translation lang="nl">Kaartverkoop / Ticketshops</translation>
+    <mapping tag="shop=ticket"/>
+  </category>
+  <category title="Tobacco">
+    <translation lang="de">Tabakwaren / Tabakläden / Kioske</translation>
+    <translation lang="es">Estancos / Tabaquerías</translation>
+    <translation lang="fr">Bureaux de tabac / Tabacs</translation>
+    <translation lang="it">Tabaccherie</translation>
+    <translation lang="nl">Tabakswinkels / Sigarenmagazijnen</translation>
+    <mapping tag="shop=tobacco"/>
+  </category>
+  <category title="Toys">
+    <translation lang="de">Spielwarengeschäfte</translation>
+    <translation lang="es">Jugueterías</translation>
+    <translation lang="fr">Magasins de jouets</translation>
+    <translation lang="it">Negozi di giocattoli</translation>
+    <translation lang="nl">Speelgoedwinkels</translation>
+    <mapping tag="shop=toys"/>
+  </category>
+ 
+<category title="Vacuum cleaners">
+  <translation lang="de">Staubsauger-Fachgeschäfte</translation>
+  <translation lang="es">Tiendas de aspiradoras</translation>
+  <translation lang="fr">Magasins d'aspirateurs</translation>
+  <translation lang="it">Negozi di aspirapolvere</translation>
+  <translation lang="nl">Stofzuigervakhandels</translation>
+  <mapping tag="shop=vacuum_cleaner"/>
+</category>
+
+<category title="Videos">
+  <translation lang="de">Videotheken / Videoverleih</translation>
+  <translation lang="es">Videoclubs / Alquiler de vídeo</translation>
+  <translation lang="fr">Vidéoclubs / Location de vidéos</translation>
+  <translation lang="it">Videonoleggi</translation>
+  <translation lang="nl">Videotheken</translation>
+  <mapping tag="shop=video"/>
+</category>
+<category title="Window blinds">
+  <translation lang="de">Rollläden- und Jalousiegeschäfte</translation>
+  <translation lang="es">Persianas y toldos (tienda)</translation>
+  <translation lang="fr">Magasins de stores et volets</translation>
+  <translation lang="it">Negozio di tapparelle e tende da sole</translation>
+  <translation lang="nl">Rolluiken en zonwering</translation>
+  <mapping tag="shop=window_blind"/>
+</category>
+</category>
+<!-- Sport -->
+<category title="Sport">
+  <translation lang="de">Sport</translation>
+  <translation lang="es">Deporte</translation>
+  <translation lang="fr">Sport</translation>
+  <translation lang="it">Sport</translation>
+  <translation lang="nl">Sport</translation>
+  <category title="Bowling">
+    <translation lang="de">Kegeln / Bowling</translation>
+    <translation lang="es">Bolos y bolo 9 / 10 bolos</translation>
+    <translation lang="fr">Bowling / Quilles</translation>
+    <translation lang="it">Bowling / Bocce / Bowling a 9 o 10 birilli</translation>
+    <translation lang="nl">Kegelen / Bowlen</translation>
+    <mapping tag="sport=9-pin"/>
+    <mapping tag="sport=10-pin"/>
+  </category>
+  <category title="American football">
+    <translation lang="de">American Football</translation>
+    <translation lang="es">Fútbol americano</translation>
+    <translation lang="fr">Football américain</translation>
+    <translation lang="it">Football americano</translation>
+    <translation lang="nl">Amerikanenvoetbal / American football</translation>
+    <mapping tag="sport=american_football"/>
+  </category>
+  <category title="Archery">
+    <translation lang="de">Bogenschießen</translation>
+    <translation lang="es">Tiro con arco</translation>
+    <translation lang="fr">Tir à l'arc</translation>
+    <translation lang="it">Tiro con l'arco</translation>
+    <translation lang="nl">Boogschieten</translation>
+    <mapping tag="sport=archery"/>
+  </category>
+  <category title="Athletics">
+    <translation lang="de">Leichtathletik</translation>
+    <translation lang="es">Atletismo</translation>
+    <translation lang="fr">Athlétisme</translation>
+    <translation lang="it">Atletica leggera</translation>
+    <translation lang="nl">Atletiek</translation>
+    <mapping tag="sport=athletics"/>
+  </category>
+  <category title="Australian football">
+    <translation lang="de">Australian Football</translation>
+    <translation lang="es">Fútbol australiano</translation>
+    <translation lang="fr">Football australien</translation>
+    <translation lang="it">Football australiano</translation>
+    <translation lang="nl">Australisch voetbal</translation>
+    <mapping tag="sport=australian_football"/>
+  </category>
+  <category title="BASE jumping">
+    <translation lang="de">BASE-Jumping / Fallschirmspringen</translation>
+    <translation lang="es">Salto BASE</translation>
+    <translation lang="fr">BASE-jump</translation>
+    <translation lang="it">BASE jumping</translation>
+    <translation lang="nl">BASE-springen / Basejumpen</translation>
+    <mapping tag="sport=base"/>
+  </category>
+  <category title="Badminton">
+    <translation lang="de">Badminton</translation>
+    <translation lang="es">Bádminton</translation>
+    <translation lang="fr">Badminton</translation>
+    <translation lang="it">Badminton</translation>
+    <translation lang="nl">Badminton</translation>
+    <mapping tag="sport=badminton"/>
+  </category>
+  <category title="Baseball">
+    <translation lang="de">Baseball</translation>
+    <translation lang="es">Béisbol</translation>
+    <translation lang="fr">Baseball</translation>
+    <translation lang="it">Baseball</translation>
+    <translation lang="nl">Honkbal / Baseball</translation>
+    <mapping tag="sport=baseball"/>
+  </category>
+  <category title="Basketball">
+    <translation lang="de">Basketball</translation>
+    <translation lang="es">Baloncesto</translation>
+    <translation lang="fr">Basketball</translation>
+    <translation lang="it">Pallacanestro / Basket</translation>
+    <translation lang="nl">Basketbal</translation>
+    <mapping tag="sport=basketball"/>
+  </category>
+  <category title="Beach volleyball">
+    <translation lang="de">Beachvolleyball</translation>
+    <translation lang="es">Vóley playa</translation>
+    <translation lang="fr">Beach-volley</translation>
+    <translation lang="it">Beach volley</translation>
+    <translation lang="nl">Beachvolleybal</translation>
+    <mapping tag="sport=beachvolleyball"/>
+  </category>
+  <category title="BMX">
+    <translation lang="de">BMX</translation>
+    <translation lang="es">BMX</translation>
+    <translation lang="fr">BMX</translation>
+    <translation lang="it">BMX</translation>
+    <translation lang="nl">BMX</translation>
+    <mapping tag="sport=bmx"/>
+  </category>
+  <category title="Boules">
+    <translation lang="de">Boule / Pétanque</translation>
+    <translation lang="es">Petanca / Bolos franceses</translation>
+    <translation lang="fr">Boules / Pétanque</translation>
+    <translation lang="it">Bocce / Pétanque</translation>
+    <translation lang="nl">Jeu de boules / Petanque</translation>
+    <mapping tag="sport=boules"/>
+  </category>
+  <category title="Bowls">
+    <translation lang="de">Bowls (Rasenbocce)</translation>
+    <translation lang="es">Bolos sobre césped / Bowls</translation>
+    <translation lang="fr">Bowls (jeu de boules britannique)</translation>
+    <translation lang="it">Bowls (bocce inglesi)</translation>
+    <translation lang="nl">Bowls</translation>
+    <mapping tag="sport=bowls"/>
+  </category>
+  <category title="Canadian football">
+    <translation lang="de">Canadian Football</translation>
+    <translation lang="es">Fútbol canadiense</translation>
+    <translation lang="fr">Football canadien</translation>
+    <translation lang="it">Football canadese</translation>
+    <translation lang="nl">Canadees voetbal</translation>
+    <mapping tag="sport=canadian_football"/>
+  </category>
+  <category title="Canoe">
+    <translation lang="de">Kanusport / Kanu</translation>
+    <translation lang="es">Piragüismo / Canotaje</translation>
+    <translation lang="fr">Canoë-kayak</translation>
+    <translation lang="it">Canoa</translation>
+    <translation lang="nl">Kanoën</translation>
+    <mapping tag="sport=canoe"/>
+  </category>
+  <category title="Chess">
+    <translation lang="de">Schach</translation>
+    <translation lang="es">Ajedrez</translation>
+    <translation lang="fr">Échecs</translation>
+    <translation lang="it">Scacchi</translation>
+    <translation lang="nl">Schaken</translation>
+    <mapping tag="sport=chess"/>
+  </category>
+  <category title="Climbing">
+    <translation lang="de">Klettern</translation>
+    <translation lang="es">Escalada</translation>
+    <translation lang="fr">Escalade</translation>
+    <translation lang="it">Arrampicata</translation>
+    <translation lang="nl">Klimmen</translation>
+    <mapping tag="sport=climbing"/>
+  </category>
+  <category title="Cricket">
+    <translation lang="de">Cricket</translation>
+    <translation lang="es">Críquet</translation>
+    <translation lang="fr">Cricket</translation>
+    <translation lang="it">Cricket</translation>
+    <translation lang="nl">Cricket</translation>
+    <mapping tag="sport=cricket"/>
+  </category>
+  <category title="Cricket nets">
+    <translation lang="de">Cricket-Netze / Schlagkäfige</translation>
+    <translation lang="es">Redes de críquet / Jaulas de bateo</translation>
+    <translation lang="fr">Filets de cricket</translation>
+    <translation lang="it">Gabbie da cricket / Reti da allenamento</translation>
+    <translation lang="nl">Cricketnetten</translation>
+    <mapping tag="sport=cricket_nets"/>
+  </category>
+  <category title="Croquet">
+    <translation lang="de">Krocket</translation>
+    <translation lang="es">Croquet</translation>
+    <translation lang="fr">Croquet</translation>
+    <translation lang="it">Croquet</translation>
+    <translation lang="nl">Croquet</translation>
+    <mapping tag="sport=croquet"/>
+  </category>
+  <category title="Cycling">
+    <translation lang="de">Radfahren / Radsport</translation>
+    <translation lang="es">Ciclismo</translation>
+    <translation lang="fr">Cyclisme</translation>
+    <translation lang="it">Ciclismo</translation>
+    <translation lang="nl">Wielrennen / Fietsen</translation>
+    <mapping tag="sport=cycling"/>
+  </category>
+  <category title="Diving">
+    <translation lang="de">Wasserspringen / Tauchen</translation>
+    <translation lang="es">Saltos de trampolín / Buceo</translation>
+    <translation lang="fr">Plongeon / Plongée</translation>
+    <translation lang="it">Tuffi / Immersioni</translation>
+    <translation lang="nl">Schoonspringen / Duiken</translation>
+    <mapping tag="sport=diving"/>
+  </category>
+  <category title="Dog racing">
+    <translation lang="de">Hunderennen</translation>
+    <translation lang="es">Carreras de galgos</translation>
+    <translation lang="fr">Courses de lévriers</translation>
+    <translation lang="it">Corsa di levrieri</translation>
+    <translation lang="nl">Windhondenrennen</translation>
+    <mapping tag="sport=dog_racing"/>
+  </category>
+  <category title="Fencing">
+    <translation lang="de">Fechten</translation>
+    <translation lang="es">Esgrima</translation>
+    <translation lang="fr">Escrime</translation>
+    <translation lang="it">Scherma</translation>
+    <translation lang="nl">Schermen</translation>
+    <mapping tag="sport=fencing"/>
+  </category>
+  <category title="Equestrian">
+    <translation lang="de">Reitsport</translation>
+    <translation lang="es">Deportes ecuestres / Hípica</translation>
+    <translation lang="fr">Sports équestres / Équitation</translation>
+    <translation lang="it">Sport equestri / Equitazione</translation>
+    <translation lang="nl">Paardensport</translation>
+    <mapping tag="sport=equestrian"/>
+  </category>
+  <category title="Gaelic games">
+    <translation lang="de">Gälische Sportarten</translation>
+    <translation lang="es">Deportes gaélicos</translation>
+    <translation lang="fr">Sports gaéliques</translation>
+    <translation lang="it">Sport gaelici</translation>
+    <translation lang="nl">Gaelic games / Gaelische sporten</translation>
+    <mapping tag="sport=gaelic_games"/>
+  </category>
+  <category title="Golf">
+    <translation lang="de">Golf</translation>
+    <translation lang="es">Golf</translation>
+    <translation lang="fr">Golf</translation>
+    <translation lang="it">Golf</translation>
+    <translation lang="nl">Golf</translation>
+    <mapping tag="sport=golf"/>
+  </category>
+  <category title="Gymnastics">
+    <translation lang="de">Turnen / Gymnastik</translation>
+    <translation lang="es">Gimnasia</translation>
+    <translation lang="fr">Gymnastique</translation>
+    <translation lang="it">Ginnastica</translation>
+    <translation lang="nl">Gymnastiek</translation>
+    <mapping tag="sport=gymnastics"/>
+  </category>
+  <category title="Hockey">
+    <translation lang="de">Hockey / Eishockey</translation>
+    <translation lang="es">Hockey (hierba / patines / hielo)</translation>
+    <translation lang="fr">Hockey</translation>
+    <translation lang="it">Hockey</translation>
+    <translation lang="nl">Hockey / IJshockey</translation>
+    <mapping tag="sport=hockey"/>
+  </category>
+  <category title="Horseshoes">
+    <translation lang="de">Hufeisenwerfen</translation>
+    <translation lang="es">Juego de herradura</translation>
+    <translation lang="fr">Lancer de fer à cheval</translation>
+    <translation lang="it">Lancio del ferro di cavallo</translation>
+    <translation lang="nl">Hoefijzerwerpen</translation>
+    <mapping tag="sport=horseshoes"/>
+  </category>
+  <category title="Horse racing">
+    <translation lang="de">Pferderennen</translation>
+    <translation lang="es">Carreras de caballos</translation>
+    <translation lang="fr">Courses hippiques / Courses de chevaux</translation>
+    <translation lang="it">Ippica / Corse di cavalli</translation>
+    <translation lang="nl">Paardenrennen</translation>
+    <mapping tag="sport=horse_racing"/>
+  </category>
+  <category title="Ice stock">
+    <translation lang="de">Eisstockschießen</translation>
+    <translation lang="es">Eisstockschießen / Curling bávaro</translation>
+    <translation lang="fr">Stock-sport / Eisstock</translation>
+    <translation lang="it">Eisstock / Stock sport</translation>
+    <translation lang="nl">Ijsstokschieten / Eisstockschießen</translation>
+    <mapping tag="sport=ice_stock"/>
+  </category>
+  <category title="Karting">
+    <translation lang="de">Kartfahren / Karting</translation>
+    <translation lang="es">Karting</translation>
+    <translation lang="fr">Karting</translation>
+    <translation lang="it">Karting</translation>
+    <translation lang="nl">Karting / Karten</translation>
+    <mapping tag="sport=karting"/>
+  </category>
+  <category title="Korfball">
+    <translation lang="de">Korfball</translation>
+    <translation lang="es">Korfbal</translation>
+    <translation lang="fr">Korfbal</translation>
+    <translation lang="it">Korfball</translation>
+    <translation lang="nl">Korfbal</translation>
+    <mapping tag="sport=korfball"/>
+  </category>
+  <category title="Motor">
+    <translation lang="de">Motorsport</translation>
+    <translation lang="es">Deportes de motor</translation>
+    <translation lang="fr">Sports mécaniques</translation>
+    <translation lang="it">Sport motoristici</translation>
+    <translation lang="nl">Motorsport</translation>
+    <mapping tag="sport=motor"/>
+  </category>
+  <category title="Multi">
+    <translation lang="de">Mehrsport / Multisport</translation>
+    <translation lang="es">Multideporte</translation>
+    <translation lang="fr">Multisport</translation>
+    <translation lang="it">Multisport</translation>
+    <translation lang="nl">Multisport</translation>
+    <mapping tag="sport=multi"/>
+  </category>
+  <category title="Orienteering">
+    <translation lang="de">Orientierungslauf</translation>
+    <translation lang="es">Orientación</translation>
+    <translation lang="fr">Course d'orientation</translation>
+    <translation lang="it">Orientamento</translation>
+    <translation lang="nl">Oriëntatieloop</translation>
+    <mapping tag="sport=orienteering"/>
+  </category>
+  <category title="Paddle tennis">
+    <translation lang="de">Padel-Tennis</translation>
+    <translation lang="es">Pádel</translation>
+    <translation lang="fr">Padel</translation>
+    <translation lang="it">Padel</translation>
+    <translation lang="nl">Padel</translation>
+    <mapping tag="sport=paddle_tennis"/>
+  </category>
+  <category title="Paragliding">
+    <translation lang="de">Gleitschirmfliegen / Paragleiten</translation>
+    <translation lang="es">Parapente</translation>
+    <translation lang="fr">Parapente</translation>
+    <translation lang="it">Parapendio</translation>
+    <translation lang="nl">Paragliding / Schermvliegen</translation>
+    <mapping tag="sport=paragliding"/>
+  </category>
+  <category title="Free flying">
+    <translation lang="de">Drachenfliegen / Freiflug</translation>
+    <translation lang="es">Vuelo libre</translation>
+    <translation lang="fr">Vol libre</translation>
+    <translation lang="it">Volo libero</translation>
+    <translation lang="nl">Vrij vliegen / Hanggliding</translation>
+    <mapping tag="sport=free_flying"/>
+  </category>
+  <category title="Pelota">
+    <translation lang="de">Pelota / Baskisches Pelota</translation>
+    <translation lang="es">Pelota vasca</translation>
+    <translation lang="fr">Pelote basque</translation>
+    <translation lang="it">Pelota basca</translation>
+    <translation lang="nl">Pelota</translation>
+    <mapping tag="sport=pelota"/>
+  </category>
+  <category title="Racquet">
+    <translation lang="de">Schlägersportarten (Allgemein)</translation>
+    <translation lang="es">Deportes de raqueta</translation>
+    <translation lang="fr">Sports de raquette</translation>
+    <translation lang="it">Sport con racchetta</translation>
+    <translation lang="nl">Racketsporten</translation>
+    <mapping tag="sport=racquet"/>
+  </category>
+  <category title="Rowing">
+    <translation lang="de">Rudern</translation>
+    <translation lang="es">Remo</translation>
+    <translation lang="fr">Aviron</translation>
+    <translation lang="it">Canottaggio</translation>
+    <translation lang="nl">Roeien</translation>
+    <mapping tag="sport=rowing"/>
+  </category>
+  <category title="Rugby">
+    <translation lang="de">Rugby (League / Union)</translation>
+    <translation lang="es">Rugby (League / Union)</translation>
+    <translation lang="fr">Rugby (à XIII / à XV)</translation>
+    <translation lang="it">Rugby (League / Union)</translation>
+    <translation lang="nl">Rugby (League / Union)</translation>
+    <mapping tag="sport=rugby_league"/>
+    <mapping tag="sport=rugby_union"/>
+  </category>
+  <category title="Shooting">
+    <translation lang="de">Sportschießen</translation>
+    <translation lang="es">Tiro deportivo</translation>
+    <translation lang="fr">Tir sportif</translation>
+    <translation lang="it">Tiro a segno / Tiro a volo</translation>
+    <translation lang="nl">Schietsport</translation>
+    <mapping tag="sport=shooting"/>
+  </category>
+  <category title="Ice skating">
+    <translation lang="de">Eislaufen / Eiskunstlauf</translation>
+    <translation lang="es">Patinaje sobre hielo</translation>
+    <translation lang="fr">Patinage sur glace</translation>
+    <translation lang="it">Pattinaggio su ghiaccio</translation>
+    <translation lang="nl">Schaatsen</translation>
+    <mapping tag="sport=skating"/>
+  </category>
+  <category title="Skateboarding">
+    <translation lang="de">Skateboarding</translation>
+    <translation lang="es">Monopatín / Skateboarding</translation>
+    <translation lang="fr">Skateboarding / Skateboard</translation>
+    <translation lang="it">Skateboarding</translation>
+    <translation lang="nl">Skateboarden</translation>
+    <mapping tag="sport=skateboard"/>
+  </category>
+  <category title="Skiing">
+    <translation lang="de">Skisport / Skifahren</translation>
+    <translation lang="es">Esquí</translation>
+    <translation lang="fr">Ski</translation>
+    <translation lang="it">Sci</translation>
+    <translation lang="nl">Skiën</translation>
+    <mapping tag="sport=skiing"/>
+  </category>
+  <category title="Soccer">
+    <translation lang="de">Fußball</translation>
+    <translation lang="es">Fútbol</translation>
+    <translation lang="fr">Football</translation>
+    <translation lang="it">Calcio</translation>
+    <translation lang="nl">Voetbal</translation>
+    <mapping tag="sport=soccer"/>
+  </category>
+  <category title="Surfing">
+    <translation lang="de">Surfen</translation>
+    <translation lang="es">Surf</translation>
+    <translation lang="fr">Surf</translation>
+    <translation lang="it">Surf</translation>
+    <translation lang="nl">Surfen</translation>
+    <mapping tag="sport=surfing"/>
+  </category>
+  <category title="Swimming">
+    <translation lang="de">Schwimmen</translation>
+    <translation lang="es">Natación</translation>
+    <translation lang="fr">Natation</translation>
+    <translation lang="it">Nuoto</translation>
+    <translation lang="nl">Zwemmen</translation>
+    <mapping tag="sport=swimming"/>
+  </category>
+  <category title="Table tennis">
+    <translation lang="de">Tischtennis</translation>
+    <translation lang="es">Tenis de mesa / Ping-pong</translation>
+    <translation lang="fr">Tennis de table / Ping-pong</translation>
+    <translation lang="it">Tennis tavolo / Ping-pong</translation>
+    <translation lang="nl">Tafeltennis</translation>
+    <mapping tag="sport=table_tennis"/>
+  </category>
+  <category title="Handball">
+    <translation lang="de">Handball</translation>
+    <translation lang="es">Balonmano</translation>
+    <translation lang="fr">Handball</translation>
+    <translation lang="it">Pallamano</translation>
+    <translation lang="nl">Handbal</translation>
+    <mapping tag="sport=team_handball"/>
+  </category>
+  <category title="Tennis courts">
+    <translation lang="de">Tennis</translation>
+    <translation lang="es">Tenis</translation>
+    <translation lang="fr">Tennis</translation>
+    <translation lang="it">Tennis</translation>
+    <translation lang="nl">Tennis</translation>
+    <mapping tag="sport=tennis"/>
+  </category>
+  <category title="Toboggan">
+    <translation lang="de">Rodeln / Schlittenfahren</translation>
+    <translation lang="es">Trineo</translation>
+    <translation lang="fr">Luge</translation>
+    <translation lang="it">Slittino</translation>
+    <translation lang="nl">Rodelen / Sleie</translation>
+    <mapping tag="sport=toboggan"/>
+  </category>
+  <category title="Volleyball">
+    <translation lang="de">Volleyball</translation>
+    <translation lang="es">Voleibol</translation>
+    <translation lang="fr">Volleyball / Volley</translation>
+    <translation lang="it">Pallavolo / Volley</translation>
+    <translation lang="nl">Volleybal</translation>
+    <mapping tag="sport=volleyball"/>
+  </category>
+  <category title="Water ski">
+    <translation lang="de">Wasserski</translation>
+    <translation lang="es"> Esquí acuático</translation>
+    <translation lang="fr">Ski nautique</translation>
+    <translation lang="it">Sci nautico</translation>
+    <translation lang="nl">Waterskiën</translation>
+    <mapping tag="sport=water_ski"/>
+  </category>
+</category>
+<!-- Tourism -->
+<category title="Tourism">
+  <translation lang="de">Tourismus</translation>
+  <translation lang="es">Turismo</translation>
+  <translation lang="fr">Tourisme</translation>
+  <translation lang="it">Turismo</translation>
+  <translation lang="nl">Toerisme</translation>
+  <category title="Alpine huts">
+    <translation lang="de">Alpenvereinshütten / Schutzhütten</translation>
+    <translation lang="es">Refugios de montaña</translation>
+    <translation lang="fr">Refuges de montagne / Cabanes alpines</translation>
+    <translation lang="it">Rifugi alpini / Rifugi di montagna</translation>
+    <translation lang="nl">Alpenhutten / Berghutten</translation>
+    <mapping tag="tourism=alpine_hut"/>
+  </category>
+  <category title="Attractions">
+    <translation lang="de">Sehenswürdigkeiten / Attraktionen</translation>
+    <translation lang="es">Atracciones turísticas</translation>
+    <translation lang="fr">Attractions touristiques</translation>
+    <translation lang="it">Attrazioni turistiche</translation>
+    <translation lang="nl">Bezienswaardigheden / Attracties</translation>
+    <mapping tag="tourism=attraction"/>
+  </category>
+  <category title="Artworks">
+    <translation lang="de">Kunstwerke / Skulpturen</translation>
+    <translation lang="es">Obras de arte / Monumentos artísticos</translation>
+    <translation lang="fr">Œuvres d'art</translation>
+    <translation lang="it">Opere d'arte</translation>
+    <translation lang="nl">Kunstwerken</translation>
+    <mapping tag="tourism=artwork"/>
+  </category>
+  <category title="Camp sites">
+    <translation lang="de">Campingplätze</translation>
+    <translation lang="es">Campings</translation>
+    <translation lang="fr">Campings / Terrains de camping</translation>
+    <translation lang="it">Campeggi</translation>
+    <translation lang="nl">Campings</translation>
+    <mapping tag="tourism=camp_site"/>
+  </category>
+  <category title="Caravan sites">
+    <translation lang="de">Wohnmobilstellplätze</translation>
+    <translation lang="es">Áreas de autocaravanas / Zonas de caravanas</translation>
+    <translation lang="fr"> Aires de camping-car</translation>
+    <translation lang="it">Aree di sosta per camper</translation>
+    <translation lang="nl">Camperplaatsen / Caravanterreinen</translation>
+    <mapping tag="tourism=caravan_site"/>
+  </category>
+  <category title="Chalets">
+    <translation lang="de">Chalets / Ferienhäuser</translation>
+    <translation lang="es">Chalets / Alojamientos rurales</translation>
+    <translation lang="fr">Chalets</translation>
+    <translation lang="it">Chalet</translation>
+    <translation lang="nl">Chalets / Vakantiehuizen</translation>
+    <mapping tag="tourism=chalet"/>
+  </category>
+  <category title="Guest houses">
+    <translation lang="de">Gästehäuser / Pensionen</translation>
+    <translation lang="es">Hostales / Pensiones / Casas de huéspedes</translation>
+    <translation lang="fr">Maisons d'hôtes / Chambres d'hôtes</translation>
+    <translation lang="it">Affittacamere / Pensioni</translation>
+    <translation lang="nl">Pensions / Gastenverblijven</translation>
+    <mapping tag="tourism=guest_house"/>
+  </category>
+  <category title="Hostels">
+    <translation lang="de">Hostels / Jugendherbergen</translation>
+    <translation lang="es">Albergues / Hostales juveniles</translation>
+    <translation lang="fr">Auberges de jeunesse</translation>
+    <translation lang="it">Ostelli per la gioventù</translation>
+    <translation lang="nl">Hostels / Jeugdherbergen</translation>
+    <mapping tag="tourism=hostel"/>
+  </category>
+  <category title="Hotels">
+    <translation lang="de">Hotels</translation>
+    <translation lang="es">Hoteles</translation>
+    <translation lang="fr">Hôtels</translation>
+    <translation lang="it">Hotel / Alberghi</translation>
+    <translation lang="nl">Hotels</translation>
+    <mapping tag="tourism=hotel"/>
+  </category>
+  <category title="Information">
+    <translation lang="de">Informationen / Infotafeln</translation>
+    <translation lang="es">Información turística / Paneles informativos</translation>
+    <translation lang="fr">Information / Panneaux d'information</translation>
+    <translation lang="it">Informazioni turistiche</translation>
+    <translation lang="nl">Informatie / Informatieborden</translation>
+    <mapping tag="tourism=information"/>
+  </category>
+  <category title="Motels">
+    <translation lang="de">Motels</translation>
+    <translation lang="es">Moteles</translation>
+    <translation lang="fr">Motels</translation>
+    <translation lang="it">Motel</translation>
+    <translation lang="nl">Motels</translation>
+    <mapping tag="tourism=motel"/>
+  </category>
+  <category title="Museums">
+    <translation lang="de">Museen</translation>
+    <translation lang="es">Museos</translation>
+    <translation lang="fr">Musées</translation>
+    <translation lang="it">Musei</translation>
+    <translation lang="nl">Musea</translation>
+    <mapping tag="tourism=museum"/>
+    <mapping tag="amenity=museum"/>
+  </category>
+  <category title="Picnic sites">
+    <translation lang="de">Picknickplätze / Rastplätze</translation>
+    <translation lang="es">Merenderos / Zonas de pícnic</translation>
+    <translation lang="fr">Sites de pique-nique / Aires de pique-nique</translation>
+    <translation lang="it">Aree picnic</translation>
+    <translation lang="nl">Picknickplaatsen</translation>
+    <mapping tag="tourism=picnic_site"/>
+  </category>
+  <category title="Theme parks">
+    <translation lang="de">Freizeitparks / Themenparks</translation>
+    <translation lang="es">Parques temáticos / Parques de atracciones</translation>
+    <translation lang="fr">Parcs à thèmes / Parcs d'attractions</translation>
+    <translation lang="it">Parchi tematici / Parchi di divertimento</translation>
+    <translation lang="nl">Themaparken / Pretparken</translation>
+    <mapping tag="tourism=theme_park"/>
+  </category>
+  <category title="Viewpoints">
+    <translation lang="de">Aussichtspunkte</translation>
+    <translation lang="es">Miradores / Puntos panorámicos</translation>
+    <translation lang="fr">Points de vue / Belvédères</translation>
+    <translation lang="it">Punti panoramici / Belvedere</translation>
+    <translation lang="nl">Uitzichtpunten</translation>
+    <mapping tag="tourism=viewpoint"/>
+  </category>
+  <category title="Zoos">
+    <translation lang="de">Zoos / Tierparks</translation>
+    <translation lang="es">Zoológicos / Parques de animales</translation>
+    <translation lang="fr">Zoos / Parcs zoologiques</translation>
+    <translation lang="it">Zoo / Parchi faunistici</translation>
+    <translation lang="nl">Dierentuinen / Dierenparken</translation>
+    <mapping tag="tourism=zoo"/>
+  </category>
+</category>
+<!-- Waterway / added OAM -->
+<category title="Waterways">
+  <translation lang="de">Gewässer / Wasserwege</translation>
+  <translation lang="es">Cursos de agua / Hidrografía</translation>
+  <translation lang="fr">Voies d'eau / Cours d'eau</translation>
+  <translation lang="it">Corsi d'acqua / Idrografia</translation>
+  <translation lang="nl">Waterwegen / Waterlopen</translation>
+  <category title="Rapids">
+    <translation lang="de">Stromschnellen</translation>
+    <translation lang="es">Rápidos</translation>
+    <translation lang="fr">Rapides</translation>
+    <translation lang="it">Rapide</translation>
+    <translation lang="nl">Stroomversnellingen</translation>
+    <mapping tag="waterway=rapids"/>
+    <mapping tag="natural=rapids"/>
+  </category>
+  <category title="Waterfalls">
+    <translation lang="de">Wasserfälle</translation>
+    <translation lang="es">Cascadas / Cataratas</translation>
+    <translation lang="fr">Cascades</translation>
+    <translation lang="it">Cascate</translation>
+    <translation lang="nl">Watervallen</translation>
+    <mapping tag="waterway=waterfall"/>
+    <mapping tag="natural=waterfall"/>
+  </category>
+  <category title="Water points">
+    <translation lang="de">Wasserstellen / Trinkwasser</translation>
+    <translation lang="es">Puntos de agua / Tomas de agua</translation>
+    <translation lang="fr">Points d'eau</translation>
+    <translation lang="it">Punti acqua</translation>
+    <translation lang="nl">Waterpunten</translation>
+    <mapping tag="waterway=water_point"/>
+    <mapping tag="amenity=water_point"/>
+  </category>
+</category>
+<!-- Bicycle / added OAM -->
+<category title="Bicycle related">
+  <translation lang="de">Fahrrad / Radfahren (Zubehör und Service)</translation>
+  <translation lang="es">Relacionado con la bicicleta</translation>
+  <translation lang="fr">Cyclisme / Lié au vélo</translation>
+  <translation lang="it">Infrastrutture ciclabili</translation>
+  <translation lang="nl">Gerelateerd aan fietsen</translation>
+  <category title="Cycle parking places">
+    <translation lang="de">Fahrradabstellplätze / Fahrradständer</translation>
+    <translation lang="es">Aparcabicicletas / Estacionamiento de bicicletas</translation>
+    <translation lang="fr">Parkings à vélos / Stationnement vélos</translation>
+    <translation lang="it">Parcheggi per biciclette / Portabici</translation>
+    <translation lang="nl">Fietsenstallingen / Fietsenrekken</translation>
+    <mapping tag="amenity=bicycle_parking"/>
+  </category>
+  <category title="Cycle rental stations">
+    <translation lang="de">Fahrradverleih / Leihräder</translation>
+    <translation lang="es">Alquiler de bicicletas / Estaciones de préstamo</translation>
+    <translation lang="fr">Location de vélos / Vélos en libre-service</translation>
+    <translation lang="it">Noleggio biciclette / Bike sharing</translation>
+    <translation lang="nl">Fietsverhuur</translation>
+    <mapping tag="amenity=bicycle_rental"/>
+  </category>
+  <category title="Cycle shops">
+    <translation lang="de">Fahrradläden / Fahrradgeschäfte</translation>
+    <translation lang="es">Tiendas de bicicletas</translation>
+    <translation lang="fr">Magasins de vélos</translation>
+    <translation lang="it">Negozi di biciclette</translation>
+    <translation lang="nl">Fietsenwinkels</translation>
+    <mapping tag="shop=bicycle"/>
+  </category>
+  <category title="Cycle vending">
+    <translation lang="de">Fahrradschlauch-Automaten</translation>
+    <translation lang="es">Máquinas expendedoras de cámaras de aire</translation>
+    <translation lang="fr">Distributeurs de chambres à air</translation>
+    <translation lang="it">Distributori automatici di camere d'aria</translation>
+    <translation lang="nl">Bandenautomaten / Fietsbandenautomaat</translation>
+    <mapping tag="vending=bicycle_tube"/>
+  </category>
+  <category title="Cycle self repair">
+    <translation lang="de">Fahrrad-Selbstreparaturstationen</translation>
+    <translation lang="es">Estaciones de autoservicio de reparación de bicicletas</translation>
+    <translation lang="fr">Stations de réparation de vélos en libre-service</translation>
+    <translation lang="it">Colonnine di riparazione biciclette</translation>
+    <translation lang="nl">Fietsreparatiestations</translation>
+    <mapping tag="amenity=bicycle_repair_station"/>
+  </category>
+</category>
+
+</category>
