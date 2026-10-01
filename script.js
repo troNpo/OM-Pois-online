@@ -1,4 +1,7 @@
 document.addEventListener("DOMContentLoaded", async () => {
+    const container = document.getElementById("category-container");
+    container.innerHTML = "<p style='color: #ffa726;'>Iniciando y cargando archivo XML...</p>";
+
     const urlParams = new URLSearchParams(window.location.search);
     const lat = parseFloat(urlParams.get("lat")) || 40.4168;
     const lon = parseFloat(urlParams.get("lon")) || -3.7038;
@@ -13,45 +16,52 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // Control para el checkbox global de "Expandir nodos"
     const toggleExpandAll = document.getElementById("toggle-expand-all");
-    toggleExpandAll.addEventListener("change", (e) => {
-        const groups = document.querySelectorAll(".category-group");
-        groups.forEach(group => {
-            if (e.target.checked) {
-                group.classList.add("active");
-            } else {
-                group.classList.remove("active");
-            }
+    if (toggleExpandAll) {
+        toggleExpandAll.addEventListener("change", (e) => {
+            const groups = document.querySelectorAll(".category-group");
+            groups.forEach(group => {
+                if (e.target.checked) {
+                    group.classList.add("active");
+                } else {
+                    group.classList.remove("active");
+                }
+            });
         });
-    });
+    }
 
     let xmlDoc;
     try {
-        const response = await fetch("poi-mapping-overpass-turbo.xml");
+        // Usamos ruta relativa explícita para evitar fallos en subdirectorios de GitHub Pages
+        const response = await fetch("./poi-mapping-overpass-turbo.xml");
+        
         if (!response.ok) {
-            throw new Error(`Error HTTP: ${response.status} (No se encuentra el archivo)`);
+            throw new Error(`No se encuentra el archivo XML (Error HTTP: ${response.status})`);
         }
+        
         const text = await response.text();
         xmlDoc = new DOMParser().parseFromString(text, "text/xml");
         
-        // Comprobar si hubo error de parseo en el XML
         const parserError = xmlDoc.querySelector("parsererror");
         if (parserError) {
-            throw new Error("El archivo XML está mal formado.");
+            throw new Error("El archivo XML tiene errores de sintaxis.");
         }
 
         renderizarCategorias(xmlDoc);
     } catch (error) {
         console.error("Error al cargar el XML:", error);
-        document.getElementById("category-container").innerHTML = `<p style='color: #ff5252;'>${error.message}</p>`;
+        container.innerHTML = `<p style='color: #ff5252;'>${error.message}</p>`;
     }
 
-    document.getElementById("btn-search").addEventListener("click", () => {
-        if (!xmlDoc) {
-            alert("El archivo XML aún no se ha cargado.");
-            return;
-        }
-        ejecutarConsultaOverpass(lat, lon);
-    });
+    const btnSearch = document.getElementById("btn-search");
+    if (btnSearch) {
+        btnSearch.addEventListener("click", () => {
+            if (!xmlDoc) {
+                alert("El archivo XML aún no se ha cargado correctamente.");
+                return;
+            }
+            ejecutarConsultaOverpass(lat, lon);
+        });
+    }
 });
 
 function renderizarCategorias(xmlDoc) {
@@ -60,7 +70,7 @@ function renderizarCategorias(xmlDoc) {
     const categories = xmlDoc.querySelectorAll("category");
     
     if (categories.length === 0) {
-        container.innerHTML = "<p>No se encontraron categorías en el XML.</p>";
+        container.innerHTML = "<p style='color: #ff5252;'>No se encontraron categorías en el XML.</p>";
         return;
     }
 
