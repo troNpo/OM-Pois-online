@@ -3,23 +3,31 @@ body {
     background-color: #121212;
     color: #e0e0e0;
     margin: 0;
-    padding: 10px;
+    padding: 0;
 }
 
 .app-container {
     max-width: 600px;
     margin: 0 auto;
-    background: #1e1e1e;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    background: #121212;
+    padding: 10px;
+}
+
+.orux-top-bar {
+    background-color: #b71c1c;
+    color: white;
+    padding: 12px 15px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin: -10px -10px 15px -10px;
 }
 
 .search-params {
-    background: #2c2c2c;
+    background: #1e1e1e;
     padding: 12px;
-    border-radius: 6px;
+    border-radius: 4px;
     margin-bottom: 10px;
+    border: 1px solid #2c2c2c;
 }
 
 .search-params input[type="range"] {
@@ -27,73 +35,78 @@ body {
     margin-top: 8px;
 }
 
-/* Estilos de las agrupaciones de categorías */
-.category-group {
-    background: #252525;
-    margin-bottom: 8px;
-    border-radius: 6px;
-    overflow: hidden;
-    border: 1px solid #333;
+.categories-header-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #2c2c2c;
+    margin-bottom: 5px;
 }
 
-.category-header {
-    padding: 12px 15px;
-    background: #2c2c2c;
-    cursor: pointer;
+/* Estilo de elementos de categoría tipo OruxMaps */
+.category-node {
+    border-bottom: 1px solid #222;
+}
+
+.category-row {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    font-weight: bold;
-    color: #fff;
+    justify-content: space-between;
+    padding: 12px 8px;
+    background: #121212;
+    cursor: pointer;
     user-select: none;
 }
 
-.category-header:hover {
-    background: #333;
+.category-row:hover {
+    background: #1a1a1a;
 }
 
-.category-header .arrow {
-    transition: transform 0.3s ease;
-}
-
-.category-group.active .category-header .arrow {
-    transform: rotate(180deg);
-}
-
-/* Contenedor de subcategorías (oculto por defecto) */
-.category-items {
-    display: none;
-    padding: 10px 15px;
-    background-color: #1a1a1a;
-    border-top: 1px solid #333;
-    flex-direction: column;
-    gap: 8px;
-}
-
-/* Estado activo cuando se despliega el acordeón */
-.category-group.active .category-items {
-    display: flex;
-}
-
-.category-items label {
+.category-left {
     display: flex;
     align-items: center;
-    gap: 10px;
-    font-size: 0.95rem;
+    gap: 12px;
+}
+
+.category-left input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: #b71c1c;
     cursor: pointer;
-    color: #ccc;
 }
 
-.category-items label:hover {
-    color: #fff;
+.category-arrow {
+    font-size: 1rem;
+    color: #888;
+    transition: transform 0.2s ease;
+    width: 24px;
+    text-align: center;
 }
 
-/* Estilo de interruptor (Switch) moderno para Expandir nodos */
+/* Subniveles ocultos por defecto */
+.category-children {
+    display: none !important;
+    padding-left: 25px;
+    background: #161616;
+    border-left: 2px solid #b71c1c;
+}
+
+.category-node.active > .category-children {
+    display: flex !important;
+    flex-direction: column;
+}
+
+.category-node.active > .category-row .category-arrow {
+    transform: rotate(90deg); /* Gira hacia abajo o se adapta a flecha inferior */
+}
+
+/* Interruptor (Toggle Switch) idéntico al de la captura */
 .toggle-switch {
     position: relative;
     display: inline-block;
-    width: 40px;
-    height: 20px;
+    width: 44px;
+    height: 22px;
 }
 
 .toggle-switch input {
@@ -106,16 +119,16 @@ body {
     position: absolute;
     cursor: pointer;
     top: 0; left: 0; right: 0; bottom: 0;
-    background-color: #444;
+    background-color: #555;
     transition: .3s;
-    border-radius: 20px;
+    border-radius: 22px;
 }
 
 .slider-switch:before {
     position: absolute;
     content: "";
-    height: 14px;
-    width: 14px;
+    height: 16px;
+    width: 16px;
     left: 3px;
     bottom: 3px;
     background-color: white;
@@ -128,5 +141,5 @@ body {
 }
 
 .toggle-switch input:checked + .slider-switch:before {
-    transform: translateX(20px);
+    transform: translateX(22px);
 }
