@@ -1,6 +1,8 @@
+let xmlDocGlobal = null;
+
 document.addEventListener("DOMContentLoaded", async () => {
     const container = document.getElementById("category-container");
-    container.innerHTML = "<p style='color: #ffa726;'>Iniciando y cargando archivo XML...</p>";
+    container.innerHTML = "<p style='color: #ffa726;'>Cargando categorías...</p>";
 
     const urlParams = new URLSearchParams(window.location.search);
     const lat = parseFloat(urlParams.get("lat")) || 40.4168;
@@ -28,23 +30,31 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     }
 
-    let xmlDoc;
+    // Evento para actualizar los textos al cambiar de idioma en el desplegable
+    const selectLang = document.getElementById("select-lang");
+    if (selectLang) {
+        selectLang.addEventListener("change", () => {
+            if (xmlDocGlobal) {
+                renderizarCategorias(xmlDocGlobal);
+            }
+        });
+    }
+
     try {
         const response = await fetch("./poi-mapping-overpass-turbo.xml");
-        
         if (!response.ok) {
             throw new Error(`No se encuentra el archivo XML (Error HTTP: ${response.status})`);
         }
         
         const text = await response.text();
-        xmlDoc = new DOMParser().parseFromString(text, "text/xml");
+        xmlDocGlobal = new DOMParser().parseFromString(text, "text/xml");
         
-        const parserError = xmlDoc.querySelector("parsererror");
+        const parserError = xmlDocGlobal.querySelector("parsererror");
         if (parserError) {
             throw new Error("El archivo XML tiene errores de sintaxis.");
         }
 
-        renderizarCategorias(xmlDoc);
+        renderizarCategorias(xmlDocGlobal);
     } catch (error) {
         console.error("Error al cargar el XML:", error);
         container.innerHTML = `<p style='color: #ff5252;'>${error.message}</p>`;
@@ -53,7 +63,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const btnSearch = document.getElementById("btn-search");
     if (btnSearch) {
         btnSearch.addEventListener("click", () => {
-            if (!xmlDoc) {
+            if (!xmlDocGlobal) {
                 alert("El archivo XML aún no se ha cargado correctamente.");
                 return;
             }
@@ -62,32 +72,52 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 });
 
+function obtenerTraduccion(element, fallback) {
+    const selectLang = document.getElementById("select-lang");
+    const lang = selectLang ? selectLang.value : "es";
+
+    // Si el idioma seleccionado es inglés, tiramos del atributo "title" del XML
+    if (lang === "en") {
+        return element.getAttribute("title") || fallback;
+    }
+
+    // Para el resto de idiomas, buscamos su etiqueta <translation lang="...">
+    const trans = element.querySelector(`translation[lang='${lang}']`);
+    if (trans && trans.textContent.trim()) {
+        return trans.textContent.trim();
+    }
+    
+    // Fallback a español si no encuentra el idioma elegido
+    const transEs = element.querySelector("translation[lang='es']");
+    if (transEs && transEs.textContent.trim()) {
+        return transEs.textContent.trim();
+    }
+
+    // Último recurso: el título original
+    return element.getAttribute("title") || fallback;
+}
+
 function renderizarCategorias(xmlDoc) {
     const container = document.getElementById("category-container");
     container.innerHTML = "";
-    const categories = xmlDoc.querySelectorAll("category");
     
-    if (categories.length === 0) {
-        container.innerHTML = "<p style='color: #ff5252;'>No se encontraron categorías en el XML.</p>";
+    const rootCategories = xmlDoc.querySelectorAll(":scope > category, poi_categories > category");
+    
+    if (rootCategories.length === 0) {
+        container.innerHTML = "<p style='color: #ff5252;'>No se encontraron categorías principales en el XML.</p>";
         return;
     }
 
-    categories.forEach((cat) => {
-        const key = cat.getAttribute("key");
-        const nameNode = cat.querySelector("name");
-        
-        // Extraer el texto en español de forma flexible
-        let catName = key;
-        if (nameNode) {
-            catName = nameNode.getAttribute("es") || nameNode.textContent || key;
-        }
+    rootCategories.forEach((cat) => {
+        const catTitle = cat.getAttribute("title") || "Categoría";
+        const catName = obtenerTraduccion(cat, catTitle);
 
         const groupDiv = document.createElement("div");
         groupDiv.className = "category-group";
 
         const headerDiv = document.createElement("div");
         headerDiv.className = "category-header";
-        headerDiv.innerHTML = `<span>${catName} (${key})</span> <span class="arrow">▼</span>`;
+        headerDiv.innerHTML = `<span>${catName}</span> <span class="arrow">▼</span>`;
         
         headerDiv.addEventListener("click", () => {
             groupDiv.classList.toggle("active");
@@ -96,20 +126,47 @@ function renderizarCategorias(xmlDoc) {
         const itemsDiv = document.createElement("div");
         itemsDiv.className = "category-items";
 
-        const subcategories = cat.querySelectorAll("subcategory");
-        subcategories.forEach((sub) => {
-            const subValue = sub.getAttribute("value");
-            const subNameNode = sub.querySelector("name");
-            
-            let subName = subValue;
-            if (subNameNode) {
-                subName = subNameNode.getAttribute("es") || subNameNode.textContent || subValue;
-            }
+        // Función recursiva o iterativa para extraer subcategorías y mapeos
+        const procesarSubcategorias = (parentElem) => {
+            const subCategories = parentElem.querySelectorAll(":scope > category");
+            subCategories.forEach((sub) => {
+                const subTitle = sub.getAttribute("title") || "";
+                const subName = obtenerTraduccion(sub, subTitle);
+
+                // Si tiene subcategorías dentro, procesarlas también
+                procesarSubcategorias(sub);
+
+                // Mapeos de esta subcategoría
+                const mappings = sub.querySelectorAll(":scope > mapping");
+                mappings.forEach((map) => {
+                    const tagAttr = map.getAttribute("tag");
+                    if (!tagAttr) return;
+
+                    const [tagKey, tagValue] = tagAttr.split("=");
+
+                    const label = document.createElement("label");
+                    label.innerHTML = `
+                        <input type="checkbox" class="subcat-checkbox" data-key="${tagKey}" data-value="${tagValue}">
+                        <span>${subName} (${tagAttr})</span>
+                    `;
+                    itemsDiv.appendChild(label);
+                });
+            });
+        };
+
+        procesarSubcategorias(cat);
+
+        // Mapeos directos de la categoría principal
+        const directMappings = cat.querySelectorAll(":scope > mapping");
+        directMappings.forEach((map) => {
+            const tagAttr = map.getAttribute("tag");
+            if (!tagAttr) return;
+            const [tagKey, tagValue] = tagAttr.split("=");
 
             const label = document.createElement("label");
             label.innerHTML = `
-                <input type="checkbox" class="subcat-checkbox" data-key="${key}" data-value="${subValue}">
-                <span>${subName} (${subValue})</span>
+                <input type="checkbox" class="subcat-checkbox" data-key="${tagKey}" data-value="${tagValue}">
+                <span>${catName} (${tagAttr})</span>
             `;
             itemsDiv.appendChild(label);
         });
@@ -127,7 +184,7 @@ async function ejecutarConsultaOverpass(lat, lon) {
 
     const checkboxes = document.querySelectorAll(".subcat-checkbox:checked");
     if (checkboxes.length === 0) {
-        alert("Por favor, selecciona al menos una subcategoría.");
+        alert("Por favor, selecciona al menos una categoría o elemento.");
         return;
     }
 
