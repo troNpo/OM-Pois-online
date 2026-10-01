@@ -30,7 +30,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     }
 
-    // Evento para actualizar los textos al cambiar de idioma en el desplegable
     const selectLang = document.getElementById("select-lang");
     if (selectLang) {
         selectLang.addEventListener("change", () => {
@@ -43,7 +42,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     try {
         const response = await fetch("./poi-mapping-overpass-turbo.xml");
         if (!response.ok) {
-            throw new Error(`No se encuentra el archivo XML (Error HTTP: ${response.status})`);
+            throw new Error(`No se encuentra el XML (Error HTTP: ${response.status})`);
         }
         
         const text = await response.text();
@@ -76,24 +75,20 @@ function obtenerTraduccion(element, fallback) {
     const selectLang = document.getElementById("select-lang");
     const lang = selectLang ? selectLang.value : "es";
 
-    // Si el idioma seleccionado es inglés, tiramos del atributo "title" del XML
     if (lang === "en") {
         return element.getAttribute("title") || fallback;
     }
 
-    // Para el resto de idiomas, buscamos su etiqueta <translation lang="...">
     const trans = element.querySelector(`translation[lang='${lang}']`);
     if (trans && trans.textContent.trim()) {
         return trans.textContent.trim();
     }
     
-    // Fallback a español si no encuentra el idioma elegido
     const transEs = element.querySelector("translation[lang='es']");
     if (transEs && transEs.textContent.trim()) {
         return transEs.textContent.trim();
     }
 
-    // Último recurso: el título original
     return element.getAttribute("title") || fallback;
 }
 
@@ -126,17 +121,14 @@ function renderizarCategorias(xmlDoc) {
         const itemsDiv = document.createElement("div");
         itemsDiv.className = "category-items";
 
-        // Función recursiva o iterativa para extraer subcategorías y mapeos
         const procesarSubcategorias = (parentElem) => {
             const subCategories = parentElem.querySelectorAll(":scope > category");
             subCategories.forEach((sub) => {
                 const subTitle = sub.getAttribute("title") || "";
                 const subName = obtenerTraduccion(sub, subTitle);
 
-                // Si tiene subcategorías dentro, procesarlas también
                 procesarSubcategorias(sub);
 
-                // Mapeos de esta subcategoría
                 const mappings = sub.querySelectorAll(":scope > mapping");
                 mappings.forEach((map) => {
                     const tagAttr = map.getAttribute("tag");
@@ -145,9 +137,10 @@ function renderizarCategorias(xmlDoc) {
                     const [tagKey, tagValue] = tagAttr.split("=");
 
                     const label = document.createElement("label");
+                    // Mostramos solo el nombre limpio sin las etiquetas OSM entre paréntesis
                     label.innerHTML = `
                         <input type="checkbox" class="subcat-checkbox" data-key="${tagKey}" data-value="${tagValue}">
-                        <span>${subName} (${tagAttr})</span>
+                        <span>${subName}</span>
                     `;
                     itemsDiv.appendChild(label);
                 });
@@ -156,7 +149,6 @@ function renderizarCategorias(xmlDoc) {
 
         procesarSubcategorias(cat);
 
-        // Mapeos directos de la categoría principal
         const directMappings = cat.querySelectorAll(":scope > mapping");
         directMappings.forEach((map) => {
             const tagAttr = map.getAttribute("tag");
@@ -166,7 +158,7 @@ function renderizarCategorias(xmlDoc) {
             const label = document.createElement("label");
             label.innerHTML = `
                 <input type="checkbox" class="subcat-checkbox" data-key="${tagKey}" data-value="${tagValue}">
-                <span>${catName} (${tagAttr})</span>
+                <span>${catName}</span>
             `;
             itemsDiv.appendChild(label);
         });
