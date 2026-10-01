@@ -9,7 +9,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     const lon = parseFloat(urlParams.get("lon")) || -3.7038;
 
     // Mostrar coordenadas formateadas
-    document.getElementById("info-coords").innerText = `Centro: ${lat.toFixed(5)}°N, ${lon.toFixed(5)}°E`;
+    const infoCoords = document.getElementById("info-coords");
+    if (infoCoords) {
+        infoCoords.innerText = `Centro: ${lat.toFixed(5)}°N, ${lon.toFixed(5)}°E`;
+    }
 
     // Control del Slider de radio y cálculo de superficie en tiempo real
     const radiusSlider = document.getElementById("search-radius");
@@ -17,17 +20,24 @@ document.addEventListener("DOMContentLoaded", async () => {
     const infoArea = document.getElementById("info-area");
 
     function actualizarCalculosRadio(r) {
-        radiusValueSpan.innerText = r;
-        const superficie = Math.PI * Math.pow(r, 2);
-        infoArea.innerText = `Superficie del área: ${superficie.toFixed(1)} km²`;
+        const radioNum = parseFloat(r) || 0;
+        if (radiusValueSpan) {
+            radiusValueSpan.innerText = radioNum;
+        }
+        const superficie = Math.PI * Math.pow(radioNum, 2);
+        if (infoArea) {
+            infoArea.innerText = `Superficie del área: ${superficie.toFixed(1)} km²`;
+        }
     }
 
-    // Inicializar con el valor por defecto del slider
-    actualizarCalculosRadio(radiusSlider.value);
+    if (radiusSlider) {
+        // Inicializar con el valor actual del slider
+        actualizarCalculosRadio(radiusSlider.value);
 
-    radiusSlider.addEventListener("input", (e) => {
-        actualizarCalculosRadio(e.target.value);
-    });
+        radiusSlider.addEventListener("input", (e) => {
+            actualizarCalculosRadio(e.target.value);
+        });
+    }
 
     // Control del interruptor general "Expandir nodos"
     const toggleExpandAll = document.getElementById("toggle-expand-all");
