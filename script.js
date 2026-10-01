@@ -2,18 +2,31 @@ let xmlDocGlobal = null;
 
 document.addEventListener("DOMContentLoaded", async () => {
     const container = document.getElementById("category-container");
-    container.innerHTML = "<p style='color: #ffa726; padding: 10px;'>Cargando categorías...</p>";
+    container.innerHTML = "<p style='color: #ffa726; padding: 15px;'>Cargando categorías...</p>";
 
     const urlParams = new URLSearchParams(window.location.search);
     const lat = parseFloat(urlParams.get("lat")) || 40.4168;
     const lon = parseFloat(urlParams.get("lon")) || -3.7038;
 
+    // Mostrar coordenadas formateadas
     document.getElementById("info-coords").innerText = `Centro: ${lat.toFixed(5)}°N, ${lon.toFixed(5)}°E`;
 
+    // Control del Slider de radio y cálculo de superficie en tiempo real
     const radiusSlider = document.getElementById("search-radius");
     const radiusValueSpan = document.getElementById("radius-value");
+    const infoArea = document.getElementById("info-area");
+
+    function actualizarCalculosRadio(r) {
+        radiusValueSpan.innerText = r;
+        const superficie = Math.PI * Math.pow(r, 2);
+        infoArea.innerText = `Superficie del área: ${superficie.toFixed(1)} km²`;
+    }
+
+    // Inicializar con el valor por defecto del slider
+    actualizarCalculosRadio(radiusSlider.value);
+
     radiusSlider.addEventListener("input", (e) => {
-        radiusValueSpan.innerText = e.target.value;
+        actualizarCalculosRadio(e.target.value);
     });
 
     // Control del interruptor general "Expandir nodos"
@@ -31,6 +44,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     }
 
+    // Selector de idioma
     const selectLang = document.getElementById("select-lang");
     if (selectLang) {
         selectLang.addEventListener("change", () => {
@@ -40,6 +54,17 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     }
 
+    // Botón de limpiar selecciones (✕)
+    const btnClear = document.getElementById("btn-clear");
+    if (btnClear) {
+        btnClear.addEventListener("click", () => {
+            const checkboxes = document.querySelectorAll("input[type='checkbox']");
+            checkboxes.forEach(chk => chk.checked = false);
+            if (toggleExpandAll) toggleExpandAll.checked = false;
+        });
+    }
+
+    // Cargar archivo XML de categorías
     try {
         const response = await fetch("./poi-mapping-overpass-turbo.xml");
         if (!response.ok) {
@@ -57,9 +82,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         renderizarArbolCategorias(xmlDocGlobal);
     } catch (error) {
         console.error("Error al cargar el XML:", error);
-        container.innerHTML = `<p style='color: #ff5252; padding: 10px;'>${error.message}</p>`;
+        container.innerHTML = `<p style='color: #ff5252; padding: 15px;'>${error.message}</p>`;
     }
 
+    // Botón de búsqueda (✓) en la barra superior
     const btnSearch = document.getElementById("btn-search");
     if (btnSearch) {
         btnSearch.addEventListener("click", () => {
@@ -103,7 +129,6 @@ function construirNodoXML(categoryElem) {
     const rowDiv = document.createElement("div");
     rowDiv.className = "category-row";
 
-    // Subcategorías internas o Mappings
     const subCategories = categoryElem.querySelectorAll(":scope > category");
     const mappings = categoryElem.querySelectorAll(":scope > mapping");
     const hasChildren = subCategories.length > 0 || mappings.length > 0;
@@ -117,24 +142,19 @@ function construirNodoXML(categoryElem) {
     `;
 
     const checkbox = rowDiv.querySelector("input[type='checkbox']");
-
-    // Contenedor de hijos (subcategorías o mapeos finales)
     const childrenDiv = document.createElement("div");
     childrenDiv.className = "category-children";
 
     if (hasChildren) {
-        // Evento para expandir/contraer al hacer clic en la fila o flecha
         rowDiv.addEventListener("click", (e) => {
-            if (e.target === checkbox) return; // Si hace clic en el checkbox, no expande
+            if (e.target === checkbox) return;
             nodeDiv.classList.toggle("active");
         });
 
-        // Procesar subcategorías recursivamente
         subCategories.forEach(sub => {
             childrenDiv.appendChild(construirNodoXML(sub));
         });
 
-        // Procesar mapeos directos limpios (sin tags OSM visibles)
         mappings.forEach(map => {
             const tagAttr = map.getAttribute("tag");
             if (!tagAttr) return;
@@ -150,10 +170,6 @@ function construirNodoXML(categoryElem) {
             `;
             childrenDiv.appendChild(mapRow);
         });
-    } else {
-        // Si no tiene hijos pero es una categoría hoja con mapeo propio
-        checkbox.className = "subcat-checkbox";
-        // Aquí podríamos extraer su tag si existiera directamente
     }
 
     nodeDiv.appendChild(rowDiv);
@@ -161,7 +177,6 @@ function construirNodoXML(categoryElem) {
         nodeDiv.appendChild(childrenDiv);
     }
 
-    // Cascada de selección de checkboxes (si marcas la categoría padre, marca los hijos opcionalmente o viceversa)
     checkbox.addEventListener("change", () => {
         const descendantChecks = nodeDiv.querySelectorAll("input[type='checkbox']");
         descendantChecks.forEach(ch => {
@@ -179,7 +194,7 @@ function renderizarArbolCategorias(xmlDoc) {
     const rootCategories = xmlDoc.querySelectorAll(":scope > category, poi_categories > category");
     
     if (rootCategories.length === 0) {
-        container.innerHTML = "<p style='color: #ff5252; padding: 10px;'>No se encontraron categorías principales en el XML.</p>";
+        container.innerHTML = "<p style='color: #ff5252; padding: 15px;'>No se encontraron categorías principales en el XML.</p>";
         return;
     }
 
