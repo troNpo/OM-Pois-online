@@ -3,14 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buscador de PDI - Overpass</title>
+    <title>Búsqueda de PDI</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="app-container">
-        <!-- Parámetros de búsqueda -->
+        <!-- Cabecera estilo OruxMaps -->
+        <div class="orux-top-bar">
+            <span>Búsqueda de PDI</span>
+        </div>
+
         <div class="search-params">
-            <div id="info-coords" style="font-size: 0.85rem; color: #b0bec5; margin-bottom: 8px;">Centro: --</div>
+            <div id="info-coords" style="font-size: 0.85rem; color: #b0bec5; margin-bottom: 8px;">Max. Lat: --</div>
             
             <label for="search-radius">Radio de búsqueda: <span id="radius-value">20</span> km</label>
             <input type="range" id="search-radius" min="1" max="100" value="20">
@@ -34,10 +38,10 @@
             </select>
         </div>
 
-        <!-- Cabecera de Categorías y Toggle Switch -->
-        <div class="categories-header" style="display: flex; align-items: center; justify-content: space-between; margin-top: 20px; margin-bottom: 10px;">
-            <h3 style="margin: 0; color: #fff;">Categorías</h3>
-            <div style="display: flex; align-items: center; gap: 8px;">
+        <!-- Cabecera de Categorías con el Interruptor idéntico a la captura -->
+        <div class="categories-header-bar">
+            <span style="font-weight: bold; color: #fff;">Categorías</span>
+            <div style="display: flex; align-items: center; gap: 10px;">
                 <span style="font-size: 0.85rem; color: #b0bec5;">Expandir nodos</span>
                 <label class="toggle-switch">
                     <input type="checkbox" id="toggle-expand-all">
@@ -46,12 +50,9 @@
             </div>
         </div>
 
-        <!-- Contenedor dinámico del acordeón -->
-        <div id="category-container">
-            <!-- Las categorías se inyectarán aquí mediante script.js -->
-        </div>
+        <!-- Contenedor del árbol de categorías -->
+        <div id="category-container"></div>
 
-        <!-- Botón de Búsqueda -->
         <button id="btn-search" style="width: 100%; margin-top: 20px; padding: 12px; background: #b71c1c; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">
             Buscar y Generar KML
         </button>
