@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Búsqueda de PDI - OruxMaps</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Cabecera -->
+        <header class="app-header">
+            <h2>Búsqueda de PDI</h2>
+            <button id="btn-search" title="Buscar y Exportar KML">✔</button>
+        </header>
+
+        <!-- Panel de Coordenadas y Radio -->
+        <section class="config-section">
+            <div class="coords-box" id="info-coords">
+                Centro: Leyendo coordenadas...
+            </div>
+            
+            <!-- Barra deslizadora de radio (hasta 40km) -->
+            <div class="slider-control">
+                <label for="search-radius">Radio de búsqueda: <span id="radius-value">20</span> km</label>
+                <input type="range" id="search-radius" min="1" max="40" value="20">
+            </div>
+
+            <div class="input-group">
+                <input type="text" id="search-keywords" placeholder="Palabras a buscar (opcional)">
+            </div>
+            
+            <div class="input-group">
+                <label for="max-results">Max. resultados (por defecto 3000):</label>
+                <input type="number" id="max-results" value="3000">
+            </div>
+        </section>
+
+        <!-- Listado Dinámico de Categorías desde el XML -->
+        <section class="categories-section">
+            <div class="categories-header">
+                <h3>Categorías</h3>
+                <label class="toggle-expand">
+                    <span>Expandir nodos</span>
+                    <input type="checkbox" id="toggle-expand-all">
+                </label>
+            </div>
+            <div id="categories-container">
+                <p style="color: #888; font-size: 0.9rem;">Cargando categorías desde el XML...</p>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
