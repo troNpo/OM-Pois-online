@@ -92,18 +92,21 @@ document.addEventListener("DOMContentLoaded", async () => {
         console.error("Error al inicializar MapLibre:", e);
     }
 
-    // Control del Acordeón del Mapa
+    // Control del Acordeón del Mapa (Corregido para evaluar correctamente el estado display)
     const btnToggleMap = document.getElementById("btn-toggle-map");
     const mapContainerCollapse = document.getElementById("map-container-collapse");
     if (btnToggleMap && mapContainerCollapse) {
         btnToggleMap.addEventListener("click", () => {
-            const isHidden = mapContainerCollapse.style.display === "none";
+            const isHidden = mapContainerCollapse.style.display === "none" || mapContainerCollapse.style.display === "";
             mapContainerCollapse.style.display = isHidden ? "block" : "none";
             btnToggleMap.classList.toggle("active", isHidden);
             
-            // Forzar renderizado de MapLibre al desplegarse
+            // Forzar renderizado de MapLibre y recentrar al desplegarse
             if (isHidden && miniMap) {
-                setTimeout(() => miniMap.resize(), 50);
+                setTimeout(() => {
+                    miniMap.resize();
+                    miniMap.jumpTo({ center: [currentLon, currentLat] });
+                }, 100);
             }
         });
     }
