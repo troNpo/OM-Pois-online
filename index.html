@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Búsqueda de PDI - OruxMaps / Cruiser</title>
+    
+    <!-- MapLibre GL CSS -->
+    <link href="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.css" rel="stylesheet" />
+    <!-- MapLibre GL JS -->
+    <script src="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.js"></script>
+
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -44,7 +50,7 @@
             <span class="accordion-arrow">›</span>
         </button>
         <div id="map-container-collapse" class="accordion-content" style="display: none;">
-            <div id="mini-map" style="width: 100%; height: 200px; background: #1a1a1a;"></div>
+            <div id="mini-map"></div>
         </div>
     </div>
 
