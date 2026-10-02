@@ -31,9 +31,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     if (radiusSlider) {
-        // Inicializar con el valor actual del slider
         actualizarCalculosRadio(radiusSlider.value);
-
         radiusSlider.addEventListener("input", (e) => {
             actualizarCalculosRadio(e.target.value);
         });
@@ -139,9 +137,16 @@ function construirNodoXML(categoryElem) {
     const rowDiv = document.createElement("div");
     rowDiv.className = "category-row";
 
-    const subCategories = categoryElem.querySelectorAll(":scope > category");
-    const mappings = categoryElem.querySelectorAll(":scope > mapping");
-    const hasChildren = subCategories.length > 0 || mappings.length > 0;
+    const subCategories = Array.from(categoryElem.querySelectorAll(":scope > category"));
+    const mappings = Array.from(categoryElem.querySelectorAll(":scope > mapping"));
+
+    // Filtrar subcategorías redundantes que se llamen exactamente igual que el padre actual
+    const validSubCategories = subCategories.filter(sub => {
+        const subName = obtenerTraduccion(sub, sub.getAttribute("title") || "");
+        return subName.toLowerCase() !== name.toLowerCase();
+    });
+
+    const hasChildren = validSubCategories.length > 0 || mappings.length > 0;
 
     rowDiv.innerHTML = `
         <div class="category-left">
@@ -161,7 +166,7 @@ function construirNodoXML(categoryElem) {
             nodeDiv.classList.toggle("active");
         });
 
-        subCategories.forEach(sub => {
+        validSubCategories.forEach(sub => {
             childrenDiv.appendChild(construirNodoXML(sub));
         });
 
@@ -289,3 +294,4 @@ function generarKMLAgrupado(data) {
     a.click();
     document.body.removeChild(a);
 }
+
