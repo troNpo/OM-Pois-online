@@ -1,4 +1,7 @@
 let xmlDocGlobal = null;
+let miniMap = null;
+let currentLat = 40.4168;
+let currentLon = -3.7038;
 
 const uiTranslations = {
     es: {
@@ -77,11 +80,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     container.innerHTML = "<p style='color: #ffa726; padding: 15px;'>Cargando categorías...</p>";
 
     const urlParams = new URLSearchParams(window.location.search);
-    const lat = parseFloat(urlParams.get("lat")) || 40.4168;
-    const lon = parseFloat(urlParams.get("lon")) || -3.7038;
+    currentLat = parseFloat(urlParams.get("lat")) || 40.4168;
+    currentLon = parseFloat(urlParams.get("lon")) || -3.7038;
 
     actualizarTextosUI();
 
+    // Inicializar Mapa estático MapLibre
+    inicializarMiniMapa();
+
+    // Control del Acordeón del Mapa
     const btnToggleMap = document.getElementById("btn-toggle-map");
     const mapContainerCollapse = document.getElementById("map-container-collapse");
     if (btnToggleMap && mapContainerCollapse) {
@@ -89,9 +96,15 @@ document.addEventListener("DOMContentLoaded", async () => {
             const isHidden = mapContainerCollapse.style.display === "none";
             mapContainerCollapse.style.display = isHidden ? "block" : "none";
             btnToggleMap.classList.toggle("active", isHidden);
+            
+            // Forzar renderizado de MapLibre al desplegarse
+            if (isHidden && miniMap) {
+                setTimeout(() => miniMap.resize(), 50);
+            }
         });
     }
 
+    // Control del Slider de radio y cálculo de superficie + radio en mapa
     const radiusSlider = document.getElementById("search-radius");
     const radiusValueSpan = document.getElementById("radius-value");
 
@@ -102,6 +115,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
         currentAreaValue = Math.PI * Math.pow(radioNum, 2);
         actualizarTextosUI();
+        actualizarCirculoRadioMapa(radioNum);
     }
 
     if (radiusSlider) {
@@ -155,7 +169,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             document.body.classList.toggle("is-editing");
             const isEditing = document.body.classList.contains("is-editing");
             editActionsGroup.style.display = isEditing ? "flex" : "none";
-            // Al activar/desactivar modo edición, repintamos para mostrar/ocultar según corresponda
             if (xmlDocGlobal) renderizarArbolCategorias(xmlDocGlobal);
         });
     }
@@ -206,10 +219,183 @@ document.addEventListener("DOMContentLoaded", async () => {
                 alert("El archivo XML aún no se ha cargado correctamente.");
                 return;
             }
-            ejecutarConsultaOverpass(lat, lon);
+            ejecutarConsultaOverpass(currentLat, currentLon);
         });
     }
 });
+
+// --- INICIALIZACIÓN Y CONFIGURACIÓN DEL MAPA CON MAPLIBRE ---
+function inicializarMiniMapa() {
+    miniMap = new maplibregl.Map({
+        container: 'mini-map',
+        style: getMapStyle('osm'),
+        center: [currentLon, currentLat],
+        zoom: 11,
+        interactive: false // Bloqueado totalmente (sin desplazamiento ni zoom)
+    });
+
+    miniMap.on('load', () => {
+        agregarCapaRadioAlMapa(5); // Radio inicial por defecto
+    });
+
+    // Selector de capas base (OSM / Esri Satélite)
+    const layerBtns = document.querySelectorAll('.layer-btn');
+    layerBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            layerBtns.forEach(b => b.classList.remove('active'));
+            const targetBtn = e.currentTarget;
+            targetBtn.classList.add('active');
+            
+            const layerType = targetBtn.getAttribute('data-layer');
+            miniMap.setStyle(getMapStyle(layerType));
+
+            // Al cambiar de estilo, MapLibre recarga las fuentes y capas; reañadimos el círculo de radio tras el evento 'style.load'
+            miniMap.once('style.load', () => {
+                const currentRadius = parseFloat(document.getElementById("search-radius").value) || 5;
+                agregarCapaRadioAlMapa(currentRadius);
+            });
+        });
+    });
+}
+
+function getMapStyle(type) {
+    if (type === 'esri') {
+        return {
+            version: 8,
+            sources: {
+                'esri-sat': {
+                    type: 'raster',
+                    tiles: [
+                        'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
+                    ],
+                    tileSize: 256,
+                    attribution: 'Esri'
+                }
+            },
+            layers: [
+                {
+                    id: 'esri-sat-layer',
+                    type: 'raster',
+                    source: 'esri-sat',
+                    minzoom: 0,
+                    maxzoom: 22
+                }
+            ]
+        };
+    } else {
+        // Estilo OSM Estándar Raster
+        return {
+            version: 8,
+            sources: {
+                'osm-raster': {
+                    type: 'raster',
+                    tiles: [
+                        'https://tile.openstreetmap.org/{z}/{x}/{y}.png'
+                    ],
+                    tileSize: 256,
+                    attribution: '&copy; OpenStreetMap Contributors'
+                }
+            },
+            layers: [
+                {
+                    id: 'osm-layer',
+                    type: 'raster',
+                    source: 'osm-raster',
+                    minzoom: 0,
+                    maxzoom: 19
+                }
+            ]
+        };
+    }
+}
+
+function crearGeoJsonCirculo(centerLon, centerLat, radiusKm, points = 64) {
+    const coords = { latitude: centerLat, longitude: centerLon };
+    const km = radiusKm;
+    const ret = [];
+    const distanceX = km / (111.320 * Math.cos(centerLat * Math.PI / 180));
+    const distanceY = km / 110.574;
+
+    for (let i = 0; i < points; i++) {
+        const theta = (i / points) * (2 * Math.PI);
+        const x = coords.longitude + (distanceX * Math.cos(theta));
+        const y = coords.latitude + (distanceY * Math.sin(theta));
+        ret.push([x, y]);
+    }
+    ret.push(ret[0]); // Cerrar polígono
+
+    return {
+        type: 'Feature',
+        geometry: {
+            type: 'Polygon',
+            coordinates: [ret]
+        }
+    };
+}
+
+function agregarCapaRadioAlMapa(radiusKm) {
+    if (!miniMap) return;
+
+    const geojsonData = crearGeoJsonCirculo(currentLon, currentLat, radiusKm);
+
+    if (miniMap.getSource('search-radius-source')) {
+        miniMap.getSource('search-radius-source').setData(geojsonData);
+    } else {
+        miniMap.addSource('search-radius-source', {
+            type: 'geojson',
+            data: geojsonData
+        });
+
+        // Relleno transparente rojo
+        miniMap.addLayer({
+            id: 'radius-fill',
+            type: 'fill',
+            source: 'search-radius-source',
+            paint: {
+                'fill-color': '#b71c1c',
+                'fill-opacity': 0.2
+            }
+        });
+
+        // Borde rojo vivo
+        miniMap.addLayer({
+            id: 'radius-stroke',
+            type: 'line',
+            source: 'search-radius-source',
+            paint: {
+                'line-color': '#ff5252',
+                'line-width': 2
+            }
+        });
+
+        // Marcador central rojo elegante
+        const markerEl = document.createElement('div');
+        markerEl.className = 'center-map-marker';
+        markerEl.style.width = '14px';
+        markerEl.style.height = '14px';
+        markerEl.style.backgroundColor = '#b71c1c';
+        markerEl.style.border = '2px solid white';
+        markerEl.style.borderRadius = '50%';
+        markerEl.style.boxShadow = '0 0 6px rgba(0,0,0,0.5)';
+
+        new maplibregl.Marker({ element: markerEl })
+            .setLngLat([currentLon, currentLat])
+            .addTo(miniMap);
+    }
+
+    // Ajustar zoom del mini mapa dinámicamente según el radio seleccionado
+    const zoomLevel = Math.max(8, Math.min(14, 12 - Math.log2(radiusKm)));
+    miniMap.jumpTo({ center: [currentLon, currentLat], zoom: zoomLevel });
+}
+
+function actualizarCirculoRadioMapa(radiusKm) {
+    if (!miniMap || !miniMap.getSource('search-radius-source')) return;
+    const geojsonData = crearGeoJsonCirculo(currentLon, currentLat, radiusKm);
+    miniMap.getSource('search-radius-source').setData(geojsonData);
+    
+    const zoomLevel = Math.max(8, Math.min(14, 12 - Math.log2(radiusKm)));
+    miniMap.jumpTo({ center: [currentLon, currentLat], zoom: zoomLevel });
+}
 
 function obtenerTraduccion(element, fallback) {
     const selectLang = document.getElementById("select-lang");
