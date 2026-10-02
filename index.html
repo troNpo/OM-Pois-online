@@ -5,36 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Búsqueda de PDI - OruxMaps / Cruiser</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Si usas Leaflet o MapLibre para el mini mapa, puedes incluir sus estilos aquí -->
 </head>
 <body>
 
     <!-- BARRA SUPERIOR DE ACCIONES -->
     <header class="top-bar">
-        <!-- 1. Ayuda -->
-        <button id="btn-help" title="Ayuda"><img src="./ui-icons/help.svg" alt="Ayuda"></button>
-        
-        <!-- 2. Limpiar selecciones -->
-        <button id="btn-clear" title="Limpiar"><img src="./ui-icons/cancel.svg" alt="Limpiar"></button>
-        
-        <!-- 3. Realizar búsqueda -->
-        <button id="btn-search" title="Buscar"><img src="./ui-icons/check.svg" alt="Buscar"></button>
-        
-        <!-- 4. Selector de idioma con icono -->
-        <div class="lang-selector-wrapper">
-            <img src="./ui-icons/language.svg" alt="Idioma" class="icon-inline">
-            <select id="select-lang">
-                <option value="es">ES</option>
-                <option value="en">EN</option>
-                <option value="de">DE</option>
-                <option value="fr">FR</option>
-                <option value="it">IT</option>
-                <option value="nl">NL</option>
-            </select>
+        <div class="header-title" data-i18n="app_title">POI Exporter</div>
+        <div class="header-actions">
+            <!-- 1. Ayuda -->
+            <button id="btn-help" title="Ayuda"><img src="./ui-icons/help.svg" alt="Ayuda"></button>
+            
+            <!-- 2. Limpiar selecciones -->
+            <button id="btn-clear" title="Limpiar"><img src="./ui-icons/cancel.svg" alt="Limpiar"></button>
+            
+            <!-- 3. Realizar búsqueda -->
+            <button id="btn-search" title="Buscar"><img src="./ui-icons/check.svg" alt="Buscar"></button>
+            
+            <!-- 4. Selector de idioma con icono -->
+            <div class="lang-selector-wrapper">
+                <img src="./ui-icons/language.svg" alt="Idioma" class="icon-inline">
+                <select id="select-lang">
+                    <option value="es">ES</option>
+                    <option value="en">EN</option>
+                    <option value="de">DE</option>
+                    <option value="fr">FR</option>
+                    <option value="it">IT</option>
+                    <option value="nl">NL</option>
+                </select>
+            </div>
         </div>
     </header>
 
-    <!-- SECCIÓN DEL MAPA ACORDEÓN (Colocada arriba del slider para no taparlo) -->
+    <!-- SECCIÓN DEL MAPA ACORDEÓN (Encima del slider) -->
     <div class="map-accordion-section">
         <button id="btn-toggle-map" class="accordion-header">
             <img src="./ui-icons/map.svg" alt="Mapa" class="icon-inline"> 
@@ -57,8 +59,8 @@
     <div class="categories-header-bar">
         <div class="categories-title-group">
             <span data-i18n="label_categories">Categorías</span>
-            <!-- Botón de Editar Visibilidad -->
-            <button id="btn-edit-mode" title="Editar visibilidad"><img src="./ui-icons/eye.svg" alt="Editar"></button>
+            <!-- Botón de Editar Visibilidad con edit.svg -->
+            <button id="btn-edit-mode" title="Editar visibilidad"><img src="./ui-icons/edit.svg" alt="Editar"></button>
         </div>
         
         <!-- Acciones contextuales del modo edición (Ocultas por defecto) -->
@@ -68,17 +70,19 @@
         </div>
 
         <div class="expand-group">
-            <input type="checkbox" id="toggle-expand-all">
-            <label for="toggle-expand-all" data-i18n="label_expand">Expandir</label>
+            <label class="toggle-switch">
+                <input type="checkbox" id="toggle-expand-all">
+                <span class="slider-switch"></span>
+            </label>
+            <span data-i18n="label_expand">Expandir</span>
         </div>
     </div>
 
     <!-- CONTENEDOR PRINCIPAL DEL ÁRBOL DE CATEGORÍAS -->
     <main id="category-container">
-        <!-- Las categorías se cargarán dinámicamente aquí mediante JavaScript -->
+        <!-- Las categorías se cargarán dinámicamente aquí -->
     </main>
 
-    <!-- Enlace al script principal -->
     <script src="script.js"></script>
 </body>
 </html>
