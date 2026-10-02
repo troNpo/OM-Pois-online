@@ -21,10 +21,10 @@ body {
     margin: 0;
     padding: 0;
     height: 100vh;
-    overflow: hidden; /* Evita el scroll global de la página */
+    overflow: hidden;
 }
 
-/* 1. BARRA SUPERIOR DE ACCIONES (Iconos y Selector de Idioma) */
+/* BARRA SUPERIOR */
 .top-bar {
     background-color: var(--primary-red);
     color: white;
@@ -34,6 +34,18 @@ body {
     justify-content: space-between;
     box-shadow: 0 2px 6px rgba(0,0,0,0.3);
     z-index: 10;
+}
+
+.header-title {
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
 
 .top-bar button {
@@ -55,7 +67,7 @@ body {
 .top-bar img, .icon-inline {
     width: 20px;
     height: 20px;
-    filter: brightness(0) invert(1); /* Vuelve los iconos blancos automáticamente */
+    filter: brightness(0) invert(1);
 }
 
 .lang-selector-wrapper {
@@ -82,7 +94,7 @@ body {
     color: white;
 }
 
-/* 2. SECCIÓN DEL MAPA ACORDEÓN */
+/* MAPA ACORDEÓN */
 .map-accordion-section {
     background: var(--bg-card);
     border-bottom: 1px solid var(--border-color);
@@ -121,7 +133,7 @@ body {
     background: var(--bg-main);
 }
 
-/* 3. CONTROL DE RADIO Y SUPERFICIE */
+/* RADIO Y SUPERFICIE */
 .radius-control-panel {
     background: var(--bg-card);
     padding: 10px 15px;
@@ -156,7 +168,7 @@ body {
     color: var(--text-muted);
 }
 
-/* 4. CABECERA DE CATEGORÍAS Y MODO EDICIÓN */
+/* CABECERA DE CATEGORÍAS */
 .categories-header-bar {
     display: flex;
     align-items: center;
@@ -202,24 +214,73 @@ body {
 .expand-group {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
     font-size: 0.8rem;
     color: var(--text-muted);
-    cursor: pointer;
 }
 
-/* 5. CONTENEDOR PRINCIPAL DEL ÁRBOL DE CATEGORÍAS (Scroll independiente) */
+/* INTERRUPTOR (TOGGLE SWITCH) MODERNO */
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 34px;
+    height: 18px;
+}
+
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider-switch {
+    position: absolute;
+    cursor: pointer;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: #333;
+    transition: .3s;
+    border-radius: 20px;
+    border: 1px solid #444;
+}
+
+.slider-switch:before {
+    position: absolute;
+    content: "";
+    height: 12px;
+    width: 12px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    transition: .3s;
+    border-radius: 50%;
+}
+
+.toggle-switch input:checked + .slider-switch {
+    background-color: var(--primary-red);
+    border-color: var(--primary-red);
+}
+
+.toggle-switch input:checked + .slider-switch:before {
+    transform: translateX(16px);
+}
+
+/* CONTENEDOR PRINCIPAL */
 #category-container {
     flex: 1;
     overflow-y: auto;
     background: var(--bg-main);
     padding-bottom: 30px;
-    height: calc(100vh - 180px); /* Ajuste dinámico de altura restante */
+    height: calc(100vh - 180px);
 }
 
-/* ESTILOS DE LOS NODOS Y ÁRBOL XML */
+/* NODOS Y ÁRBOL */
 .category-node {
     border-bottom: 1px solid #1a1a1a;
+}
+
+/* Ocultar completamente sin atenuar */
+.category-node.category-hidden-by-user {
+    display: none !important;
 }
 
 .category-row {
@@ -251,18 +312,18 @@ body {
     background-color: #262626;
 }
 
-/* Botón de visibilidad (Ojo) dentro de cada nodo en Modo Edición */
+/* Botón de visibilidad (Ojo / Ojo tachado) en Modo Edición */
 .btn-toggle-visibility {
     background: transparent;
     border: none;
     cursor: pointer;
     padding: 2px;
-    display: none; /* Oculto por defecto fuera del modo edición */
+    display: none;
     align-items: center;
 }
 
 body.is-editing .btn-toggle-visibility {
-    display: inline-flex; /* Se muestra al activar el modo edición */
+    display: inline-flex;
 }
 
 .btn-toggle-visibility img {
@@ -271,12 +332,7 @@ body.is-editing .btn-toggle-visibility {
     filter: brightness(0) invert(0.7);
 }
 
-/* Categorías ocultas por el usuario */
-.category-node.category-hidden-by-user {
-    opacity: 0.35;
-}
-
-/* Checkboxes personalizados estilo oscuro */
+/* Checkboxes personalizados */
 .category-left input[type="checkbox"] {
     appearance: none;
     -webkit-appearance: none;
