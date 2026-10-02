@@ -232,41 +232,47 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 });
 
-// --- INICIALIZACIÓN Y CONFIGURACIÓN DEL MAPA CON MAPLIBRE ---
+// --- INICIALIZACIÓN Y CONFIGURACIÓN DEL MAPA CON MAPLIBRE (SOLO OSM) ---
 function inicializarMiniMapa() {
     const mapContainer = document.getElementById('mini-map');
     if (!mapContainer) return;
 
     miniMap = new maplibregl.Map({
         container: 'mini-map',
-        style: getMapStyle('osm'),
+        style: {
+            version: 8,
+            sources: {
+                'osm-raster': {
+                    type: 'raster',
+                    tiles: [
+                        'https://tile.openstreetmap.org/{z}/{x}/{y}.png'
+                    ],
+                    tileSize: 256,
+                    attribution: '&copy; OpenStreetMap Contributors | <a href="https://maplibre.org/" target="_blank">MapLibre</a>'
+                }
+            },
+            layers: [
+                {
+                    id: 'osm-layer',
+                    type: 'raster',
+                    source: 'osm-raster',
+                    minzoom: 0,
+                    maxzoom: 19
+                }
+            ]
+        },
         center: [currentLon, currentLat],
         zoom: 11,
         interactive: false
     });
 
     miniMap.on('load', () => {
-        agregarCapaRadioAlMapa(5);
-    });
-
-    const layerBtns = document.querySelectorAll('.layer-btn');
-    layerBtns.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            layerBtns.forEach(b => b.classList.remove('active'));
-            const targetBtn = e.currentTarget;
-            targetBtn.classList.add('active');
-            
-            const layerType = targetBtn.getAttribute('data-layer');
-            miniMap.setStyle(getMapStyle(layerType));
-
-            miniMap.once('style.load', () => {
-                const radiusSlider = document.getElementById("search-radius");
-                const currentRadius = radiusSlider ? parseFloat(radiusSlider.value) || 5 : 5;
-                agregarCapaRadioAlMapa(currentRadius);
-            });
-        });
+        const radiusSlider = document.getElementById("search-radius");
+        const currentRadius = radiusSlider ? parseFloat(radiusSlider.value) || 5 : 5;
+        agregarCapaRadioAlMapa(currentRadius);
     });
 }
+
 
 function getMapStyle(type) {
     if (type === 'esri') {
