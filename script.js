@@ -1,5 +1,58 @@
 let xmlDocGlobal = null;
 
+// Diccionario de traducciones para la interfaz estática
+const uiTranslations = {
+    es: {
+        map_preview: "Vista previa del área",
+        label_radius: "Radio",
+        label_categories: "Categorías",
+        label_expand: "Expandir"
+    },
+    en: {
+        map_preview: "Area preview",
+        label_radius: "Radius",
+        label_categories: "Categories",
+        label_expand: "Expand"
+    },
+    de: {
+        map_preview: "Bereichsvorschau",
+        label_radius: "Radius",
+        label_categories: "Kategorien",
+        label_expand: "Erweitern"
+    },
+    fr: {
+        map_preview: "Aperçu de la zone",
+        label_radius: "Rayon",
+        label_categories: "Catégories",
+        label_expand: "Développer"
+    },
+    it: {
+        map_preview: "Anteprima dell'area",
+        label_radius: "Raggio",
+        label_categories: "Categorie",
+        label_expand: "Espandi"
+    },
+    nl: {
+        map_preview: "Gebiedsvoorbeeld",
+        label_radius: "Straal",
+        label_categories: "Categorieën",
+        label_expand: "Uitvouwen"
+    }
+};
+
+function actualizarTextosUI() {
+    const selectLang = document.getElementById("select-lang");
+    const lang = selectLang ? selectLang.value : "es";
+    const translations = uiTranslations[lang] || uiTranslations["es"];
+
+    document.querySelectorAll("[data-i18n]").forEach(el => {
+        const key = el.getAttribute("data-i18n");
+        if (translations[key]) {
+            el.textContent = translations[key];
+        }
+    });
+}
+
 document.addEventListener("DOMContentLoaded", async () => {
     const container = document.getElementById("category-container");
     container.innerHTML = "<p style='color: #ffa726; padding: 15px;'>Cargando categorías...</p>";
@@ -8,10 +61,24 @@ document.addEventListener("DOMContentLoaded", async () => {
     const lat = parseFloat(urlParams.get("lat")) || 40.4168;
     const lon = parseFloat(urlParams.get("lon")) || -3.7038;
 
-    // Mostrar coordenadas formateadas
+    // Mostrar coordenadas formateadas si existe el contenedor
     const infoCoords = document.getElementById("info-coords");
     if (infoCoords) {
         infoCoords.innerText = `Centro: ${lat.toFixed(5)}°N, ${lon.toFixed(5)}°E`;
+    }
+
+    // Inicializar textos traducidos de la interfaz
+    actualizarTextosUI();
+
+    // Control del Acordeón del Mapa
+    const btnToggleMap = document.getElementById("btn-toggle-map");
+    const mapContainerCollapse = document.getElementById("map-container-collapse");
+    if (btnToggleMap && mapContainerCollapse) {
+        btnToggleMap.addEventListener("click", () => {
+            const isHidden = mapContainerCollapse.style.display === "none";
+            mapContainerCollapse.style.display = isHidden ? "block" : "none";
+            btnToggleMap.classList.toggle("active", isHidden);
+        });
     }
 
     // Control del Slider de radio y cálculo de superficie en tiempo real
@@ -52,10 +119,11 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     }
 
-    // Selector de idioma
+    // Selector de idioma (actualiza interfaz y árbol XML)
     const selectLang = document.getElementById("select-lang");
     if (selectLang) {
         selectLang.addEventListener("change", () => {
+            actualizarTextosUI();
             if (xmlDocGlobal) {
                 renderizarArbolCategorias(xmlDocGlobal);
             }
@@ -69,6 +137,38 @@ document.addEventListener("DOMContentLoaded", async () => {
             const checkboxes = document.querySelectorAll("input[type='checkbox']");
             checkboxes.forEach(chk => chk.checked = false);
             if (toggleExpandAll) toggleExpandAll.checked = false;
+        });
+    }
+
+    // --- LÓGICA DEL MODO EDICIÓN (Ocultar/Mostrar categorías) ---
+    const btnEditMode = document.getElementById("btn-edit-mode");
+    const editActionsGroup = document.querySelector(".edit-actions-group");
+    const btnValidateEdit = document.getElementById("btn-validate-edit");
+    const btnRestoreEdit = document.getElementById("btn-restore-edit");
+
+    if (btnEditMode) {
+        btnEditMode.addEventListener("click", () => {
+            document.body.classList.toggle("is-editing");
+            const isEditing = document.body.classList.contains("is-editing");
+            editActionsGroup.style.display = isEditing ? "flex" : "none";
+            btnEditMode.querySelector("img").src = isEditing ? "./ui-icons/eye.svg" : "./ui-icons/eye.svg"; // Indicador visual
+        });
+    }
+
+    if (btnValidateEdit) {
+        btnValidateEdit.addEventListener("click", () => {
+            document.body.classList.remove("is-editing");
+            editActionsGroup.style.display = "none";
+            if (xmlDocGlobal) renderizarArbolCategorias(xmlDocGlobal);
+        });
+    }
+
+    if (btnRestoreEdit) {
+        btnRestoreEdit.addEventListener("click", () => {
+            localStorage.removeItem("hidden_categories");
+            document.body.classList.remove("is-editing");
+            editActionsGroup.style.display = "none";
+            if (xmlDocGlobal) renderizarArbolCategorias(xmlDocGlobal);
         });
     }
 
@@ -127,15 +227,53 @@ function obtenerTraduccion(element, fallback) {
     return element.getAttribute("title") || fallback;
 }
 
+function obtenerCategoriasOcultas() {
+    try {
+        return JSON.parse(localStorage.getItem("hidden_categories")) || [];
+    } catch (e) {
+        return [];
+    }
+}
+
+function guardarCategoriasOcultas(hiddenList) {
+    localStorage.setItem("hidden_categories", JSON.stringify(hiddenList));
+}
+
 function construirNodoXML(categoryElem) {
     const titleAttr = categoryElem.getAttribute("title") || "Categoría";
     const name = obtenerTraduccion(categoryElem, titleAttr);
 
+    // Comprobar si esta categoría está oculta por el usuario
+    const hiddenList = obtenerCategoriasOcultas();
+    const isHidden = hiddenList.includes(titleAttr);
+
     const nodeDiv = document.createElement("div");
     nodeDiv.className = "category-node";
+    if (isHidden) {
+        nodeDiv.classList.add("category-hidden-by-user");
+    }
 
     const rowDiv = document.createElement("div");
     rowDiv.className = "category-row";
+
+    // Botón de visibilidad (Ojo / Ojo tachado) para el modo edición
+    const eyeBtn = document.createElement("button");
+    eyeBtn.className = "btn-toggle-visibility";
+    eyeBtn.innerHTML = `<img src="./ui-icons/${isHidden ? 'eye-no.svg' : 'eye.svg'}" alt="Visibilidad">`;
+    eyeBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        let currentHidden = obtenerCategoriasOcultas();
+        if (currentHidden.includes(titleAttr)) {
+            currentHidden = currentHidden.filter(t => t !== titleAttr);
+            nodeDiv.classList.remove("category-hidden-by-user");
+            eyeBtn.querySelector("img").src = "./ui-icons/eye.svg";
+        } else {
+            currentHidden.push(titleAttr);
+            nodeDiv.classList.add("category-hidden-by-user");
+            eyeBtn.querySelector("img").src = "./ui-icons/eye-no.svg";
+        }
+        guardarCategoriasOcultas(currentHidden);
+    });
 
     const subCategories = Array.from(categoryElem.querySelectorAll(":scope > category"));
     const mappings = Array.from(categoryElem.querySelectorAll(":scope > mapping"));
@@ -158,6 +296,7 @@ function construirNodoXML(categoryElem) {
                 <span>${name}</span>
             </div>
         `;
+        rowDiv.querySelector(".category-left").prepend(eyeBtn);
         nodeDiv.appendChild(rowDiv);
         return nodeDiv;
     }
@@ -170,6 +309,7 @@ function construirNodoXML(categoryElem) {
         </div>
         <div class="category-arrow">${hasChildren ? '›' : ''}</div>
     `;
+    rowDiv.querySelector(".category-left").prepend(eyeBtn);
 
     const checkbox = rowDiv.querySelector("input[type='checkbox']");
     const childrenDiv = document.createElement("div");
@@ -177,7 +317,7 @@ function construirNodoXML(categoryElem) {
 
     if (hasChildren) {
         rowDiv.addEventListener("click", (e) => {
-            if (e.target === checkbox) return;
+            if (e.target === checkbox || e.target.closest(".btn-toggle-visibility")) return;
             nodeDiv.classList.toggle("active");
         });
 
@@ -236,7 +376,7 @@ function renderizarArbolCategorias(xmlDoc) {
 async function ejecutarConsultaOverpass(lat, lon) {
     const radiusKm = parseInt(document.getElementById("search-radius").value, 10);
     const radiusMeters = radiusKm * 1000;
-    const maxResults = parseInt(document.getElementById("max-results").value, 10) || 3000;
+    const maxResults = 3000;
 
     const checkboxes = document.querySelectorAll(".subcat-checkbox:checked");
     if (checkboxes.length === 0) {
