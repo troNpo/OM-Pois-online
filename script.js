@@ -85,8 +85,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     actualizarTextosUI();
 
-    // Inicializar Mapa estático MapLibre
-    inicializarMiniMapa();
+    // Inicializar Mapa estático MapLibre de forma segura
+    try {
+        inicializarMiniMapa();
+    } catch (e) {
+        console.error("Error al inicializar MapLibre:", e);
+    }
 
     // Control del Acordeón del Mapa
     const btnToggleMap = document.getElementById("btn-toggle-map");
@@ -168,7 +172,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         btnEditMode.addEventListener("click", () => {
             document.body.classList.toggle("is-editing");
             const isEditing = document.body.classList.contains("is-editing");
-            editActionsGroup.style.display = isEditing ? "flex" : "none";
+            if (editActionsGroup) editActionsGroup.style.display = isEditing ? "flex" : "none";
             if (xmlDocGlobal) renderizarArbolCategorias(xmlDocGlobal);
         });
     }
@@ -176,7 +180,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (btnValidateEdit) {
         btnValidateEdit.addEventListener("click", () => {
             document.body.classList.remove("is-editing");
-            editActionsGroup.style.display = "none";
+            if (editActionsGroup) editActionsGroup.style.display = "none";
             if (xmlDocGlobal) {
                 renderizarArbolCategorias(xmlDocGlobal);
             }
@@ -187,11 +191,12 @@ document.addEventListener("DOMContentLoaded", async () => {
         btnRestoreEdit.addEventListener("click", () => {
             localStorage.removeItem("hidden_categories");
             document.body.classList.remove("is-editing");
-            editActionsGroup.style.display = "none";
+            if (editActionsGroup) editActionsGroup.style.display = "none";
             if (xmlDocGlobal) renderizarArbolCategorias(xmlDocGlobal);
         });
     }
 
+    // Carga independiente del XML de categorías
     try {
         const response = await fetch("./poi-mapping-overpass-turbo.xml");
         if (!response.ok) {
@@ -209,7 +214,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         renderizarArbolCategorias(xmlDocGlobal);
     } catch (error) {
         console.error("Error al cargar el XML:", error);
-        container.innerHTML = `<p style='color: #ff5252; padding: 15px;'>${error.message}</p>`;
+        container.innerHTML = `<p style='color: #ff5252; padding: 15px;'>Error al cargar categorías: ${error.message}</p>`;
     }
 
     const btnSearch = document.getElementById("btn-search");
@@ -226,19 +231,21 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 // --- INICIALIZACIÓN Y CONFIGURACIÓN DEL MAPA CON MAPLIBRE ---
 function inicializarMiniMapa() {
+    const mapContainer = document.getElementById('mini-map');
+    if (!mapContainer) return;
+
     miniMap = new maplibregl.Map({
         container: 'mini-map',
         style: getMapStyle('osm'),
         center: [currentLon, currentLat],
         zoom: 11,
-        interactive: false // Bloqueado totalmente (sin desplazamiento ni zoom)
+        interactive: false
     });
 
     miniMap.on('load', () => {
-        agregarCapaRadioAlMapa(5); // Radio inicial por defecto
+        agregarCapaRadioAlMapa(5);
     });
 
-    // Selector de capas base (OSM / Esri Satélite)
     const layerBtns = document.querySelectorAll('.layer-btn');
     layerBtns.forEach(btn => {
         btn.addEventListener('click', (e) => {
@@ -249,9 +256,9 @@ function inicializarMiniMapa() {
             const layerType = targetBtn.getAttribute('data-layer');
             miniMap.setStyle(getMapStyle(layerType));
 
-            // Al cambiar de estilo, MapLibre recarga las fuentes y capas; reañadimos el círculo de radio tras el evento 'style.load'
             miniMap.once('style.load', () => {
-                const currentRadius = parseFloat(document.getElementById("search-radius").value) || 5;
+                const radiusSlider = document.getElementById("search-radius");
+                const currentRadius = radiusSlider ? parseFloat(radiusSlider.value) || 5 : 5;
                 agregarCapaRadioAlMapa(currentRadius);
             });
         });
@@ -283,7 +290,6 @@ function getMapStyle(type) {
             ]
         };
     } else {
-        // Estilo OSM Estándar Raster
         return {
             version: 8,
             sources: {
@@ -322,7 +328,7 @@ function crearGeoJsonCirculo(centerLon, centerLat, radiusKm, points = 64) {
         const y = coords.latitude + (distanceY * Math.sin(theta));
         ret.push([x, y]);
     }
-    ret.push(ret[0]); // Cerrar polígono
+    ret.push(ret[0]);
 
     return {
         type: 'Feature',
@@ -346,7 +352,6 @@ function agregarCapaRadioAlMapa(radiusKm) {
             data: geojsonData
         });
 
-        // Relleno transparente rojo
         miniMap.addLayer({
             id: 'radius-fill',
             type: 'fill',
@@ -357,7 +362,6 @@ function agregarCapaRadioAlMapa(radiusKm) {
             }
         });
 
-        // Borde rojo vivo
         miniMap.addLayer({
             id: 'radius-stroke',
             type: 'line',
@@ -368,7 +372,6 @@ function agregarCapaRadioAlMapa(radiusKm) {
             }
         });
 
-        // Marcador central rojo elegante
         const markerEl = document.createElement('div');
         markerEl.className = 'center-map-marker';
         markerEl.style.width = '14px';
@@ -383,7 +386,6 @@ function agregarCapaRadioAlMapa(radiusKm) {
             .addTo(miniMap);
     }
 
-    // Ajustar zoom del mini mapa dinámicamente según el radio seleccionado
     const zoomLevel = Math.max(8, Math.min(14, 12 - Math.log2(radiusKm)));
     miniMap.jumpTo({ center: [currentLon, currentLat], zoom: zoomLevel });
 }
@@ -562,7 +564,8 @@ function renderizarArbolCategorias(xmlDoc) {
 }
 
 async function ejecutarConsultaOverpass(lat, lon) {
-    const radiusKm = parseInt(document.getElementById("search-radius").value, 10);
+    const radiusSlider = document.getElementById("search-radius");
+    const radiusKm = radiusSlider ? parseInt(radiusSlider.value, 10) : 5;
     const radiusMeters = radiusKm * 1000;
     const maxResults = 3000;
 
