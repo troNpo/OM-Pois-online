@@ -1,44 +1,58 @@
 let xmlDocGlobal = null;
 
-// Diccionario de traducciones para la interfaz estática
+// Diccionario de traducciones para la interfaz estática (con los 6 idiomas y la superficie)
 const uiTranslations = {
     es: {
+        app_title: "POI Exporter",
         map_preview: "Vista previa del área",
         label_radius: "Radio",
         label_categories: "Categorías",
-        label_expand: "Expandir"
+        label_expand: "Expandir",
+        area_text: "Superficie del área"
     },
     en: {
+        app_title: "POI Exporter",
         map_preview: "Area preview",
         label_radius: "Radius",
         label_categories: "Categories",
-        label_expand: "Expand"
+        label_expand: "Expand",
+        area_text: "Area surface"
     },
     de: {
+        app_title: "POI Exporter",
         map_preview: "Bereichsvorschau",
         label_radius: "Radius",
         label_categories: "Kategorien",
-        label_expand: "Erweitern"
+        label_expand: "Erweitern",
+        area_text: "Fläche"
     },
     fr: {
+        app_title: "POI Exporter",
         map_preview: "Aperçu de la zone",
         label_radius: "Rayon",
         label_categories: "Catégories",
-        label_expand: "Développer"
+        label_expand: "Développer",
+        area_text: "Surface de la zone"
     },
     it: {
+        app_title: "POI Exporter",
         map_preview: "Anteprima dell'area",
         label_radius: "Raggio",
         label_categories: "Categorie",
-        label_expand: "Espandi"
+        label_expand: "Espandi",
+        area_text: "Superficie dell'area"
     },
     nl: {
+        app_title: "POI Exporter",
         map_preview: "Gebiedsvoorbeeld",
         label_radius: "Straal",
         label_categories: "Categorieën",
-        label_expand: "Uitvouwen"
+        label_expand: "Uitvouwen",
+        area_text: "Oppervlakte"
     }
 };
+
+let currentAreaValue = 78.5; // Valor por defecto
 
 function actualizarTextosUI() {
     const selectLang = document.getElementById("select-lang");
@@ -51,6 +65,13 @@ function actualizarTextosUI() {
             el.textContent = translations[key];
         }
     });
+
+    // Actualizar texto de superficie traducido
+    const infoArea = document.getElementById("info-area");
+    if (infoArea) {
+        const areaLabel = translations["area_text"] || "Superficie del área";
+        infoArea.innerText = `${areaLabel}: ${currentAreaValue.toFixed(1)} km²`;
+    }
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -61,13 +82,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     const lat = parseFloat(urlParams.get("lat")) || 40.4168;
     const lon = parseFloat(urlParams.get("lon")) || -3.7038;
 
-    // Mostrar coordenadas formateadas si existe el contenedor
-    const infoCoords = document.getElementById("info-coords");
-    if (infoCoords) {
-        infoCoords.innerText = `Centro: ${lat.toFixed(5)}°N, ${lon.toFixed(5)}°E`;
-    }
-
-    // Inicializar textos traducidos de la interfaz
     actualizarTextosUI();
 
     // Control del Acordeón del Mapa
@@ -81,20 +95,17 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     }
 
-    // Control del Slider de radio y cálculo de superficie en tiempo real
+    // Control del Slider de radio y cálculo de superficie
     const radiusSlider = document.getElementById("search-radius");
     const radiusValueSpan = document.getElementById("radius-value");
-    const infoArea = document.getElementById("info-area");
 
     function actualizarCalculosRadio(r) {
         const radioNum = parseFloat(r) || 0;
         if (radiusValueSpan) {
             radiusValueSpan.innerText = radioNum;
         }
-        const superficie = Math.PI * Math.pow(radioNum, 2);
-        if (infoArea) {
-            infoArea.innerText = `Superficie del área: ${superficie.toFixed(1)} km²`;
-        }
+        currentAreaValue = Math.PI * Math.pow(radioNum, 2);
+        actualizarTextosUI();
     }
 
     if (radiusSlider) {
@@ -104,7 +115,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     }
 
-    // Control del interruptor general "Expandir nodos"
+    // Control del Switch "Expandir nodos"
     const toggleExpandAll = document.getElementById("toggle-expand-all");
     if (toggleExpandAll) {
         toggleExpandAll.addEventListener("change", (e) => {
@@ -119,7 +130,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     }
 
-    // Selector de idioma (actualiza interfaz y árbol XML)
+    // Selector de idioma
     const selectLang = document.getElementById("select-lang");
     if (selectLang) {
         selectLang.addEventListener("change", () => {
@@ -140,7 +151,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     }
 
-    // --- LÓGICA DEL MODO EDICIÓN (Ocultar/Mostrar categorías) ---
+    // --- MODO EDICIÓN ---
     const btnEditMode = document.getElementById("btn-edit-mode");
     const editActionsGroup = document.querySelector(".edit-actions-group");
     const btnValidateEdit = document.getElementById("btn-validate-edit");
@@ -151,7 +162,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             document.body.classList.toggle("is-editing");
             const isEditing = document.body.classList.contains("is-editing");
             editActionsGroup.style.display = isEditing ? "flex" : "none";
-            btnEditMode.querySelector("img").src = isEditing ? "./ui-icons/eye.svg" : "./ui-icons/eye.svg"; // Indicador visual
         });
     }
 
@@ -172,7 +182,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     }
 
-    // Cargar archivo XML de categorías
+    // Cargar XML
     try {
         const response = await fetch("./poi-mapping-overpass-turbo.xml");
         if (!response.ok) {
@@ -193,7 +203,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         container.innerHTML = `<p style='color: #ff5252; padding: 15px;'>${error.message}</p>`;
     }
 
-    // Botón de búsqueda (✓) en la barra superior
+    // Botón de búsqueda (✓)
     const btnSearch = document.getElementById("btn-search");
     if (btnSearch) {
         btnSearch.addEventListener("click", () => {
@@ -243,7 +253,6 @@ function construirNodoXML(categoryElem) {
     const titleAttr = categoryElem.getAttribute("title") || "Categoría";
     const name = obtenerTraduccion(categoryElem, titleAttr);
 
-    // Comprobar si esta categoría está oculta por el usuario
     const hiddenList = obtenerCategoriasOcultas();
     const isHidden = hiddenList.includes(titleAttr);
 
@@ -256,7 +265,7 @@ function construirNodoXML(categoryElem) {
     const rowDiv = document.createElement("div");
     rowDiv.className = "category-row";
 
-    // Botón de visibilidad (Ojo / Ojo tachado) para el modo edición
+    // Botón de visibilidad (Ojo / Ojo tachado) para alternar ocultación real
     const eyeBtn = document.createElement("button");
     eyeBtn.className = "btn-toggle-visibility";
     eyeBtn.innerHTML = `<img src="./ui-icons/${isHidden ? 'eye-no.svg' : 'eye.svg'}" alt="Visibilidad">`;
@@ -279,7 +288,6 @@ function construirNodoXML(categoryElem) {
     const mappings = Array.from(categoryElem.querySelectorAll(":scope > mapping"));
     const hasChildren = subCategories.length > 0 || mappings.length > 0;
 
-    // Si la categoría tiene un mapping directo y NO tiene subcategorías, es un nodo hoja final
     if (mappings.length > 0 && subCategories.length === 0) {
         const mapElem = mappings[0];
         const tagAttr = mapElem.getAttribute("tag");
@@ -301,7 +309,6 @@ function construirNodoXML(categoryElem) {
         return nodeDiv;
     }
 
-    // Si tiene subcategorías o estructura mixta, actúa como contenedor desplegable
     rowDiv.innerHTML = `
         <div class="category-left">
             <input type="checkbox" class="cat-checkbox">
