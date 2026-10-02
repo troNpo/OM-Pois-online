@@ -3,68 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Búsqueda de PDI</title>
+    <title>Búsqueda de PDI - OruxMaps / Cruiser</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Si usas Leaflet o MapLibre para el mini mapa, puedes incluir sus estilos aquí -->
 </head>
 <body>
-    <div class="app-container">
-        <!-- 1. BARRA SUPERIOR ROJA FIJA -->
-        <header class="app-header">
-            <div class="header-title">Búsqueda de PDI</div>
-            <div class="header-actions">
-                <!-- Selector de Idioma integrado -->
-                <select id="select-lang" class="modern-select" title="Idioma / Language">
-                    <option value="es" selected>Español</option>
-                    <option value="en">English</option>
-                    <option value="de">Deutsch</option>
-                    <option value="fr">Français</option>
-                    <option value="it">Italiano</option>
-                    <option value="nl">Nederlands</option>
-                </select>
-                <!-- Botón de limpiar / reset -->
-                <button id="btn-clear" class="icon-btn" title="Quitar selecciones">✕</button>
-                <!-- Botón de acción principal (Buscar) -->
-                <button id="btn-search" class="icon-btn accent" title="Buscar">✓</button>
-            </div>
-        </header>
 
-        <!-- 2. BANNER DE INFORMACIÓN Y PARÁMETROS FIJO -->
-        <section class="info-banner">
-            <div id="info-coords" class="coords-text">Centro: --</div>
-            
-            <div class="slider-group">
-                <div class="slider-label-row">
-                    <label for="search-radius">Radio de búsqueda</label>
-                    <span class="slider-value"><strong id="radius-value">25</strong> km</span>
-                </div>
-                <input type="range" id="search-radius" min="1" max="25" value="20">
-                <div id="info-area" class="area-text">Superficie del área: -- km²</div>
-            </div>
-
-            <div class="results-row">
-                <label for="max-results">Máx. resultados:</label>
-                <input type="number" id="max-results" value="3000" class="modern-input">
-            </div>
-        </section>
-
-        <!-- 3. CABECERA DE CATEGORÍAS CON INTERRUPTOR -->
-        <div class="categories-bar">
-            <span class="categories-title">Categorías</span>
-            <div class="expand-control">
-                <span>Expandir nodos</span>
-                <label class="toggle-switch">
-                    <input type="checkbox" id="toggle-expand-all">
-                    <span class="slider-switch"></span>
-                </label>
-            </div>
+    <!-- BARRA SUPERIOR DE ACCIONES -->
+    <header class="top-bar">
+        <!-- 1. Ayuda -->
+        <button id="btn-help" title="Ayuda"><img src="./ui-icons/help.svg" alt="Ayuda"></button>
+        
+        <!-- 2. Limpiar selecciones -->
+        <button id="btn-clear" title="Limpiar"><img src="./ui-icons/cancel.svg" alt="Limpiar"></button>
+        
+        <!-- 3. Realizar búsqueda -->
+        <button id="btn-search" title="Buscar"><img src="./ui-icons/check.svg" alt="Buscar"></button>
+        
+        <!-- 4. Selector de idioma con icono -->
+        <div class="lang-selector-wrapper">
+            <img src="./ui-icons/language.svg" alt="Idioma" class="icon-inline">
+            <select id="select-lang">
+                <option value="es">ES</option>
+                <option value="en">EN</option>
+                <option value="de">DE</option>
+                <option value="fr">FR</option>
+                <option value="it">IT</option>
+                <option value="nl">NL</option>
+            </select>
         </div>
+    </header>
 
-        <!-- 4. PANEL INFERIOR DE CATEGORÍAS (OCUPA 3/4 DE PANTALLA CON SCROLL) -->
-        <main class="categories-scroll-container">
-            <div id="category-container"></div>
-        </main>
+    <!-- SECCIÓN DEL MAPA ACORDEÓN (Colocada arriba del slider para no taparlo) -->
+    <div class="map-accordion-section">
+        <button id="btn-toggle-map" class="accordion-header">
+            <img src="./ui-icons/map.svg" alt="Mapa" class="icon-inline"> 
+            <span data-i18n="map_preview">Vista previa del área</span>
+            <span class="accordion-arrow">›</span>
+        </button>
+        <div id="map-container-collapse" class="accordion-content" style="display: none;">
+            <div id="mini-map" style="width: 100%; height: 200px; background: #1a1a1a;"></div>
+        </div>
     </div>
 
+    <!-- CONTROL DE RADIO Y SUPERFICIE -->
+    <div class="radius-control-panel">
+        <label><span data-i18n="label_radius">Radio</span>: <span id="radius-value">5</span> km</label>
+        <input type="range" id="search-radius" min="1" max="50" value="5">
+        <div id="info-area">Superficie del área: 78.5 km²</div>
+    </div>
+
+    <!-- CABECERA DE CATEGORÍAS CON EDICIÓN -->
+    <div class="categories-header-bar">
+        <div class="categories-title-group">
+            <span data-i18n="label_categories">Categorías</span>
+            <!-- Botón de Editar Visibilidad -->
+            <button id="btn-edit-mode" title="Editar visibilidad"><img src="./ui-icons/eye.svg" alt="Editar"></button>
+        </div>
+        
+        <!-- Acciones contextuales del modo edición (Ocultas por defecto) -->
+        <div class="edit-actions-group" style="display: none;">
+            <button id="btn-validate-edit" title="Validar"><img src="./ui-icons/check.svg" alt="Validar"></button>
+            <button id="btn-restore-edit" title="Restaurar por defecto"><img src="./ui-icons/reverse.svg" alt="Restaurar"></button>
+        </div>
+
+        <div class="expand-group">
+            <input type="checkbox" id="toggle-expand-all">
+            <label for="toggle-expand-all" data-i18n="label_expand">Expandir</label>
+        </div>
+    </div>
+
+    <!-- CONTENEDOR PRINCIPAL DEL ÁRBOL DE CATEGORÍAS -->
+    <main id="category-container">
+        <!-- Las categorías se cargarán dinámicamente aquí mediante JavaScript -->
+    </main>
+
+    <!-- Enlace al script principal -->
     <script src="script.js"></script>
 </body>
 </html>
