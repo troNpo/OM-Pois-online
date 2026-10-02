@@ -208,6 +208,13 @@ body {
     align-items: center;
     gap: 12px;
 }
+.category-row.category-leaf {
+    background-color: #1a1a1a;
+}
+.category-row.category-leaf:hover {
+    background-color: #262626;
+}
+
 
 /* Estilo unificado para los checkboxes en modo oscuro */
 .category-left input[type="checkbox"] {
