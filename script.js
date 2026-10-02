@@ -1,6 +1,5 @@
 let xmlDocGlobal = null;
 
-// Diccionario de traducciones para la interfaz estática (con los 6 idiomas y la superficie)
 const uiTranslations = {
     es: {
         app_title: "POI Exporter",
@@ -52,7 +51,7 @@ const uiTranslations = {
     }
 };
 
-let currentAreaValue = 78.5; // Valor por defecto
+let currentAreaValue = 78.5;
 
 function actualizarTextosUI() {
     const selectLang = document.getElementById("select-lang");
@@ -66,7 +65,6 @@ function actualizarTextosUI() {
         }
     });
 
-    // Actualizar texto de superficie traducido
     const infoArea = document.getElementById("info-area");
     if (infoArea) {
         const areaLabel = translations["area_text"] || "Superficie del área";
@@ -84,7 +82,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     actualizarTextosUI();
 
-    // Control del Acordeón del Mapa
     const btnToggleMap = document.getElementById("btn-toggle-map");
     const mapContainerCollapse = document.getElementById("map-container-collapse");
     if (btnToggleMap && mapContainerCollapse) {
@@ -95,7 +92,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     }
 
-    // Control del Slider de radio y cálculo de superficie
     const radiusSlider = document.getElementById("search-radius");
     const radiusValueSpan = document.getElementById("radius-value");
 
@@ -115,7 +111,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     }
 
-    // Control del Switch "Expandir nodos"
     const toggleExpandAll = document.getElementById("toggle-expand-all");
     if (toggleExpandAll) {
         toggleExpandAll.addEventListener("change", (e) => {
@@ -130,7 +125,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     }
 
-    // Selector de idioma
     const selectLang = document.getElementById("select-lang");
     if (selectLang) {
         selectLang.addEventListener("change", () => {
@@ -141,7 +135,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     }
 
-    // Botón de limpiar selecciones (✕)
     const btnClear = document.getElementById("btn-clear");
     if (btnClear) {
         btnClear.addEventListener("click", () => {
@@ -162,20 +155,20 @@ document.addEventListener("DOMContentLoaded", async () => {
             document.body.classList.toggle("is-editing");
             const isEditing = document.body.classList.contains("is-editing");
             editActionsGroup.style.display = isEditing ? "flex" : "none";
+            // Al activar/desactivar modo edición, repintamos para mostrar/ocultar según corresponda
+            if (xmlDocGlobal) renderizarArbolCategorias(xmlDocGlobal);
         });
     }
 
-        if (btnValidateEdit) {
+    if (btnValidateEdit) {
         btnValidateEdit.addEventListener("click", () => {
             document.body.classList.remove("is-editing");
             editActionsGroup.style.display = "none";
-            // ¡Añadido aquí para que recargue el árbol y aplique los ocultados de inmediato!
             if (xmlDocGlobal) {
                 renderizarArbolCategorias(xmlDocGlobal);
             }
         });
     }
-
 
     if (btnRestoreEdit) {
         btnRestoreEdit.addEventListener("click", () => {
@@ -186,7 +179,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     }
 
-    // Cargar XML
     try {
         const response = await fetch("./poi-mapping-overpass-turbo.xml");
         if (!response.ok) {
@@ -207,7 +199,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         container.innerHTML = `<p style='color: #ff5252; padding: 15px;'>${error.message}</p>`;
     }
 
-    // Botón de búsqueda (✓)
     const btnSearch = document.getElementById("btn-search");
     if (btnSearch) {
         btnSearch.addEventListener("click", () => {
@@ -269,10 +260,10 @@ function construirNodoXML(categoryElem) {
     const rowDiv = document.createElement("div");
     rowDiv.className = "category-row";
 
-    // Botón de visibilidad (Ojo / Ojo tachado) para alternar ocultación real
     const eyeBtn = document.createElement("button");
     eyeBtn.className = "btn-toggle-visibility";
     eyeBtn.innerHTML = `<img src="./ui-icons/${isHidden ? 'eye-no.svg' : 'eye.svg'}" alt="Visibilidad">`;
+    
     eyeBtn.addEventListener("click", (e) => {
         e.stopPropagation();
         let currentHidden = obtenerCategoriasOcultas();
