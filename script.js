@@ -139,15 +139,29 @@ function construirNodoXML(categoryElem) {
 
     const subCategories = Array.from(categoryElem.querySelectorAll(":scope > category"));
     const mappings = Array.from(categoryElem.querySelectorAll(":scope > mapping"));
+    const hasChildren = subCategories.length > 0 || mappings.length > 0;
 
-    // Filtrar subcategorías redundantes que se llamen exactamente igual que el padre actual
-    const validSubCategories = subCategories.filter(sub => {
-        const subName = obtenerTraduccion(sub, sub.getAttribute("title") || "");
-        return subName.toLowerCase() !== name.toLowerCase();
-    });
+    // Si la categoría tiene un mapping directo y NO tiene subcategorías, la convertimos en la fila final con checkbox
+    if (mappings.length > 0 && subCategories.length === 0) {
+        const mapElem = mappings[0];
+        const tagAttr = mapElem.getAttribute("tag");
+        let tagKey = "";
+        let tagValue = "";
+        if (tagAttr) {
+            [tagKey, tagValue] = tagAttr.split("=");
+        }
 
-    const hasChildren = validSubCategories.length > 0 || mappings.length > 0;
+        rowDiv.innerHTML = `
+            <div class="category-left">
+                <input type="checkbox" class="subcat-checkbox" data-key="${tagKey}" data-value="${tagValue}">
+                <span>${name}</span>
+            </div>
+        `;
+        nodeDiv.appendChild(rowDiv);
+        return nodeDiv;
+    }
 
+    // Si tiene subcategorías o estructura mixta, actúa como contenedor desplegable
     rowDiv.innerHTML = `
         <div class="category-left">
             <input type="checkbox" class="cat-checkbox">
@@ -166,7 +180,7 @@ function construirNodoXML(categoryElem) {
             nodeDiv.classList.toggle("active");
         });
 
-        validSubCategories.forEach(sub => {
+        subCategories.forEach(sub => {
             childrenDiv.appendChild(construirNodoXML(sub));
         });
 
@@ -265,6 +279,7 @@ async function ejecutarConsultaOverpass(lat, lon) {
         alert("Ocurrió un error al conectar con la API de Overpass.");
     }
 }
+
 
 function generarKMLAgrupado(data) {
     let kml = `<?xml version="1.0" encoding="UTF-8"?>\n<kml xmlns="http://www.opengis.net/kml/2.2">\n<Document>\n<name>PDI - OruxMaps</name>\n`;
