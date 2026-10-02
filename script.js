@@ -151,7 +151,7 @@ function construirNodoXML(categoryElem) {
             [tagKey, tagValue] = tagAttr.split("=");
         }
 
-        rowDiv.className = "category-row category-leaf"; // <-- Añadido aquí
+        rowDiv.className = "category-row category-leaf";
         rowDiv.innerHTML = `
             <div class="category-left">
                 <input type="checkbox" class="subcat-checkbox" data-key="${tagKey}" data-value="${tagValue}">
@@ -191,7 +191,7 @@ function construirNodoXML(categoryElem) {
             const [tagKey, tagValue] = tagAttr.split("=");
 
             const mapRow = document.createElement("div");
-            mapRow.className = "category-row category-leaf"; // <-- Y añadido aquí también
+            mapRow.className = "category-row category-leaf";
             mapRow.innerHTML = `
                 <div class="category-left">
                     <input type="checkbox" class="subcat-checkbox" data-key="${tagKey}" data-value="${tagValue}">
@@ -215,6 +215,70 @@ function construirNodoXML(categoryElem) {
     });
 
     return nodeDiv;
+}
+
+function renderizarArbolCategorias(xmlDoc) {
+    const container = document.getElementById("category-container");
+    container.innerHTML = "";
+    
+    const rootCategories = xmlDoc.querySelectorAll(":scope > category, poi_categories > category");
+    
+    if (rootCategories.length === 0) {
+        container.innerHTML = "<p style='color: #ff5252; padding: 15px;'>No se encontraron categorías principales en el XML.</p>";
+        return;
+    }
+
+    rootCategories.forEach((cat) => {
+        container.appendChild(construirNodoXML(cat));
+    });
+}
+
+async function ejecutarConsultaOverpass(lat, lon) {
+    const radiusKm = parseInt(document.getElementById("search-radius").value, 10);
+    const radiusMeters = radiusKm * 1000;
+    const maxResults = parseInt(document.getElementById("max-results").value, 10) || 3000;
+
+    const checkboxes = document.querySelectorAll(".subcat-checkbox:checked");
+    if (checkboxes.length === 0) {
+        alert("Por favor, selecciona al menos una categoría o elemento.");
+        return;
+    }
+
+    let queries = [];
+    checkboxes.forEach(chk => {
+        const key = chk.getAttribute("data-key");
+        const value = chk.getAttribute("data-value");
+        if (key && value) {
+            queries.push(`node(around:${radiusMeters}, ${lat}, ${lon})["${key}"="${value}"];`);
+        }
+    });
+
+    if (queries.length === 0) {
+        alert("Los elementos seleccionados no tienen etiquetas de mapeo válidas.");
+        return;
+    }
+
+    const overpassQuery = `
+        [out:json][timeout:25];
+        (
+            ${queries.join("\n")}
+        );
+        out body ${maxResults};
+        >;
+        out skel qt;
+    `;
+
+    try {
+        const res = await fetch("https://overpass-api.de/api/interpreter", {
+            method: "POST",
+            body: overpassQuery
+        });
+        const data = await res.json();
+        generarKMLAgrupado(data);
+    } catch (e) {
+        console.error("Error en Overpass API:", e);
+        alert("Ocurrió un error al conectar con la API de Overpass.");
+    }
 }
 
 function generarKMLAgrupado(data) {
@@ -245,4 +309,3 @@ function generarKMLAgrupado(data) {
     a.click();
     document.body.removeChild(a);
 }
-
