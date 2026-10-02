@@ -209,11 +209,41 @@ body {
     gap: 12px;
 }
 
+/* Estilo unificado para los checkboxes en modo oscuro */
 .category-left input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
     width: 18px;
     height: 18px;
-    accent-color: var(--primary-red);
+    background-color: #262626; /* Fondo gris oscuro integrado */
+    border: 1px solid #404040; /* Borde sutil */
+    border-radius: 3px;
     cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s, border-color 0.2s;
+    outline: none;
+    margin: 0;
+}
+
+/* Aspecto cuando el checkbox pasa el ratón o se marca */
+.category-left input[type="checkbox"]:hover {
+    border-color: #666;
+}
+
+.category-left input[type="checkbox"]:checked {
+    background-color: var(--primary-red); /* Rojo OruxMaps cuando está activo */
+    border-color: var(--primary-red);
+}
+
+/* Pequeña marca de verificación (check) en blanco para cuando esté activo */
+.category-left input[type="checkbox"]:checked::after {
+    content: "✔";
+    color: white;
+    font-size: 11px;
+    font-weight: bold;
+    line-height: 1;
 }
 
 .category-arrow {
