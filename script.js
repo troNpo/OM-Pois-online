@@ -165,13 +165,17 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     }
 
-    if (btnValidateEdit) {
+        if (btnValidateEdit) {
         btnValidateEdit.addEventListener("click", () => {
             document.body.classList.remove("is-editing");
             editActionsGroup.style.display = "none";
-            if (xmlDocGlobal) renderizarArbolCategorias(xmlDocGlobal);
+            // ¡Añadido aquí para que recargue el árbol y aplique los ocultados de inmediato!
+            if (xmlDocGlobal) {
+                renderizarArbolCategorias(xmlDocGlobal);
+            }
         });
     }
+
 
     if (btnRestoreEdit) {
         btnRestoreEdit.addEventListener("click", () => {
