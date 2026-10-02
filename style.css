@@ -278,9 +278,14 @@ body {
     border-bottom: 1px solid #1a1a1a;
 }
 
-/* Ocultar completamente sin atenuar */
-.category-node.category-hidden-by-user {
+/* FUERA de edición: se ocultan totalmente si el usuario los marcó */
+body:not(.is-editing) .category-node.category-hidden-by-user {
     display: none !important;
+}
+
+/* DENTRO de edición: se muestran pero atenuados para identificarlos */
+body.is-editing .category-node.category-hidden-by-user {
+    opacity: 0.4;
 }
 
 .category-row {
