@@ -88,6 +88,52 @@
     <main id="category-container">
         <!-- Las categorías se cargarán dinámicamente aquí -->
     </main>
+    <!-- PANEL DE RESULTADOS -->
+<div id="results-panel" class="app-panel" style="display: none;">
+    
+    <!-- Cabecera Roja (Barra de herramientas) -->
+    <header class="app-header red-bar">
+        <button id="btn-back" class="icon-btn" title="Volver">
+            <img src="icons/back.svg" alt="Back">
+        </button>
+        <div class="header-title-group">
+            <button id="btn-results-list" class="icon-btn badge-container">
+                <img src="icons/list.svg" alt="Resultados">
+                <span id="results-badge" class="badge">0</span>
+            </button>
+            <button id="btn-toggle-search" class="icon-btn" title="Buscar en lista">
+                <img src="icons/search.svg" alt="Buscar">
+            </button>
+            <button id="btn-select-all" class="icon-btn" title="Marcar/Desmarcar todo">
+                <img src="icons/list-check.svg" id="icon-select-all" alt="Seleccionar todo">
+            </button>
+            <button id="btn-download-preset" class="icon-btn" title="Descargar KML">
+                <img src="icons/file-download.svg" alt="Descargar">
+            </button>
+        </div>
+    </header>
+
+    <!-- Input de búsqueda rápida (oculto por defecto, se despliega con la lupa) -->
+    <div id="quick-search-container" class="quick-search-bar" style="display: none;">
+        <input type="text" id="quick-search-input" placeholder="Filtrar por nombre...">
+    </div>
+
+    <!-- Zona Superior: Pestañas de Categorías Principales (Scroll Horizontal) -->
+    <div class="categories-nav-wrapper">
+        <div class="scroll-indicator left"></div>
+        <div id="categories-chips-container" class="categories-chips-scroll">
+            <!-- Las tarjetas de categorías se inyectarán dinámicamente aquí -->
+        </div>
+        <div class="scroll-indicator right"></div>
+    </div>
+
+    <!-- Zona Inferior: Contenedor de Elementos (Scroll Vertical Interno) -->
+    <div id="nodes-container" class="nodes-vertical-scroll">
+        <!-- Subcategorías y tarjetas de nodos se inyectarán aquí -->
+    </div>
+
+</div>
+
 
     <script src="script.js"></script>
 </body>
