@@ -609,17 +609,387 @@ async function ejecutarConsultaOverpass(lat, lon) {
     `;
 
     try {
+        // Mostrar indicador de carga opcional si se desea
         const res = await fetch("https://overpass-api.de/api/interpreter", {
             method: "POST",
             body: overpassQuery
         });
         const data = await res.json();
-        generarKMLAgrupado(data);
+        
+        if (!data.elements || data.elements.length === 0) {
+            alert("No se han encontrado puntos de interés para los criterios seleccionados en este radio.");
+            return;
+        }
+
+        // Guardar elementos y procesar para el nuevo panel de resultados
+        currentOverpassElements = data.elements.filter(el => el.type === "node" && el.lat && el.lon);
+        
+        // Inicializar todos seleccionados por defecto
+        selectedNodesMap.clear();
+        currentOverpassElements.forEach(el => selectedNodesMap.set(el.id, true));
+
+        // Cambiar de panel visualmente
+        mostrarPanelResultados();
+
     } catch (e) {
         console.error("Error en Overpass API:", e);
         alert("Ocurrió un error al conectar con la API de Overpass.");
     }
 }
+
+function mostrarPanelResultados() {
+    const searchPanel = document.body.querySelector("header.top-bar").parentNode; // O el contenedor principal de búsqueda si lo tienes envuelto
+    // Ocultar elementos del panel de búsqueda inicial
+    document.querySelectorAll("body > *:not(#results-panel)").forEach(el => {
+        el.style.display = "none";
+    });
+
+    // Mostrar panel de resultados
+    const resultsPanel = document.getElementById("results-panel");
+    if (resultsPanel) {
+        resultsPanel.style.display = "flex";
+    }
+
+    // Actualizar badge total
+    const badge = document.getElementById("results-badge");
+    if (badge) badge.textContent = currentOverpassElements.length;
+
+    // Poblar chips de categorías superiores y nodos
+    poblarPanelResultados();
+}
+
+function volverAPanelBusqueda() {
+    const resultsPanel = document.getElementById("results-panel");
+    if (resultsPanel) {
+        resultsPanel.style.display = "none";
+    }
+
+    // Restaurar visibilidad del panel de búsqueda inicial
+    document.querySelectorAll("body > *:not(#results-panel)").forEach(el => {
+        // Restaurar según su tipo original (main, header, div, etc.)
+        if (el.tagName === "HEADER") el.style.display = "flex";
+        else if (el.tagName === "MAIN") el.style.display = "block";
+        else el.style.display = "block";
+    });
+}
+
+// Función auxiliar para calcular distancia en km desde el centro de búsqueda
+function calcularDistanciaKm(lat1, lon1, lat2, lon2) {
+    const R = 6371; // Radio de la tierra en km
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLon = (lon2 - lon1) * Math.PI / 180;
+    const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+              Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+              Math.sin(dLon/2) * Math.sin(dLon/2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    return R * c;
+}
+
+function poblarPanelResultados() {
+    const chipsContainer = document.getElementById("categories-chips-container");
+    const nodesContainer = document.getElementById("nodes-container");
+    if (!chipsContainer || !nodesContainer) return;
+
+    chipsContainer.innerHTML = "";
+    nodesContainer.innerHTML = "";
+
+    // 1. Agrupar los nodos obtenidos según las categorías del XML global
+    // Para cada nodo, verificamos qué tag cumple y a qué categoría/subcategoría pertenece en el XML
+    const agrupacion = clasificarNodosPorCategoriasXML(currentOverpassElements, xmlDocGlobal);
+
+    const categoriasDisponibles = Object.keys(agrupacion);
+    if (categoriasDisponibles.length === 0) {
+        nodesContainer.innerHTML = "<p style='padding: 15px; color: #999;'>No se pudieron clasificar los nodos en las categorías.</p>";
+        return;
+    }
+
+    // Seleccionar por defecto la primera categoría
+    activeCategoryName = categoriasDisponibles[0];
+
+    // 2. Construir los chips horizontales superiores
+    categoriasDisponibles.forEach((catName, index) => {
+        const catData = agrupacion[catName];
+        const totalNodesInCat = contarNodosEnCategoria(catData);
+
+        const chip = document.createElement("div");
+        chip.className = `category-chip ${catName === activeCategoryName ? 'active' : ''}`;
+        chip.dataset.category = catName;
+
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.checked = true; // Por defecto marcados
+        checkbox.addEventListener("change", (e) => {
+            e.stopPropagation();
+            const checked = checkbox.checked;
+            // Marcar/desmarcar todos los nodos de esta categoría
+            marcarDesmarcarCategoria(catData, checked);
+            renderizarNodosCategoria(agrupacion[activeCategoryName]);
+        });
+
+        const labelSpan = document.createElement("span");
+        labelSpan.textContent = `${catName} (${totalNodesInCat})`;
+        labelSpan.addEventListener("click", () => {
+            document.querySelectorAll(".category-chip").forEach(c => c.classList.remove("active"));
+            chip.classList.add("active");
+            activeCategoryName = catName;
+            renderizarNodosCategoria(agrupacion[activeCategoryName]);
+        });
+
+        chip.appendChild(checkbox);
+        chip.appendChild(labelSpan);
+        chipsContainer.appendChild(chip);
+    });
+
+    // 3. Renderizar los nodos de la categoría activa inicial
+    renderizarNodosCategoria(agrupacion[activeCategoryName]);
+
+    // Configurar eventos de la barra superior del panel de resultados
+    configurarEventosPanelResultados(agrupacion);
+}
+
+// Analiza el XML y los nodos para estructurarlos
+function clasificarNodosPorCategoriasXML(elements, xmlDoc) {
+    // Mapa estructurado: { NombreCatPrincipal: { subcatOLeafName: [nodos...] } }
+    const resultado = {};
+
+    const rootCategories = xmlDoc.querySelectorAll(":scope > category, poi_categories > category");
+    
+    rootCategories.forEach(catElem => {
+        const titleAttr = catElem.getAttribute("title") || "General";
+        const catName = obtenerTraduccion(catElem, titleAttr);
+        
+        // Recoger todos los mapeos de esta rama
+        const leafMappings = [];
+        const subcategories = catElem.querySelectorAll("category");
+
+        subcategories.forEach(sub => {
+            const subTitle = obtenerTraduccion(sub, sub.getAttribute("title") || "Subcategoría");
+            const maps = sub.querySelectorAll("mapping");
+            maps.forEach(m => {
+                const tagAttr = m.getAttribute("tag");
+                if (tagAttr) {
+                    const [k, v] = tagAttr.split("=");
+                    leafMappings.push({ key: k, value: v, subName: subTitle });
+                }
+            });
+        });
+
+        // Mapeos directos si los hay
+        const directMaps = catElem.querySelectorAll(":scope > mapping");
+        directMaps.forEach(m => {
+            const tagAttr = m.getAttribute("tag");
+            if (tagAttr) {
+                const [k, v] = tagAttr.split("=");
+                leafMappings.push({ key: k, value: v, subName: catName });
+            }
+        });
+
+        // Filtrar qué nodos de Overpass coinciden con estos mapeos
+        const nodosDeEstaCat = [];
+        elements.forEach(el => {
+            if (!el.tags) return;
+            for (let map of leafMappings) {
+                if (el.tags[map.key] === map.value) {
+                    // Evitar duplicados si un nodo cumple varios
+                    if (!nodosDeEstaCat.some(n => n.id === el.id)) {
+                        nodosDeEstaCat.push({ ...el, subcategoryName: map.subName });
+                    }
+                    break;
+                }
+            }
+        });
+
+        if (nodosDeEstaCat.length > 0) {
+            resultado[catName] = nodosDeEstaCat;
+        }
+    });
+
+    return resultado;
+}
+
+function contarNodosEnCategoria(nodosList) {
+    return nodosList.length;
+}
+
+function marcarDesmarcarCategoria(nodosList, checked) {
+    nodosList.forEach(node => {
+        selectedNodesMap.set(node.id, checked);
+    });
+}
+
+function renderizarNodosCategoria(nodosList) {
+    const nodesContainer = document.getElementById("nodes-container");
+    if (!nodesContainer) return;
+    nodesContainer.innerHTML = "";
+
+    if (!nodosList || nodosList.length === 0) {
+        nodesContainer.innerHTML = "<p style='padding: 15px; color: #999;'>No hay elementos en esta categoría.</p>";
+        return;
+    }
+
+    // Agrupar por subcategoría para mostrar encabezados limpios
+    const subGroups = {};
+    nodosList.forEach(node => {
+        const subName = node.subcategoryName || "General";
+        if (!subGroups[subName]) subGroups[subName] = [];
+        subGroups[subName].push(node);
+    });
+
+    Object.keys(subGroups).forEach(subName => {
+        // Crear encabezado de subcategoría
+        const subHeader = document.createElement("div");
+        subHeader.className = "subcategory-header";
+        subHeader.textContent = subName;
+        nodesContainer.appendChild(subHeader);
+
+        // Tarjetas de nodos
+        subGroups[subName].forEach(node => {
+            const name = node.tags && node.tags.name ? node.tags.name : "Punto sin nombre";
+            const ele = node.tags && node.tags.ele ? ` | Ele: ${node.tags.ele}m` : "";
+            const distancia = calcularDistanciaKm(currentLat, currentLon, node.lat, node.lon).toFixed(1);
+            const isChecked = selectedNodesMap.get(node.id) !== false;
+
+            const card = document.createElement("div");
+            card.className = "node-card";
+            card.innerHTML = `
+                <input type="checkbox" class="node-checkbox" data-id="${node.id}" ${isChecked ? 'checked' : ''}>
+                <div class="node-info">
+                    <div class="node-name">${name}</div>
+                    <div class="node-meta">Dist: ${distancia} km${ele} | Lat/Lon: ${node.lat.toFixed(4)}, ${node.lon.toFixed(4)}</div>
+                </div>
+                <button class="trash-btn" data-id="${node.id}" title="Eliminar de la lista">
+                    <img src="./ui-icons/trash.svg" alt="Eliminar">
+                </button>
+            `;
+
+            // Evento checkbox individual
+            card.querySelector(".node-checkbox").addEventListener("change", (e) => {
+                selectedNodesMap.set(node.id, e.target.checked);
+            });
+
+            // Evento papelera (eliminar nodo de la lista)
+            card.querySelector(".trash-btn").addEventListener("click", () => {
+                currentOverpassElements = currentOverpassElements.filter(n => n.id !== node.id);
+                selectedNodesMap.delete(node.id);
+                // Actualizar badge y re-renderizar
+                const badge = document.getElementById("results-badge");
+                if (badge) badge.textContent = currentOverpassElements.length;
+                renderizarNodosCategoria(nodosList.filter(n => n.id !== node.id));
+            });
+
+            nodesContainer.appendChild(card);
+        });
+    });
+}
+
+function configurarEventosPanelResultados(agrupacion) {
+    // Botón Volver (back.svg)
+    const btnBack = document.getElementById("btn-back");
+    if (btnBack) {
+        btnBack.onclick = () => volverAPanelBusqueda();
+    }
+
+    // Búsqueda rápida por texto (lupa)
+    const btnToggleSearch = document.getElementById("btn-toggle-search");
+    const quickSearchContainer = document.getElementById("quick-search-container");
+    const quickSearchInput = document.getElementById("quick-search-input");
+
+    if (btnToggleSearch && quickSearchContainer) {
+        btnToggleSearch.onclick = () => {
+            const isHidden = quickSearchContainer.style.display === "none";
+            quickSearchContainer.style.display = isHidden ? "block" : "none";
+            if (isHidden && quickSearchInput) quickSearchInput.focus();
+        };
+    }
+
+    if (quickSearchInput) {
+        quickSearchInput.oninput = (e) => {
+            const query = e.target.value.toLowerCase();
+            const nodosCatActiva = agrupacion[activeCategoryName] || [];
+            const filtrados = nodosCatActiva.filter(n => {
+                const name = (n.tags && n.tags.name) ? n.tags.name.toLowerCase() : "";
+                return name.includes(query);
+            });
+            renderizarNodosCategoria(filtrados);
+        };
+    }
+
+    // Marcar / Desmarcar todos (list-check.svg / cancel.svg)
+    const btnSelectAll = document.getElementById("btn-select-all");
+    const iconSelectAll = document.getElementById("icon-select-all");
+    let allChecked = true;
+
+    if (btnSelectAll) {
+        btnSelectAll.onclick = () => {
+            allChecked = !allChecked;
+            currentOverpassElements.forEach(n => selectedNodesMap.set(n.id, allChecked));
+            
+            // Actualizar todos los checkboxes visuales actuales
+            document.querySelectorAll(".node-checkbox, .category-chip input[type='checkbox']").forEach(ch => {
+                ch.checked = allChecked;
+            });
+
+            if (iconSelectAll) {
+                // Cambiar icono según estado (puedes ajustar las rutas si tienes cancel.svg en ui-icons)
+                iconSelectAll.src = allChecked ? "./ui-icons/list-check.svg" : "./ui-icons/cancel.svg";
+            }
+        };
+    }
+
+    // Botón Descargar (file-download.svg) -> Generar KML filtrado por los marcados
+    const btnDownload = document.getElementById("btn-download-preset");
+    if (btnDownload) {
+        btnDownload.onclick = () => {
+            generarKMLFiltradoSeleccion();
+        };
+    }
+}
+
+function generarKMLFiltradoSeleccion() {
+    let kml = `<?xml version="1.0" encoding="UTF-8"?>\n<kml xmlns="http://www.opengis.net/kml/2.2">\n<Document>\n<name>PDI - OruxMaps / Cruiser</name>\n`;
+    kml += `<Folder><name>Resultados Seleccionados</name>\n`;
+    
+    let count = 0;
+    currentOverpassElements.forEach(el => {
+        if (selectedNodesMap.get(el.id) === true) {
+            count++;
+            const name = el.tags && el.tags.name ? el.tags.name : "Punto sin nombre";
+            const ele = el.tags && el.tags.ele ? el.tags.ele : "0";
+            
+            // Descripción enriquecida opcional con tags adicionales si existen
+            let desc = "";
+            if (el.tags) {
+                Object.keys(el.tags).forEach(k => {
+                    if (k !== 'name') desc += `${k}: ${el.tags[k]}\n`;
+                });
+            }
+
+            kml += `
+                <Placemark>
+                    <name>${name}</name>
+                    ${desc ? `<description><![CDATA[${desc}]]></description>` : ''}
+                    <Point><coordinates>${el.lon},${el.lat},${ele}</coordinates></Point>
+                </Placemark>`;
+        }
+    });
+    
+    kml += `</Folder>\n</Document>\n</kml>`;
+
+    if (count === 0) {
+        alert("No hay ningún punto seleccionado para descargar.");
+        return;
+    }
+
+    const blob = new Blob([kml], { type: "application/vnd.google-earth.kml+xml" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "oruxmaps_pois_seleccionados.kml";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+}
+
 
 function generarKMLAgrupado(data) {
     let kml = `<?xml version="1.0" encoding="UTF-8"?>\n<kml xmlns="http://www.opengis.net/kml/2.2">\n<Document>\n<name>PDI - OruxMaps</name>\n`;
