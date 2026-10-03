@@ -2,6 +2,9 @@ let xmlDocGlobal = null;
 let miniMap = null;
 let currentLat = 40.4168;
 let currentLon = -3.7038;
+let currentOverpassElements = [];
+let selectedNodesMap = new Map();
+let activeCategoryName = "";
 
 const uiTranslations = {
     es: {
@@ -85,14 +88,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     actualizarTextosUI();
 
-    // Inicializar Mapa estático MapLibre de forma segura
     try {
         inicializarMiniMapa();
     } catch (e) {
         console.error("Error al inicializar MapLibre:", e);
     }
 
-    // Control del Acordeón del Mapa (Corregido para evaluar correctamente el estado display)
     const btnToggleMap = document.getElementById("btn-toggle-map");
     const mapContainerCollapse = document.getElementById("map-container-collapse");
     if (btnToggleMap && mapContainerCollapse) {
@@ -101,7 +102,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             mapContainerCollapse.style.display = isHidden ? "block" : "none";
             btnToggleMap.classList.toggle("active", isHidden);
             
-            // Forzar renderizado de MapLibre y recentrar al desplegarse
             if (isHidden && miniMap) {
                 setTimeout(() => {
                     miniMap.resize();
@@ -111,7 +111,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     }
 
-    // Control del Slider de radio y cálculo de superficie + radio en mapa
     const radiusSlider = document.getElementById("search-radius");
     const radiusValueSpan = document.getElementById("radius-value");
 
@@ -165,7 +164,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     }
 
-    // --- MODO EDICIÓN ---
     const btnEditMode = document.getElementById("btn-edit-mode");
     const editActionsGroup = document.querySelector(".edit-actions-group");
     const btnValidateEdit = document.getElementById("btn-validate-edit");
@@ -199,7 +197,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     }
 
-    // Carga independiente del XML de categorías
     try {
         const response = await fetch("./poi-mapping-overpass-turbo.xml");
         if (!response.ok) {
@@ -232,7 +229,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 });
 
-// --- INICIALIZACIÓN Y CONFIGURACIÓN DEL MAPA CON MAPLIBRE (SOLO OSM) ---
 function inicializarMiniMapa() {
     const mapContainer = document.getElementById('mini-map');
     if (!mapContainer) return;
@@ -248,7 +244,7 @@ function inicializarMiniMapa() {
                         'https://tile.openstreetmap.org/{z}/{x}/{y}.png'
                     ],
                     tileSize: 256,
-                    attribution: '&copy; OpenStreetMap Contributors | <a href="https://maplibre.org/" target="_blank">MapLibre</a>'
+                    attribution: '&copy; OpenStreetMap Contributors'
                 }
             },
             layers: [
@@ -271,57 +267,6 @@ function inicializarMiniMapa() {
         const currentRadius = radiusSlider ? parseFloat(radiusSlider.value) || 5 : 5;
         agregarCapaRadioAlMapa(currentRadius);
     });
-}
-
-
-function getMapStyle(type) {
-    if (type === 'esri') {
-        return {
-            version: 8,
-            sources: {
-                'esri-sat': {
-                    type: 'raster',
-                    tiles: [
-                        'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
-                    ],
-                    tileSize: 256,
-                    attribution: 'Esri'
-                }
-            },
-            layers: [
-                {
-                    id: 'esri-sat-layer',
-                    type: 'raster',
-                    source: 'esri-sat',
-                    minzoom: 0,
-                    maxzoom: 22
-                }
-            ]
-        };
-    } else {
-        return {
-            version: 8,
-            sources: {
-                'osm-raster': {
-                    type: 'raster',
-                    tiles: [
-                        'https://tile.openstreetmap.org/{z}/{x}/{y}.png'
-                    ],
-                    tileSize: 256,
-                    attribution: '&copy; OpenStreetMap Contributors'
-                }
-            },
-            layers: [
-                {
-                    id: 'osm-layer',
-                    type: 'raster',
-                    source: 'osm-raster',
-                    minzoom: 0,
-                    maxzoom: 19
-                }
-            ]
-        };
-    }
 }
 
 function crearGeoJsonCirculo(centerLon, centerLat, radiusKm, points = 64) {
@@ -572,11 +517,11 @@ function renderizarArbolCategorias(xmlDoc) {
     });
 }
 
+// --- FUNCIÓN OVERPASS OPTIMIZADA Y SEGURA ---
 async function ejecutarConsultaOverpass(lat, lon) {
     const radiusSlider = document.getElementById("search-radius");
     const radiusKm = radiusSlider ? parseInt(radiusSlider.value, 10) : 5;
     const radiusMeters = radiusKm * 1000;
-    const maxResults = 3000;
 
     const checkboxes = document.querySelectorAll(".subcat-checkbox:checked");
     if (checkboxes.length === 0) {
@@ -584,28 +529,28 @@ async function ejecutarConsultaOverpass(lat, lon) {
         return;
     }
 
-    let queries = [];
+    let conditions = [];
     checkboxes.forEach(chk => {
         const key = chk.getAttribute("data-key");
         const value = chk.getAttribute("data-value");
         if (key && value) {
-            queries.push(`node(around:${radiusMeters}, ${lat}, ${lon})["${key}"="${value}"];`);
+            conditions.push(`["${key}"="${value}"]`);
         }
     });
 
-    if (queries.length === 0) {
+    if (conditions.length === 0) {
         alert("Los elementos seleccionados no tienen etiquetas de mapeo válidas.");
         return;
     }
 
+    let unionParts = conditions.map(cond => `node(around:${radiusMeters}, ${lat}, ${lon})${cond};`);
+
     const overpassQuery = `
         [out:json][timeout:25];
         (
-            ${queries.join("\n")}
+            ${unionParts.join("\n")}
         );
-        out body ${maxResults};
-        >;
-        out skel qt;
+        out body;
     `;
 
     try {
@@ -613,39 +558,344 @@ async function ejecutarConsultaOverpass(lat, lon) {
             method: "POST",
             body: overpassQuery
         });
+
+        if (!res.ok) {
+            throw new Error(`Error en el servidor de Overpass: ${res.status}`);
+        }
+
         const data = await res.json();
-        generarKMLAgrupado(data);
+        
+        if (!data.elements || data.elements.length === 0) {
+            alert("No se han encontrado puntos de interés para los criterios seleccionados en este radio.");
+            return;
+        }
+
+        currentOverpassElements = data.elements.filter(el => el.type === "node" && el.lat && el.lon);
+        
+        selectedNodesMap.clear();
+        currentOverpassElements.forEach(el => selectedNodesMap.set(el.id, true));
+
+        mostrarPanelResultados();
+
     } catch (e) {
         console.error("Error en Overpass API:", e);
-        alert("Ocurrió un error al conectar con la API de Overpass.");
+        alert("Ocurrió un error al conectar con la API de Overpass. Prueba a reducir el radio o desmarcar algunas categorías.");
     }
 }
 
-function generarKMLAgrupado(data) {
-    let kml = `<?xml version="1.0" encoding="UTF-8"?>\n<kml xmlns="http://www.opengis.net/kml/2.2">\n<Document>\n<name>PDI - OruxMaps</name>\n`;
-    kml += `<Folder><name>Resultados de Búsqueda</name>\n`;
+function mostrarPanelResultados() {
+    document.querySelectorAll("body > *:not(#results-panel)").forEach(el => {
+        el.style.display = "none";
+    });
+
+    const resultsPanel = document.getElementById("results-panel");
+    if (resultsPanel) {
+        resultsPanel.style.display = "flex";
+    }
+
+    const badge = document.getElementById("results-badge");
+    if (badge) badge.textContent = currentOverpassElements.length;
+
+    poblarPanelResultados();
+}
+
+function volverAPanelBusqueda() {
+    const resultsPanel = document.getElementById("results-panel");
+    if (resultsPanel) {
+        resultsPanel.style.display = "none";
+    }
+
+    document.querySelectorAll("body > *:not(#results-panel)").forEach(el => {
+        if (el.tagName === "HEADER") el.style.display = "flex";
+        else if (el.tagName === "MAIN") el.style.display = "block";
+        else el.style.display = "block";
+    });
+}
+
+function calcularDistanciaKm(lat1, lon1, lat2, lon2) {
+    const R = 6371;
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLon = (lon2 - lon1) * Math.PI / 180;
+    const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+              Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+              Math.sin(dLon/2) * Math.sin(dLon/2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    return R * c;
+}
+
+function poblarPanelResultados() {
+    const chipsContainer = document.getElementById("categories-chips-container");
+    const nodesContainer = document.getElementById("nodes-container");
+    if (!chipsContainer || !nodesContainer) return;
+
+    chipsContainer.innerHTML = "";
+    nodesContainer.innerHTML = "";
+
+    const agrupacion = clasificarNodosPorCategoriasXML(currentOverpassElements, xmlDocGlobal);
+    const categoriasDisponibles = Object.keys(agrupacion);
+
+    if (categoriasDisponibles.length === 0) {
+        nodesContainer.innerHTML = "<p style='padding: 15px; color: #999;'>No se pudieron clasificar los nodos en las categorías.</p>";
+        return;
+    }
+
+    activeCategoryName = categoriasDisponibles[0];
+
+    categoriasDisponibles.forEach((catName) => {
+        const catData = agrupacion[catName];
+        const totalNodesInCat = contarNodosEnCategoria(catData);
+
+        const chip = document.createElement("div");
+        chip.className = `category-chip ${catName === activeCategoryName ? 'active' : ''}`;
+        chip.dataset.category = catName;
+
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.checked = true;
+        checkbox.addEventListener("change", (e) => {
+            e.stopPropagation();
+            const checked = checkbox.checked;
+            marcarDesmarcarCategoria(catData, checked);
+            renderizarNodosCategoria(agrupacion[activeCategoryName]);
+        });
+
+        const labelSpan = document.createElement("span");
+        labelSpan.textContent = `${catName} (${totalNodesInCat})`;
+        labelSpan.addEventListener("click", () => {
+            document.querySelectorAll(".category-chip").forEach(c => c.classList.remove("active"));
+            chip.classList.add("active");
+            activeCategoryName = catName;
+            renderizarNodosCategoria(agrupacion[activeCategoryName]);
+        });
+
+        chip.appendChild(checkbox);
+        chip.appendChild(labelSpan);
+        chipsContainer.appendChild(chip);
+    });
+
+    renderizarNodosCategoria(agrupacion[activeCategoryName]);
+    configurarEventosPanelResultados(agrupacion);
+}
+
+function clasificarNodosPorCategoriasXML(elements, xmlDoc) {
+    const resultado = {};
+    const rootCategories = xmlDoc.querySelectorAll(":scope > category, poi_categories > category");
     
-    if (data.elements) {
-        data.elements.forEach(el => {
-            if (el.type === "node" && el.lat && el.lon) {
-                const name = el.tags && el.tags.name ? el.tags.name : "Punto sin nombre";
-                kml += `
-                    <Placemark>
-                        <name>${name}</name>
-                        <Point><coordinates>${el.lon},${el.lat},0</coordinates></Point>
-                    </Placemark>`;
+    rootCategories.forEach(catElem => {
+        const titleAttr = catElem.getAttribute("title") || "General";
+        const catName = obtenerTraduccion(catElem, titleAttr);
+        
+        const leafMappings = [];
+        const subcategories = catElem.querySelectorAll("category");
+
+        subcategories.forEach(sub => {
+            const subTitle = obtenerTraduccion(sub, sub.getAttribute("title") || "Subcategoría");
+            const maps = sub.querySelectorAll("mapping");
+            maps.forEach(m => {
+                const tagAttr = m.getAttribute("tag");
+                if (tagAttr) {
+                    const [k, v] = tagAttr.split("=");
+                    leafMappings.push({ key: k, value: v, subName: subTitle });
+                }
+            });
+        });
+
+        const directMaps = catElem.querySelectorAll(":scope > mapping");
+        directMaps.forEach(m => {
+            const tagAttr = m.getAttribute("tag");
+            if (tagAttr) {
+                const [k, v] = tagAttr.split("=");
+                leafMappings.push({ key: k, value: v, subName: catName });
             }
         });
+
+        const nodosDeEstaCat = [];
+        elements.forEach(el => {
+            if (!el.tags) return;
+            for (let map of leafMappings) {
+                if (el.tags[map.key] === map.value) {
+                    if (!nodosDeEstaCat.some(n => n.id === el.id)) {
+                        nodosDeEstaCat.push({ ...el, subcategoryName: map.subName });
+                    }
+                    break;
+                }
+            }
+        });
+
+        if (nodosDeEstaCat.length > 0) {
+            resultado[catName] = nodosDeEstaCat;
+        }
+    });
+
+    return resultado;
+}
+
+function contarNodosEnCategoria(nodosList) {
+    return nodosList.length;
+}
+
+function marcarDesmarcarCategoria(nodosList, checked) {
+    nodosList.forEach(node => {
+        selectedNodesMap.set(node.id, checked);
+    });
+}
+
+function renderizarNodosCategoria(nodosList) {
+    const nodesContainer = document.getElementById("nodes-container");
+    if (!nodesContainer) return;
+    nodesContainer.innerHTML = "";
+
+    if (!nodosList || nodosList.length === 0) {
+        nodesContainer.innerHTML = "<p style='padding: 15px; color: #999;'>No hay elementos en esta categoría.</p>";
+        return;
     }
+
+    const subGroups = {};
+    nodosList.forEach(node => {
+        const subName = node.subcategoryName || "General";
+        if (!subGroups[subName]) subGroups[subName] = [];
+        subGroups[subName].push(node);
+    });
+
+    Object.keys(subGroups).forEach(subName => {
+        const subHeader = document.createElement("div");
+        subHeader.className = "subcategory-header";
+        subHeader.textContent = subName;
+        nodesContainer.appendChild(subHeader);
+
+        subGroups[subName].forEach(node => {
+            const name = node.tags && node.tags.name ? node.tags.name : "Punto sin nombre";
+            const ele = node.tags && node.tags.ele ? ` | Ele: ${node.tags.ele}m` : "";
+            const distancia = calcularDistanciaKm(currentLat, currentLon, node.lat, node.lon).toFixed(1);
+            const isChecked = selectedNodesMap.get(node.id) !== false;
+
+            const card = document.createElement("div");
+            card.className = "node-card";
+            card.innerHTML = `
+                <input type="checkbox" class="node-checkbox" data-id="${node.id}" ${isChecked ? 'checked' : ''}>
+                <div class="node-info">
+                    <div class="node-name">${name}</div>
+                    <div class="node-meta">Dist: ${distancia} km${ele} | Lat/Lon: ${node.lat.toFixed(4)}, ${node.lon.toFixed(4)}</div>
+                </div>
+                <button class="trash-btn" data-id="${node.id}" title="Eliminar de la lista">
+                    <img src="./ui-icons/trash.svg" alt="Eliminar">
+                </button>
+            `;
+
+            card.querySelector(".node-checkbox").addEventListener("change", (e) => {
+                selectedNodesMap.set(node.id, e.target.checked);
+            });
+
+            card.querySelector(".trash-btn").addEventListener("click", () => {
+                currentOverpassElements = currentOverpassElements.filter(n => n.id !== node.id);
+                selectedNodesMap.delete(node.id);
+                const badge = document.getElementById("results-badge");
+                if (badge) badge.textContent = currentOverpassElements.length;
+                renderizarNodosCategoria(nodosList.filter(n => n.id !== node.id));
+            });
+
+            nodesContainer.appendChild(card);
+        });
+    });
+}
+
+function configurarEventosPanelResultados(agrupacion) {
+    const btnBack = document.getElementById("btn-back");
+    if (btnBack) {
+        btnBack.onclick = () => volverAPanelBusqueda();
+    }
+
+    const btnToggleSearch = document.getElementById("btn-toggle-search");
+    const quickSearchContainer = document.getElementById("quick-search-container");
+    const quickSearchInput = document.getElementById("quick-search-input");
+
+    if (btnToggleSearch && quickSearchContainer) {
+        btnToggleSearch.onclick = () => {
+            const isHidden = quickSearchContainer.style.display === "none";
+            quickSearchContainer.style.display = isHidden ? "block" : "none";
+            if (isHidden && quickSearchInput) quickSearchInput.focus();
+        };
+    }
+
+    if (quickSearchInput) {
+        quickSearchInput.oninput = (e) => {
+            const query = e.target.value.toLowerCase();
+            const nodosCatActiva = agrupacion[activeCategoryName] || [];
+            const filtrados = nodosCatActiva.filter(n => {
+                const name = (n.tags && n.tags.name) ? n.tags.name.toLowerCase() : "";
+                return name.includes(query);
+            });
+            renderizarNodosCategoria(filtrados);
+        };
+    }
+
+    const btnSelectAll = document.getElementById("btn-select-all");
+    const iconSelectAll = document.getElementById("icon-select-all");
+    let allChecked = true;
+
+    if (btnSelectAll) {
+        btnSelectAll.onclick = () => {
+            allChecked = !allChecked;
+            currentOverpassElements.forEach(n => selectedNodesMap.set(n.id, allChecked));
+            
+            document.querySelectorAll(".node-checkbox, .category-chip input[type='checkbox']").forEach(ch => {
+                ch.checked = allChecked;
+            });
+
+            if (iconSelectAll) {
+                iconSelectAll.src = allChecked ? "./ui-icons/list-check.svg" : "./ui-icons/cancel.svg";
+            }
+        };
+    }
+
+    const btnDownload = document.getElementById("btn-download-preset");
+    if (btnDownload) {
+        btnDownload.onclick = () => {
+            generarKMLFiltradoSeleccion();
+        };
+    }
+}
+
+function generarKMLFiltradoSeleccion() {
+    let kml = `<?xml version="1.0" encoding="UTF-8"?>\n<kml xmlns="http://www.opengis.net/kml/2.2">\n<Document>\n<name>PDI - OruxMaps / Cruiser</name>\n`;
+    kml += `<Folder><name>Resultados Seleccionados</name>\n`;
+    
+    let count = 0;
+    currentOverpassElements.forEach(el => {
+        if (selectedNodesMap.get(el.id) === true) {
+            count++;
+            const name = el.tags && el.tags.name ? el.tags.name : "Punto sin nombre";
+            const ele = el.tags && el.tags.ele ? el.tags.ele : "0";
+            
+            let desc = "";
+            if (el.tags) {
+                Object.keys(el.tags).forEach(k => {
+                    if (k !== 'name') desc += `${k}: ${el.tags[k]}\n`;
+                });
+            }
+
+            kml += `
+                <Placemark>
+                    <name>${name}</name>
+                    ${desc ? `<description><![CDATA[${desc}]]></description>` : ''}
+                    <Point><coordinates>${el.lon},${el.lat},${ele}</coordinates></Point>
+                </Placemark>`;
+        }
+    });
     
     kml += `</Folder>\n</Document>\n</kml>`;
+
+    if (count === 0) {
+        alert("No hay ningún punto seleccionado para descargar.");
+        return;
+    }
 
     const blob = new Blob([kml], { type: "application/vnd.google-earth.kml+xml" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = "oruxmaps_pois.kml";
+    a.download = "oruxmaps_pois_seleccionados.kml";
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
-            }
+}
