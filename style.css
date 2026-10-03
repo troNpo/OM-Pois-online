@@ -584,3 +584,11 @@ body.is-editing .btn-toggle-visibility {
     height: 18px;
 }
 
+/* Corrección de color y tamaño para los iconos de la barra roja de resultados */
+.app-header.red-bar img,
+.app-header.red-bar .icon-btn img {
+    width: 20px;
+    height: 20px;
+    filter: brightness(0) invert(1);
+}
+
