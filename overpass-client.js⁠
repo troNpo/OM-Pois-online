@@ -1,0 +1,237 @@
+// overpass-client.js
+
+let currentOverpassElements = [];
+let selectedNodesMap = new Map();
+let activeCategoryName = "";
+
+document.addEventListener("DOMContentLoaded", () => {
+    const btnSearch = document.getElementById("btn-search");
+    if (btnSearch) {
+        btnSearch.addEventListener("click", () => {
+            ejecutarConsultaOverpass(currentLat, currentLon);
+        });
+    }
+});
+
+// --- FUNCIÓN OVERPASS OPTIMIZADA (Nodos y Radio máx 15km) ---
+async function ejecutarConsultaOverpass(lat, lon) {
+    const radiusSlider = document.getElementById("search-radius");
+    const radiusKm = radiusSlider ? parseInt(radiusSlider.value, 10) : 5;
+    const radiusMeters = Math.min(radiusKm * 1000, 15000); // Límite seguro de 15 km[span_1](start_span)[span_1](end_span)
+
+    const checkboxes = document.querySelectorAll(".subcat-checkbox:checked");[span_2](start_span)[span_2](end_span)[span_3](start_span)[span_3](end_span)
+    if (checkboxes.length === 0) {
+        alert("Por favor, selecciona al menos una categoría o elemento.");
+        return;
+    }
+
+    let conditions = [];
+    checkboxes.forEach(chk => {
+        const key = chk.getAttribute("data-key");
+        const value = chk.getAttribute("data-value");
+        if (key && value) {
+            conditions.push(`["${key}"="${value}"]`);
+        }
+    });
+
+    if (conditions.length === 0) {
+        alert("Los elementos seleccionados no tienen etiquetas de mapeo válidas.");
+        return;
+    }
+
+    let unionParts = conditions.map(cond => `node(around:${radiusMeters}, ${lat}, ${lon})${cond};`);[span_4](start_span)[span_4](end_span)
+
+    const overpassQuery = `
+        [out:json][timeout:25];
+        (
+            ${unionParts.join("\n")}
+        );
+        out body;
+    `;[span_5](start_span)[span_5](end_span)
+
+    try {
+        const res = await fetch("https://overpass-api.de/api/interpreter", {
+            method: "POST",
+            body: overpassQuery
+        });
+
+        if (!res.ok) {
+            throw new Error(`Error en el servidor de Overpass: ${res.status}`);
+        }
+
+        const data = await res.json();
+        
+        if (!data.elements || data.elements.length === 0) {
+            alert("No se han encontrado puntos de interés para los criterios seleccionados en este radio.");
+            return;
+        }
+
+        currentOverpassElements = data.elements.filter(el => el.type === "node" && el.lat && el.lon);[span_6](start_span)[span_6](end_span)
+        
+        selectedNodesMap.clear();
+        currentOverpassElements.forEach(el => selectedNodesMap.set(el.id, true));[span_7](start_span)[span_7](end_span)
+
+        mostrarPanelResultados();[span_8](start_span)[span_8](end_span)
+
+    } catch (e) {
+        console.error("Error en Overpass API:", e);
+        alert("Ocurrió un error al conectar con la API de Overpass. Prueba a reducir el radio o desmarcar algunas categorías.");
+    }
+}
+
+// --- GESTIÓN DE VISTAS Y PANELES ---
+function mostrarPanelResultados() {
+    document.querySelectorAll("body > *:not(#results-panel)").forEach(el => {
+        el.style.display = "none";
+    });
+
+    const resultsPanel = document.getElementById("results-panel");[span_9](start_span)[span_9](end_span)[span_10](start_span)[span_10](end_span)
+    if (resultsPanel) {
+        resultsPanel.style.display = "flex";[span_11](start_span)[span_11](end_span)
+    }
+
+    const badge = document.getElementById("results-badge");[span_12](start_span)[span_12](end_span)
+    if (badge) badge.textContent = currentOverpassElements.length;
+
+    poblarPanelResultados();
+}
+
+function volverAPanelBusqueda() {
+    const resultsPanel = document.getElementById("results-panel");[span_13](start_span)[span_13](end_span)[span_14](start_span)[span_14](end_span)
+    if (resultsPanel) {
+        resultsPanel.style.display = "none";
+    }
+
+    document.querySelectorAll("body > *:not(#results-panel)").forEach(el => {
+        if (el.tagName === "HEADER") el.style.display = "flex";
+        else if (el.tagName === "MAIN") el.style.display = "block";
+        else el.style.display = "block";
+    });
+}
+
+function calcularDistanciaKm(lat1, lon1, lat2, lon2) {
+    const R = 6371;
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLon = (lon2 - lon1) * Math.PI / 180;
+    const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+              Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+              Math.sin(dLon/2) * Math.sin(dLon/2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    return R * c;
+}
+
+// --- ASIGNACIÓN DE COLORES SEGÚN PALETA SOLICITADA ---
+function obtenerColorPorTag(tags) {
+    if (!tags) return "#666666"; // man-made / gris por defecto
+    
+    // Gastronomía / Alimentación (#C77400 o #734a08)
+    if (tags.amenity === "restaurant" || tags.amenity === "cafe" || tags.amenity === "bar" || tags.amenity === "pub" || tags.amenity === "fast_food" || tags.shop === "bakery") return "#C77400";
+    
+    // Comercios y Tiendas (#ac39ac)
+    if (tags.shop) return "#ac39ac";
+    
+    // Turismo / Alojamiento / Transporte (#0092da)
+    if (tags.tourism === "alpine_hut" || tags.tourism === "hotel" || tags.tourism === "guest_house" || tags.amenity === "ferry_terminal") return "#0092da";
+    
+    // Sanidad / Médico (#BF0000 o #da0092)
+    if (tags.amenity === "hospital" || tags.amenity === "pharmacy" || tags.amenity === "clinic") return "#BF0000";
+    
+    // Estaciones y Transporte público (#7981b0)
+    if (tags.amenity === "bus_station" || tags.public_transport) return "#7981b0";
+    
+    // Agua / Fuentes (#4d80b3 o #7abcec)
+    if (tags.natural === "water" || tags.amenity === "drinking_water" || tags.natural === "spring" || tags.waterway) return "#4d80b3";
+    
+    // Cimas y Orografía (#d08f55)
+    if (tags.natural === "peak" || tags.mountain_pass) return "#d08f55";
+    
+    // Elementos artificiales / Man-made (#666666)
+    if (tags.man_made) return "#666666";
+    
+    // Amenidades generales o por defecto (#734a08)
+    return "#734a08";
+}
+
+// --- RENDERIZADO DE CHIPS Y TARJETAS EN EL PANEL ---
+function poblarPanelResultados() {
+    const chipsContainer = document.getElementById("categories-chips-container");[span_15](start_span)[span_15](end_span)
+    const nodesContainer = document.getElementById("nodes-container");[span_16](start_span)[span_16](end_span)
+    if (!chipsContainer || !nodesContainer) return;
+
+    chipsContainer.innerHTML = "";
+    nodesContainer.innerHTML = "";
+
+    const agrupacion = {};
+    currentOverpassElements.forEach(el => {
+        if (!el.tags) return;
+        let catKey = "General";
+        if (el.tags.amenity) catKey = `Amenity: ${el.tags.amenity}`;
+        else if (el.tags.tourism) catKey = `Tourism: ${el.tags.tourism}`;
+        else if (el.tags.shop) catKey = `Shop: ${el.tags.shop}`;
+        else if (el.tags.natural) catKey = `Natural: ${el.tags.natural}`;
+        else if (el.tags.man_made) catKey = `Man Made: ${el.tags.man_made}`;
+
+        if (!agrupacion[catKey]) agrupacion[catKey] = [];
+        agrupacion[catKey].push(el);
+    });
+
+    const categoriasDisponibles = Object.keys(agrupacion);
+    if (categoriasDisponibles.length === 0) {
+        nodesContainer.innerHTML = "<p style='padding: 15px; color: #999;'>No se pudieron clasificar los nodos.</p>";
+        return;
+    }
+
+    activeCategoryName = categoriasDisponibles[0];
+
+    categoriasDisponibles.forEach(catName => {
+        const nodosList = agrupacion[catName];
+        const chip = document.createElement("div");
+        chip.className = `category-chip ${catName === activeCategoryName ? 'active' : ''}`;[span_17](start_span)[span_17](end_span)
+
+        const labelSpan = document.createElement("span");
+        labelSpan.textContent = `${catName} (${nodosList.length})`;
+        labelSpan.addEventListener("click", () => {
+            document.querySelectorAll(".category-chip").forEach(c => c.classList.remove("active"));
+            chip.classList.add("active");
+            activeCategoryName = catName;
+            renderizarNodosCategoria(agrupacion[activeCategoryName]);
+        });
+
+        chip.appendChild(labelSpan);
+        chipsContainer.appendChild(chip);
+    });
+
+    renderizarNodosCategoria(agrupacion[activeCategoryName]);
+
+    const btnBack = document.getElementById("btn-back");[span_18](start_span)[span_18](end_span)
+    if (btnBack) btnBack.onclick = () => volverAPanelBusqueda();
+}
+
+function renderizarNodosCategoria(nodosList) {
+    const nodesContainer = document.getElementById("nodes-container");[span_19](start_span)[span_19](end_span)
+    if (!nodesContainer) return;
+    nodesContainer.innerHTML = "";
+
+    if (!nodosList || nodosList.length === 0) {
+        nodesContainer.innerHTML = "<p style='padding: 15px; color: #999;'>No hay elementos en esta categoría.</p>";
+        return;
+    }
+
+    nodosList.forEach(node => {
+        const name = node.tags && node.tags.name ? node.tags.name : "Punto sin nombre";[span_20](start_span)[span_20](end_span)
+        const ele = node.tags && node.tags.ele ? ` | Ele: ${node.tags.ele}m` : "";[span_21](start_span)[span_21](end_span)
+        const distancia = calcularDistanciaKm(currentLat, currentLon, node.lat, node.lon).toFixed(1);[span_22](start_span)[span_22](end_span)
+        const colorTag = obtenerColorPorTag(node.tags);
+
+        const card = document.createElement("div");
+        card.className = "node-card";[span_23](start_span)[span_23](end_span)
+        card.style.borderLeft = `4px solid ${colorTag}`;
+        card.innerHTML = `
+            <div class="node-info">[span_24](start_span)[span_24](end_span)
+                <div class="node-name" style="color: ${colorTag};">${name}</div>[span_25](start_span)[span_25](end_span)
+                <div class="node-meta">Dist: ${distancia} km${ele} | Lat/Lon: ${node.lat.toFixed(4)}, ${node.lon.toFixed(4)}</div>[span_26](start_span)[span_26](end_span)
+            </div>
+        `;
+        nodesContainer.appendChild(card);
+    });
+}
