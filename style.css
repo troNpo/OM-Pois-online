@@ -647,3 +647,64 @@ body.is-editing .btn-toggle-visibility {
     font-weight: bold;
     line-height: 1;
 }
+
+/* CABECERA DEL PANEL DE RESULTADOS */
+.app-header.red-bar {
+    background-color: var(--primary-red);
+    color: white;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    z-index: 10;
+}
+
+.app-header.red-bar .header-title-group {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.app-header.red-bar .icon-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    position: relative;
+}
+
+.app-header.red-bar .icon-btn:hover {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.app-header.red-bar img,
+.app-header.red-bar .icon-btn img {
+    width: 20px;
+    height: 20px;
+    filter: brightness(0) invert(1);
+}
+
+/* Estilo para el contador (badge) */
+.badge-container {
+    position: relative;
+}
+
+.badge {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    background: #121212;
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: bold;
+    padding: 1px 4px;
+    border-radius: 8px;
+    line-height: 1;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
