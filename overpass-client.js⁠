@@ -4,34 +4,53 @@ let currentOverpassElements = [];
 let selectedNodesMap = new Map();
 let activeCategoryName = "";
 
-// Función para inicializar el evento del botón de búsqueda de forma segura
-function setupSearchButton() {
+console.log("overpass-client.js: Script cargado correctamente.");
+
+document.addEventListener("DOMContentLoaded", () => {
+    initOverpassModule();
+});
+
+// Por si el DOM ya se había cargado antes de leer este script
+if (document.readyState === "interactive" || document.readyState === "complete") {
+    initOverpassModule();
+}
+
+function initOverpassModule() {
     const btnSearch = document.getElementById("btn-search");
+    console.log("overpass-client.js: Buscando botón #btn-search ->", btnSearch);
+
     if (btnSearch) {
-        // Prevenir duplicados de listeners
-        btnSearch.removeEventListener("click", ejecutarBusquedaClick);
-        btnSearch.addEventListener("click", ejecutarBusquedaClick);
+        // Eliminar posibles listeners duplicados
+        btnSearch.onclick = null;
+        
+        btnSearch.addEventListener("click", (e) => {
+            e.preventDefault();
+            console.log("¡Clic detectado en el botón de búsqueda!");
+            
+            // Verificamos que las coordenadas estén disponibles
+            console.log("Coordenadas actualizadas:", typeof currentLat !== 'undefined' ? currentLat : "No definidas", typeof currentLon !== 'undefined' ? currentLon : "No definidas");
+            
+            const latToUse = typeof currentLat !== 'undefined' ? currentLat : 40.4168;
+            const lonToUse = typeof currentLon !== 'undefined' ? currentLon : -3.7038;
+
+            ejecutarConsultaOverpass(latToUse, lonToUse);
+        });
+    } else {
+        console.error("overpass-client.js: ¡ERROR! No se encontró el elemento #btn-search en el HTML.");
     }
-}
-
-function ejecutarBusquedaClick() {
-    ejecutarConsultaOverpass(currentLat, currentLon);
-}
-
-if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", setupSearchButton);
-} else {
-    // Si el DOM ya está cargado, se ejecuta inmediatamente
-    setupSearchButton();
 }
 
 // --- FUNCIÓN OVERPASS OPTIMIZADA (Nodos y Radio máx 15km) ---
 async function ejecutarConsultaOverpass(lat, lon) {
+    console.log("Iniciando consulta a Overpass para lat:", lat, "lon:", lon);
+
     const radiusSlider = document.getElementById("search-radius");
     const radiusKm = radiusSlider ? parseInt(radiusSlider.value, 10) : 5;
     const radiusMeters = Math.min(radiusKm * 1000, 15000); // Límite seguro de 15 km[span_0](start_span)[span_0](end_span)
 
     const checkboxes = document.querySelectorAll(".subcat-checkbox:checked");[span_1](start_span)[span_1](end_span)[span_2](start_span)[span_2](end_span)
+    console.log("Checkboxes de categorías seleccionados:", checkboxes.length);
+
     if (checkboxes.length === 0) {
         alert("Por favor, selecciona al menos una categoría o elemento.");
         return;
@@ -61,6 +80,8 @@ async function ejecutarConsultaOverpass(lat, lon) {
         out body;
     `;[span_4](start_span)[span_4](end_span)
 
+    console.log("Consulta Overpass generada:", overpassQuery);
+
     try {
         const res = await fetch("https://overpass-api.de/api/interpreter", {
             method: "POST",
@@ -72,6 +93,7 @@ async function ejecutarConsultaOverpass(lat, lon) {
         }
 
         const data = await res.json();
+        console.log("Respuesta recibida de Overpass:", data);
         
         if (!data.elements || data.elements.length === 0) {
             alert("No se han encontrado puntos de interés para los criterios seleccionados en este radio.");
@@ -79,15 +101,16 @@ async function ejecutarConsultaOverpass(lat, lon) {
         }
 
         currentOverpassElements = data.elements.filter(el => el.type === "node" && el.lat && el.lon);[span_5](start_span)[span_5](end_span)
+        console.log("Nodos válidos filtrados:", currentOverpassElements.length);
         
         selectedNodesMap.clear();
         currentOverpassElements.forEach(el => selectedNodesMap.set(el.id, true));[span_6](start_span)[span_6](end_span)
 
         mostrarPanelResultados();[span_7](start_span)[span_7](end_span)
 
-    } catch (e) {
-        console.error("Error en Overpass API:", e);
-        alert("Ocurrió un error al conectar con la API de Overpass. Prueba a reducir el radio o desmarcar algunas categorías.");
+            } catch (e) {
+        console.error("Error crítico en Overpass API:", e);
+        alert("Ocurrió un error al conectar con la API de Overpass. Revisa la consola para más detalles.");
     }
 }
 
@@ -203,6 +226,10 @@ function poblarPanelResultados() {
     if (btnBack) btnBack.onclick = () => volverAPanelBusqueda();
 }
 
+def renderizarNodosCategoria(nodosList) { // Corregido por si acaso
+    // ... función estándar ya existente ...
+}
+
 function renderizarNodosCategoria(nodosList) {
     const nodesContainer = document.getElementById("nodes-container");[span_18](start_span)[span_18](end_span)
     if (!nodesContainer) return;
@@ -213,6 +240,7 @@ function renderizarNodosCategoria(nodosList) {
         return;
     }
 
+    nodosList.rows = nodosList.forEach ? nodosList : [];
     nodosList.forEach(node => {
         const name = node.tags && node.tags.name ? node.tags.name : "Punto sin nombre";[span_19](start_span)[span_19](end_span)
         const ele = node.tags && node.tags.ele ? ` | Ele: ${node.tags.ele}m` : "";[span_20](start_span)[span_20](end_span)
