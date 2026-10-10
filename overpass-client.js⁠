@@ -4,31 +4,54 @@ let currentOverpassElements = [];
 let selectedNodesMap = new Map();
 let activeCategoryName = "";
 
-console.log("overpass-client.js: Script cargado correctamente.");
+// Función para mostrar un mensaje visual (Toast) en pantalla
+function showToast(message, duration = 3000) {
+    let existingToast = document.getElementById("debug-toast");
+    if (existingToast) existingToast.remove();
+
+    const toast = document.createElement("div");
+    toast.id = "debug-toast";
+    toast.textContent = message;
+    toast.style.cssText = `
+        position: fixed;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0, 0, 0, 0.9);
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 6px;
+        font-size: 14px;
+        z-index: 99999;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+        border: 1px solid #444;
+        text-align: center;
+        max-width: 90vw;
+    `;
+    document.body.appendChild(toast);
+
+    setTimeout(() => {
+        if (toast) toast.remove();
+    }, duration);
+}
 
 document.addEventListener("DOMContentLoaded", () => {
     initOverpassModule();
 });
 
-// Por si el DOM ya se había cargado antes de leer este script
 if (document.readyState === "interactive" || document.readyState === "complete") {
     initOverpassModule();
 }
 
 function initOverpassModule() {
     const btnSearch = document.getElementById("btn-search");
-    console.log("overpass-client.js: Buscando botón #btn-search ->", btnSearch);
 
     if (btnSearch) {
-        // Eliminar posibles listeners duplicados
         btnSearch.onclick = null;
         
         btnSearch.addEventListener("click", (e) => {
             e.preventDefault();
-            console.log("¡Clic detectado en el botón de búsqueda!");
-            
-            // Verificamos que las coordenadas estén disponibles
-            console.log("Coordenadas actualizadas:", typeof currentLat !== 'undefined' ? currentLat : "No definidas", typeof currentLon !== 'undefined' ? currentLon : "No definidas");
+            showToast("¡Botón de búsqueda pulsado!");
             
             const latToUse = typeof currentLat !== 'undefined' ? currentLat : 40.4168;
             const lonToUse = typeof currentLon !== 'undefined' ? currentLon : -3.7038;
@@ -36,22 +59,22 @@ function initOverpassModule() {
             ejecutarConsultaOverpass(latToUse, lonToUse);
         });
     } else {
-        console.error("overpass-client.js: ¡ERROR! No se encontró el elemento #btn-search en el HTML.");
+        showToast("Error: No se encontró el botón de búsqueda", 5000);
     }
 }
 
 // --- FUNCIÓN OVERPASS OPTIMIZADA (Nodos y Radio máx 15km) ---
 async function ejecutarConsultaOverpass(lat, lon) {
-    console.log("Iniciando consulta a Overpass para lat:", lat, "lon:", lon);
+    showToast("Consultando Overpass API...");
 
     const radiusSlider = document.getElementById("search-radius");
     const radiusKm = radiusSlider ? parseInt(radiusSlider.value, 10) : 5;
-    const radiusMeters = Math.min(radiusKm * 1000, 15000); // Límite seguro de 15 km[span_0](start_span)[span_0](end_span)
+    const radiusMeters = Math.min(radiusKm * 1000, 15000);
 
-    const checkboxes = document.querySelectorAll(".subcat-checkbox:checked");[span_1](start_span)[span_1](end_span)[span_2](start_span)[span_2](end_span)
-    console.log("Checkboxes de categorías seleccionados:", checkboxes.length);
-
+    const checkboxes = document.querySelectorAll(".subcat-checkbox:checked");
+    
     if (checkboxes.length === 0) {
+        showToast("⚠️ Marca al menos una categoría");
         alert("Por favor, selecciona al menos una categoría o elemento.");
         return;
     }
@@ -66,11 +89,12 @@ async function ejecutarConsultaOverpass(lat, lon) {
     });
 
     if (conditions.length === 0) {
+        showToast("⚠️ Sin etiquetas de mapeo válidas");
         alert("Los elementos seleccionados no tienen etiquetas de mapeo válidas.");
         return;
     }
 
-    let unionParts = conditions.map(cond => `node(around:${radiusMeters}, ${lat}, ${lon})${cond};`);[span_3](start_span)[span_3](end_span)
+    let unionParts = conditions.map(cond => `node(around:${radiusMeters}, ${lat}, ${lon})${cond};`);
 
     const overpassQuery = `
         [out:json][timeout:25];
@@ -78,9 +102,7 @@ async function ejecutarConsultaOverpass(lat, lon) {
             ${unionParts.join("\n")}
         );
         out body;
-    `;[span_4](start_span)[span_4](end_span)
-
-    console.log("Consulta Overpass generada:", overpassQuery);
+    `;
 
     try {
         const res = await fetch("https://overpass-api.de/api/interpreter", {
@@ -89,28 +111,29 @@ async function ejecutarConsultaOverpass(lat, lon) {
         });
 
         if (!res.ok) {
-            throw new Error(`Error en el servidor de Overpass: ${res.status}`);
+            throw new Error(`Error HTTP: ${res.status}`);
         }
 
         const data = await res.json();
-        console.log("Respuesta recibida de Overpass:", data);
         
         if (!data.elements || data.elements.length === 0) {
+            showToast("⚠️ No se hallaron PDI en este radio");
             alert("No se han encontrado puntos de interés para los criterios seleccionados en este radio.");
             return;
         }
 
-        currentOverpassElements = data.elements.filter(el => el.type === "node" && el.lat && el.lon);[span_5](start_span)[span_5](end_span)
-        console.log("Nodos válidos filtrados:", currentOverpassElements.length);
+        currentOverpassElements = data.elements.filter(el => el.type === "node" && el.lat && el.lon);
         
         selectedNodesMap.clear();
-        currentOverpassElements.forEach(el => selectedNodesMap.set(el.id, true));[span_6](start_span)[span_6](end_span)
+        currentOverpassElements.forEach(el => selectedNodesMap.set(el.id, true));
 
-        mostrarPanelResultados();[span_7](start_span)[span_7](end_span)
+        showToast(`¡Éxito! ${currentOverpassElements.length} PDI encontrados`);
+        mostrarPanelResultados();
 
-            } catch (e) {
-        console.error("Error crítico en Overpass API:", e);
-        alert("Ocurrió un error al conectar con la API de Overpass. Revisa la consola para más detalles.");
+    } catch (e) {
+        console.error("Error en Overpass API:", e);
+        showToast("❌ Error de conexión con Overpass");
+        alert("Ocurrió un error al conectar con la API de Overpass. Prueba a reducir el radio o desmarcar algunas categorías.");
     }
 }
 
@@ -120,19 +143,19 @@ function mostrarPanelResultados() {
         el.style.display = "none";
     });
 
-    const resultsPanel = document.getElementById("results-panel");[span_8](start_span)[span_8](end_span)[span_9](start_span)[span_9](end_span)
+    const resultsPanel = document.getElementById("results-panel");
     if (resultsPanel) {
-        resultsPanel.style.display = "flex";[span_10](start_span)[span_10](end_span)
+        resultsPanel.style.display = "flex";
     }
 
-    const badge = document.getElementById("results-badge");[span_11](start_span)[span_11](end_span)
+    const badge = document.getElementById("results-badge");
     if (badge) badge.textContent = currentOverpassElements.length;
 
     poblarPanelResultados();
 }
 
 function volverAPanelBusqueda() {
-    const resultsPanel = document.getElementById("results-panel");[span_12](start_span)[span_12](end_span)[span_13](start_span)[span_13](end_span)
+    const resultsPanel = document.getElementById("results-panel");
     if (resultsPanel) {
         resultsPanel.style.display = "none";
     }
@@ -173,8 +196,8 @@ function obtenerColorPorTag(tags) {
 
 // --- RENDERIZADO DE CHIPS Y TARJETAS EN EL PANEL ---
 function poblarPanelResultados() {
-    const chipsContainer = document.getElementById("categories-chips-container");[span_14](start_span)[span_14](end_span)
-    const nodesContainer = document.getElementById("nodes-container");[span_15](start_span)[span_15](end_span)
+    const chipsContainer = document.getElementById("categories-chips-container");
+    const nodesContainer = document.getElementById("nodes-container");
     if (!chipsContainer || !nodesContainer) return;
 
     chipsContainer.innerHTML = "";
@@ -205,7 +228,7 @@ function poblarPanelResultados() {
     categoriasDisponibles.forEach(catName => {
         const nodosList = agrupacion[catName];
         const chip = document.createElement("div");
-        chip.className = `category-chip ${catName === activeCategoryName ? 'active' : ''}`;[span_16](start_span)[span_16](end_span)
+        chip.className = `category-chip ${catName === activeCategoryName ? 'active' : ''}`;
 
         const labelSpan = document.createElement("span");
         labelSpan.textContent = `${catName} (${nodosList.length})`;
@@ -222,16 +245,12 @@ function poblarPanelResultados() {
 
     renderizarNodosCategoria(agrupacion[activeCategoryName]);
 
-    const btnBack = document.getElementById("btn-back");[span_17](start_span)[span_17](end_span)
+    const btnBack = document.getElementById("btn-back");
     if (btnBack) btnBack.onclick = () => volverAPanelBusqueda();
 }
 
-def renderizarNodosCategoria(nodosList) { // Corregido por si acaso
-    // ... función estándar ya existente ...
-}
-
 function renderizarNodosCategoria(nodosList) {
-    const nodesContainer = document.getElementById("nodes-container");[span_18](start_span)[span_18](end_span)
+    const nodesContainer = document.getElementById("nodes-container");
     if (!nodesContainer) return;
     nodesContainer.innerHTML = "";
 
@@ -240,20 +259,19 @@ function renderizarNodosCategoria(nodosList) {
         return;
     }
 
-    nodosList.rows = nodosList.forEach ? nodosList : [];
     nodosList.forEach(node => {
-        const name = node.tags && node.tags.name ? node.tags.name : "Punto sin nombre";[span_19](start_span)[span_19](end_span)
-        const ele = node.tags && node.tags.ele ? ` | Ele: ${node.tags.ele}m` : "";[span_20](start_span)[span_20](end_span)
-        const distancia = calcularDistanciaKm(currentLat, currentLon, node.lat, node.lon).toFixed(1);[span_21](start_span)[span_21](end_span)
+        const name = node.tags && node.tags.name ? node.tags.name : "Punto sin nombre";
+        const ele = node.tags && node.tags.ele ? ` | Ele: ${node.tags.ele}m` : "";
+        const distancia = calcularDistanciaKm(currentLat, currentLon, node.lat, node.lon).toFixed(1);
         const colorTag = obtenerColorPorTag(node.tags);
 
         const card = document.createElement("div");
-        card.className = "node-card";[span_22](start_span)[span_22](end_span)
+        card.className = "node-card";
         card.style.borderLeft = `4px solid ${colorTag}`;
         card.innerHTML = `
-            <div class="node-info">[span_23](start_span)[span_23](end_span)
-                <div class="node-name" style="color: ${colorTag};">${name}</div>[span_24](start_span)[span_24](end_span)
-                <div class="node-meta">Dist: ${distancia} km${ele} | Lat/Lon: ${node.lat.toFixed(4)}, ${node.lon.toFixed(4)}</div>[span_25](start_span)[span_25](end_span)
+            <div class="node-info">
+                <div class="node-name" style="color: ${colorTag};">${name}</div>
+                <div class="node-meta">Dist: ${distancia} km${ele} | Lat/Lon: ${node.lat.toFixed(4)}, ${node.lon.toFixed(4)}</div>
             </div>
         `;
         nodesContainer.appendChild(card);
